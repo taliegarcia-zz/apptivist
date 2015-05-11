@@ -1,5 +1,8 @@
+args==0.1.0
+clint==0.4.1
 Flask==0.10.1
 itsdangerous==0.24
 Jinja2==2.7.3
 MarkupSafe==0.23
+sunlight==1.2.8
 Werkzeug==0.10.4
