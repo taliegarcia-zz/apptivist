@@ -5,7 +5,7 @@ import json
 gg_api_key=os.environ['GLOBAL_GIVING_KEY']
 headers = {'Accept': 'application/json'} # returns json
 
-def gen_giving_dict():
+def gen_gg_dict():
     themes_url = 'https://api.globalgiving.org/api/public/projectservice/themes?api_key=%s' % gg_api_key
     req_all_themes = requests.get(themes_url, headers=headers) 
 
@@ -22,7 +22,7 @@ def gen_giving_dict():
 
 
 if __name__ == "__main__":
-    print(gen_giving_dict())
+    print(gen_gg_dict())
 
 
 

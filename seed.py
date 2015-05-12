@@ -1,10 +1,12 @@
 """Utility file to seed Apptivist database from third-party API's"""
 
 from model import connect_to_db, db
-from model import Meetup #, Giving, Congress
+from model import Meetup, Giving #, Congress
 from server import app
 
+## Modules for API's ##
 from meetup import gen_meetup_dict
+from global_giving import gen_gg_dict
 
 def load_meetup():
     """Load Meetup Items from the Meetup site. 
@@ -25,7 +27,20 @@ def load_meetup():
 
 
 def load_giving():
-    pass
+    """Load Global Giving Items from the GG site. 
+    The items come from the global_giving module which sends a request to the GG API 
+    and returns a dictionary"""
+
+    gg_dict = gen_gg_dict()
+
+    for item in gg_dict.items():
+        giving_code, giving_name = item
+        new_gg_item = Giving(giving_code=giving_code,
+                            giving_name=giving_name
+                            )
+        db.session.add(new_gg_item)
+
+    db.session.commit()
 
 def load_congress():
     pass
@@ -34,4 +49,5 @@ def load_congress():
 if __name__ == "__main__":
     connect_to_db(app)
     db.create_all()
-    mud = load_meetup()
+    load_meetup()
+    load_giving()

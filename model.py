@@ -9,7 +9,7 @@ db = SQLAlchemy()
 # Model definitions
 
 class Meetup(db.Model):
-    """User of ratings website."""
+    """Meetup.com object"""
 
     __tablename__ = "meetup" 
 
@@ -21,7 +21,31 @@ class Meetup(db.Model):
 
         return "<Meetup meetup_id=%s meetup_name=%s>" % (self.meetup_id, self.meetup_name)
 
+class Giving(db.Model):
+    """Global Giving object"""
 
+    __tablename__ = "giving" 
+
+    giving_code = db.Column(db.String(64), primary_key=True)
+    giving_name = db.Column(db.String(64), nullable=True)
+    
+    def __repr__(self):
+        """Provide helpful representation when printed. """
+
+        return "<Giving giving_code=%s giving_name=%s>" % (self.giving_code, self.giving_name)
+
+class Congress(db.Model):
+    """Congress contact object"""
+
+    __tablename__ = "congress" 
+
+    giving_code = db.Column(db.String(64), primary_key=True)
+    giving_name = db.Column(db.String(64), nullable=True)
+    
+    def __repr__(self):
+        """Provide helpful representation when printed. """
+
+        return "<Giving giving_code=%s giving_name=%s>" % (self.giving_code, self.giving_name)
 ##############################################################################
 # Helper functions
 
