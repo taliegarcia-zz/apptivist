@@ -4,6 +4,7 @@ clint==0.4.1
 cryptography==0.8.2
 enum34==1.0.4
 Flask==0.10.1
+Flask-SQLAlchemy==2.0
 itsdangerous==0.24
 Jinja2==2.7.3
 MarkupSafe==0.23
@@ -13,6 +14,7 @@ pycparser==2.12
 pyOpenSSL==0.15.1
 requests==2.7.0
 six==1.9.0
+SQLAlchemy==1.0.4
 sunlight==1.2.8
 urllib3==1.10.4
 Werkzeug==0.10.4
