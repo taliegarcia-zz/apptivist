@@ -121,6 +121,7 @@ class Congress(db.Model):
     email = db.Column(db.String(64), nullable=True)
     fb = db.Column(db.String(64), nullable=True)
     website = db.Column(db.String(200), nullable=True)
+    contact_form = db.Column(db.String(200), nullable=True)
     zipcode = db.Column(db.String(20), nullable=False) # essential for lookup, joining
 
 
