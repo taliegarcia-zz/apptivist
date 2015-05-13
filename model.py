@@ -34,7 +34,7 @@ class Story(db.Model):
     user = db.relationship("User", backref=db.backref("stories", order_by=story_id))
 
 class Tag(db.Model):
-    """Tags tabl. The tag options are not yet defined on the website. 
+    """Tags table. The tag options are not yet defined on the website. 
     User will be able to select multiple tag objects per story they post to the website."""
 
     __tablename__ = "tags" 
@@ -74,9 +74,7 @@ class SimilarTag(db.Model):
     similar_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     primary_id = db.Column(db.Integer, db.ForeignKey('tags.tag_id'))
     secondary_id = db.Column(db.Integer, db.ForeignKey('tags.tag_id'))
-   
-    story = db.relationship("Story", backref=db.backref("storytags", order_by=storytag_id))
-    tag = db.relationship("Tag", backref=db.backref("storytags", order_by=storytag_id))
+
 
 ##############################################################################
     ### Models relying on API's ###
@@ -108,28 +106,6 @@ class GlobalGiving(db.Model):
 
         return "<GlobalGiving gg_code=%s gg_name=%s>" % (self.gg_code, self.gg_name)
 
-
-class Congress(db.Model):
-    """Congress contact object"""
-
-    __tablename__ = "congress" 
-
-    congress_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    fname = db.Column(db.String(64), nullable=True)
-    lname = db.Column(db.String(64), nullable=True)
-    phone = db.Column(db.String(64), nullable=True)
-    email = db.Column(db.String(64), nullable=True)
-    fb = db.Column(db.String(64), nullable=True)
-    website = db.Column(db.String(200), nullable=True)
-    contact_form = db.Column(db.String(200), nullable=True)
-    zipcode = db.Column(db.String(20), nullable=False) # essential for lookup, joining
-
-
-
-    def __repr__(self):
-        """Provide helpful representation when printed. """
-
-        return "<Congress congress_id=%s congress_email=%s>" % (self.congress_id, self.congress_email)
 
 ##############################################################################
 # Helper functions

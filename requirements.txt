@@ -8,6 +8,7 @@ Flask==0.10.1
 Flask-DebugToolbar==0.10.0
 Flask-SQLAlchemy==2.0
 itsdangerous==0.24
+jellyfish==0.2.1
 Jinja2==2.7.3
 MarkupSafe==0.23
 ndg-httpsclient==0.4.0

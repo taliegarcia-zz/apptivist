@@ -1,3 +1,4 @@
+
 """Utility file to seed Apptivist database from third-party API's"""
 
 from model import connect_to_db, db
@@ -43,7 +44,25 @@ def load_giving():
     db.session.commit()
 
 def load_congress():
-    pass
+    for zipcode in zipcode_list:
+        congress_dict = gen_congress_dict(zipcode)
+
+        for rep in congress_dict:
+            congress_member = Congress(
+                votesmart_id=str(rep['votesmart_id']),  
+                fname=str(rep['fname']),
+                lname=str(rep['lname']),
+                phone=str(rep['phone']),
+                email=str(rep['email']),
+                fb_id=str(rep['fb_id']),
+                tw_id=str(rep['tw_id']),
+                yt_id=str(rep['yt_id']),
+                contact_form=str(rep['contact_form']),
+                zipcode=str(rep['zipcode'])
+                )
+            db.session.add(congress_member)
+
+    db.session.commit() 
 
 
 if __name__ == "__main__":
