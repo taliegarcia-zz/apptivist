@@ -1,7 +1,7 @@
 """Utility file to seed Apptivist database from third-party API's"""
 
 from model import connect_to_db, db
-from model import Meetup, Giving #, Congress
+from model import Meetup, GlobalGiving #, Congress
 from server import app
 
 ## Modules for API's ##
@@ -34,9 +34,9 @@ def load_giving():
     gg_dict = gen_gg_dict()
 
     for item in gg_dict.items():
-        giving_code, giving_name = item
-        new_gg_item = Giving(giving_code=giving_code,
-                            giving_name=giving_name
+        gg_code, gg_name = item
+        new_gg_item = GlobalGiving(gg_code=gg_code,
+                            gg_name=gg_name
                             )
         db.session.add(new_gg_item)
 

@@ -21,31 +21,31 @@ class Meetup(db.Model):
 
         return "<Meetup meetup_id=%s meetup_name=%s>" % (self.meetup_id, self.meetup_name)
 
-class Giving(db.Model):
+class GlobalGiving(db.Model):
     """Global Giving object"""
 
     __tablename__ = "giving" 
 
-    giving_code = db.Column(db.String(64), primary_key=True)
-    giving_name = db.Column(db.String(64), nullable=True)
+    gg_code = db.Column(db.String(64), primary_key=True)
+    gg_name = db.Column(db.String(64), nullable=True)
     
     def __repr__(self):
         """Provide helpful representation when printed. """
 
-        return "<Giving giving_code=%s giving_name=%s>" % (self.giving_code, self.giving_name)
+        return "<GlobalGiving gg_code=%s gg_name=%s>" % (self.gg_code, self.gg_name)
 
-class Congress(db.Model):
-    """Congress contact object"""
+# class Congress(db.Model):
+#     """Congress contact object"""
 
-    __tablename__ = "congress" 
+#     __tablename__ = "congress" 
 
-    giving_code = db.Column(db.String(64), primary_key=True)
-    giving_name = db.Column(db.String(64), nullable=True)
+#     giving_code = db.Column(db.String(64), primary_key=True)
+#     giving_name = db.Column(db.String(64), nullable=True)
     
-    def __repr__(self):
-        """Provide helpful representation when printed. """
+#     def __repr__(self):
+#         """Provide helpful representation when printed. """
 
-        return "<Giving giving_code=%s giving_name=%s>" % (self.giving_code, self.giving_name)
+#         return "<Giving giving_code=%s giving_name=%s>" % (self.giving_code, self.giving_name)
 ##############################################################################
 # Helper functions
 
