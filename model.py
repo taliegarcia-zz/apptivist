@@ -49,31 +49,39 @@ class Tag(db.Model):
 
 ##############################################################################
     ### Association Models ###
-#FIXME
-## Do NOT make Association Models. See Flask-SQLAlchemy for references on how to handle many-to-many relationships:
-## https://pythonhosted.org/Flask-SQLAlchemy/models.html?highlight=many%20many 
 
-class StoryTag(db.Model):
-    """Association between news stories and tags"""
+### Flask-SQLAlchemy Docs advised NOT to make models of associations, just create tables:
 
-    __tablename__ = "storytags" 
+story_tags = db.Table('storytags',
+    db.Column('tag_id', db.Integer, db.ForeignKey('tag.tag_id')),
+    db.Column('page_id', db.Integer, db.ForeignKey('story.story_id'))
+)
 
-    storytag_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    story_id = db.Column(db.Integer, db.ForeignKey('stories.story_id'))
-    tag_id = db.Column(db.Integer, db.ForeignKey('tags.tag_id'))
+sim_tags = db.Table('simtags',
+    db.Column('primary_tag_id', db.Integer, db.ForeignKey('tag.tag_id')),
+    db.Column('secondary_tag_id', db.Integer, db.ForeignKey('tag.tag_id'))
+)
+
+# class StoryTag(db.Model):
+#     """Association between news stories and tags"""
+
+#     __tablename__ = "storytags" 
+
+#     storytag_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+#     story_id = db.Column(db.Integer, db.ForeignKey('stories.story_id'))
+#     tag_id = db.Column(db.Integer, db.ForeignKey('tags.tag_id'))
    
-    story = db.relationship("Story", backref=db.backref("storytags", order_by=storytag_id))
-    tag = db.relationship("Tag", backref=db.backref("storytags", order_by=storytag_id))
+#     story = db.relationship("Story", backref=db.backref("storytags", order_by=storytag_id))
+#     tag = db.relationship("Tag", backref=db.backref("storytags", order_by=storytag_id))
 
+# class SimilarTag(db.Model):
+#     """Association between 2 similar tags"""
 
-class SimilarTag(db.Model):
-    """Association between 2 similar tags"""
+#     __tablename__ = "similartags" 
 
-    __tablename__ = "similartags" 
-
-    similar_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    primary_id = db.Column(db.Integer, db.ForeignKey('tags.tag_id'))
-    secondary_id = db.Column(db.Integer, db.ForeignKey('tags.tag_id'))
+#     similar_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+#     primary_id = db.Column(db.Integer, db.ForeignKey('tags.tag_id'))
+#     secondary_id = db.Column(db.Integer, db.ForeignKey('tags.tag_id'))
 
 
 ##############################################################################

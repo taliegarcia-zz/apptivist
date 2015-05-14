@@ -2,12 +2,30 @@
 """Utility file to seed Apptivist database from third-party API's"""
 
 from model import connect_to_db, db
-from model import Meetup, GlobalGiving #, Congress
+from model import Meetup, GlobalGiving, User
 from server import app
 
 ## Modules for API's ##
 from meetup import gen_meetup_dict
 from global_giving import gen_gg_dict
+
+def load_users():
+    """Load users from u.user into database."""
+    open_file = open("./seed_data/u.user")
+
+    for line in open_file:
+        # user_info = line.readline() # creates string of each line, with ending \n character
+        user_info = line.rstrip().split("|") # creates a list of the items on the line
+        movie_user_id, age, zipcode = user_info[0], user_info[1], user_info[-1]
+        new_user = User(name="name%s" % movie_user_id,
+                        email="NULL", 
+                        password="NULL",  
+                        zipcode=zipcode)
+
+        db.session.add(new_user)
+
+    db.session.commit()
+
 
 def load_meetup():
     """Load Meetup Items from the Meetup site. 
@@ -43,30 +61,10 @@ def load_giving():
 
     db.session.commit()
 
-def load_congress():
-    for zipcode in zipcode_list:
-        congress_dict = gen_congress_dict(zipcode)
-
-        for rep in congress_dict:
-            congress_member = Congress(
-                votesmart_id=str(rep['votesmart_id']),  
-                fname=str(rep['fname']),
-                lname=str(rep['lname']),
-                phone=str(rep['phone']),
-                email=str(rep['email']),
-                fb_id=str(rep['fb_id']),
-                tw_id=str(rep['tw_id']),
-                yt_id=str(rep['yt_id']),
-                contact_form=str(rep['contact_form']),
-                zipcode=str(rep['zipcode'])
-                )
-            db.session.add(congress_member)
-
-    db.session.commit() 
-
 
 if __name__ == "__main__":
     connect_to_db(app)
     db.create_all()
+    load_users()
     load_meetup()
     load_giving()
