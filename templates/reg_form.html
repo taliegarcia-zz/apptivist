@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Register</h1>
+
+<form action="registration" method="POST">
+
+    <div>
+        <label>Apptivist Alias:
+            <input type="name" name="name" required>
+            <br>
+            <p>Choose an alias.</p> 
+            <p>We will conceal your secret identity while you use your powers for good</p>
+            <br>
+        </label>
+    </div>  
+
+    <div>
+        <label>
+            Email
+            <input type="email" name="email">
+        </label>
+    </div>
+
+    <div>
+        <label>
+            Password
+            <input type="password" name="password">
+            <br>
+            <p>You will use this password to login with your Alias.</p>
+
+        </label>
+    </div>
+
+    <div>
+        <label>
+            Zipcode
+            <input type="text" name="zipcode">
+        </label>
+    </div>
+
+    <div>
+        <input type="submit" value="Register">
+    </div>
+
+</form>
+
+{% endblock %}

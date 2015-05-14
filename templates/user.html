@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <h2>User {{ user.user_id }} </h2>
+    <ul>
+        <li>
+          Age: {{ user.age }}  
+        </li>
+        <li>
+          Zipcode: {{ user.zipcode }}
+        </li>
+        {% if user.ratings %}
+        <li>Ratings: 
+         
+              <table class="movie_list">
+              
+                {% for rating in user.ratings|sort(attribute='movie.title') %}
+                <tr>
+                  <td><a href="/movies/{{ rating.movie_id }}">{{ rating.movie.title }}</a></td>
+                  <td>{{ rating.score }}</td>
+              
+              </tr>
+                {% endfor %}
+              </table>  
+        </li>
+        {% else %}
+          <li>You have not rated any movies yet.</li>
+        {% endif %}
+              
+                
+    </ul>
+
+{% endblock %}

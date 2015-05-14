@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+
+  <h1>{{ user.name }} ({{ user.user_id }})</h1>
+
+  <p>Zipcode: {{ user.zipcode }}</p>
+
+  {# if : this will be for "if this user has read articles, list the articles" #} 
+    <!-- Probably want to include Articles Read as header of the table below... -->
+    <h2>Articles Read:</h2>
+    
+    {# for article in user.articles #}
+      <table>
+    
+        <tr>
+    
+          <!-- <td><a href="/articles/{# article_id #}">{# article.title #}</a></td> -->
+<!--     
+          <td>
+          {# if action.taken #}
+            Action Taken: {# action #}
+          {# else #}
+          </td> -->
+    
+        </tr>
+
+      </table>
+    {# endfor #}
+    
+  {# endif #}
+
+  <form action="/congress" method="GET">
+    <div>
+        <input type="submit" value="Where's my rep??">
+    </div>
+  </form>
+
+{% endblock %}

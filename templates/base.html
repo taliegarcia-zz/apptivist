@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+    <head>
+     
+      <title>Apptivist</title>
+    
+    </head>
+
+    <body>
+      <h1>Apptivist</h1>
+        <div class="homebar">
+            <a href="/">Home</a>
+
+            <!-- show if logged in or not -->
+            {% if "user_id" in session %}
+                <p><a href="/apptivist/{{ session["user_id"] }}">Profile Me</a></p>
+                <p><a href="/logout">Log Out</a></p>
+            {% else %}
+                <p><a href="/login">Log In</a></p>
+                <p><a href="/registration">Register</a></p>
+            {% endif %}
+        
+        </div>
+
+
+        <!-- Show flashed messages -->    
+        <hr>
+
+            {% for flash in get_flashed_messages() %}
+              {{ flash }}
+            {% endfor %}
+
+            {% block content %}
+                Put your body here.
+            {% endblock %}
+
+</body>
+
+</html>

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+
+  <h1>Congress Member Contact Info</h1>
+
+  <p>Based on your location, these representatives should take your call:</p>
+
+	  <ul>
+	  {% for rep_key in con_dict %}
+	  	<li>{{ con_dict[rep_key]['First Name'] }} {{ con_dict[rep_key]['Last Name'] }} : {{ con_dict[rep_key]['Phone'] }}</li>
+	  {% endfor %}
+	  </ul>
+
+{% endblock %}
+
