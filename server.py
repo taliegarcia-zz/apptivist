@@ -7,7 +7,7 @@ from flask_debugtoolbar import DebugToolbarExtension
 
 from model import User, Meetup, GlobalGiving, connect_to_db, db
 
-from suncongress import show_congress_contacts
+from suncongress import gen_rep_list
 
 app = Flask(__name__)
 
@@ -116,13 +116,14 @@ def display_congress():
 
     user_id = session.get("user_id")
     
-    if not user_id:
-        return render_template('congress.html', con_dict={"Error:":"Sorry you are not logged in"})
+    # if not user_id: ### FIXME : If the user is not logged in, the button should not appear!!!
+    #     # flash("You must be logged in to ")
+    #     return render_template('congress.html', con_dict={"Error:":"Sorry you are not logged in"})
 
     user = User.query.filter_by(user_id=user_id).first()
-    con_dict = show_congress_contacts(user.zipcode)
+    congress_list = gen_rep_list(user.zipcode)
     
-    return render_template('congress.html', con_dict=con_dict)
+    return render_template('congress.html', congress_list=congress_list)
 
         
 

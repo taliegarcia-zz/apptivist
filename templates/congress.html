@@ -6,8 +6,8 @@
   <p>Based on your location, these representatives should take your call:</p>
 
 	  <ul>
-	  {% for rep_key in con_dict %}
-	  	<li>{{ con_dict[rep_key]['First Name'] }} {{ con_dict[rep_key]['Last Name'] }} : {{ con_dict[rep_key]['Phone'] }}</li>
+	  {% for rep in congress_list %}
+	  	<li>{{ rep['first_name'] }} {{ rep['last_name'] }} : {{ rep['phone'] }}</li>
 	  {% endfor %}
 	  </ul>
 

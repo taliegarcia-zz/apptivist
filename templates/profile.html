@@ -5,6 +5,15 @@
 
   <p>Zipcode: {{ user.zipcode }}</p>
 
+  {% if user.user_id == session["user_id"] %}
+    <form action="/congress" method="GET">
+      <div>
+          <input type="submit" value="Where's my rep??">
+      </div>
+    </form>
+  {% endif %}
+  
+
   {# if : this will be for "if this user has read articles, list the articles" #} 
     <!-- Probably want to include Articles Read as header of the table below... -->
     <h2>Articles Read:</h2>
@@ -29,10 +38,6 @@
     
   {# endif #}
 
-  <form action="/congress" method="GET">
-    <div>
-        <input type="submit" value="Where's my rep??">
-    </div>
-  </form>
+
 
 {% endblock %}
