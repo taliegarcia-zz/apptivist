@@ -19,23 +19,23 @@ class User(db.Model):
     password = db.Column(db.String(30), nullable=True)
     zipcode = db.Column(db.String(20), nullable=False) # essential for lookup, joining
 
-class Story(db.Model):
-    """Information on the news story posted by a user."""
+class Article(db.Model):
+    """Information on the news article posted by a user."""
 
     __tablename__ = "stories" 
 
-    story_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    article_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
     url = db.Column(db.String(200), nullable=False)
     img_src = db.Column(db.String(200), nullable=True)
     date = db.Column(db.DateTime(), nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
 
-    user = db.relationship("User", backref=db.backref("stories", order_by=story_id))
+    user = db.relationship("User", backref=db.backref("stories", order_by=article_id))
 
 class Tag(db.Model):
     """Tags table. The tag options are not yet defined on the website. 
-    User will be able to select multiple tag objects per story they post to the website."""
+    User will be able to select multiple tag objects per article they post to the website."""
 
     __tablename__ = "tags" 
 
@@ -52,9 +52,9 @@ class Tag(db.Model):
 
 ### Flask-SQLAlchemy Docs advised NOT to make models of associations, just create tables:
 
-story_tags = db.Table('storytags',
+article_tags = db.Table('articletags',
     db.Column('tag_id', db.Integer, db.ForeignKey('tag.tag_id')),
-    db.Column('page_id', db.Integer, db.ForeignKey('story.story_id'))
+    db.Column('article_id', db.Integer, db.ForeignKey('article.article_id'))
 )
 
 sim_tags = db.Table('simtags',
@@ -62,17 +62,17 @@ sim_tags = db.Table('simtags',
     db.Column('secondary_tag_id', db.Integer, db.ForeignKey('tag.tag_id'))
 )
 
-# class StoryTag(db.Model):
+# class ArticleTag(db.Model):
 #     """Association between news stories and tags"""
 
-#     __tablename__ = "storytags" 
+#     __tablename__ = "articletags" 
 
-#     storytag_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-#     story_id = db.Column(db.Integer, db.ForeignKey('stories.story_id'))
+#     articletag_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+#     article_id = db.Column(db.Integer, db.ForeignKey('article.article_id'))
 #     tag_id = db.Column(db.Integer, db.ForeignKey('tags.tag_id'))
    
-#     story = db.relationship("Story", backref=db.backref("storytags", order_by=storytag_id))
-#     tag = db.relationship("Tag", backref=db.backref("storytags", order_by=storytag_id))
+#     article = db.relationship("Article", backref=db.backref("articletags", order_by=articletag_id))
+#     tag = db.relationship("Tag", backref=db.backref("articletags", order_by=articletag_id))
 
 # class SimilarTag(db.Model):
 #     """Association between 2 similar tags"""
