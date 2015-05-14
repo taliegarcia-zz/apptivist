@@ -14,8 +14,8 @@ def gen_rep_list(zipcode_str):
     url = 'https://congress.api.sunlightfoundation.com/legislators/locate?zip=%s' % zipcode_str
     
     r = requests.get(url, headers=headers)
-    request_dict = json.loads(r.text)
-    congress_list = request_dict['results']
+    
+    congress_list = json.loads(r.text)['results']
 
     return congress_list 
 
