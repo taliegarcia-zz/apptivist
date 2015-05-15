@@ -51,18 +51,21 @@ class Tag(db.Model):
     ### Association Models ###
 
 ### Flask-SQLAlchemy Docs advised NOT to make models of associations, just create tables:
+class ArticleTag(db.Model):
+    __tablename__ = "articletags" 
+    atag_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    article_id = db.Column(db.Integer, db.ForeignKey('article.article_id'))
+    tag_id = db.Column(db.Integer, db.ForeignKey('tag.tag_id'))
 
-article_tags = db.Table('articletags',
-    db.Column('tag_id', db.Integer, db.ForeignKey('tag.tag_id')),
-    db.Column('article_id', db.Integer, db.ForeignKey('article.article_id'))
-)
+
 
 sim_tags = db.Table('simtags',
     db.Column('primary_tag_id', db.Integer, db.ForeignKey('tag.tag_id')),
     db.Column('secondary_tag_id', db.Integer, db.ForeignKey('tag.tag_id'))
 )
 
-# class ArticleTag(db.Model):
+
+# # class ArticleTag(db.Model):
 #     """Association between news stories and tags"""
 
 #     __tablename__ = "articletags" 

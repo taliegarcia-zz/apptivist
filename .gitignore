@@ -1,2 +1,4 @@
 secrets.sh
 env
+scrapwork/
+*.pyc

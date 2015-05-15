@@ -6,8 +6,8 @@ from model import Meetup, GlobalGiving, User
 from server import app
 
 ## Modules for API's ##
-from meetup import gen_meetup_dict
-from global_giving import gen_gg_dict
+from apis.meetup import gen_meetup_dict
+from apis.global_giving import gen_gg_dict
 
 def load_users():
     """Load users from u.user into database."""

@@ -9,11 +9,15 @@
     <body>
       <h1>Apptivist</h1>
         <div class="homebar">
-            <a href="/">Home</a>
+
+            <p><a href="/add_article">***Add an Article to DB***</a></p>
+
+            <p><a href="/">Home</a></p>
 
             <!-- show if logged in or not -->
             {% if "user_id" in session %}
                 <p><a href="/apptivist/{{ session["user_id"] }}">Profile Me</a></p>
+                <p><a href="/new_post">Post a New Article</a></p>
                 <p><a href="/logout">Log Out</a></p>
             {% else %}
                 <p><a href="/login">Log In</a></p>

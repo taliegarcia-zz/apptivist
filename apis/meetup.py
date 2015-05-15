@@ -8,6 +8,7 @@ meetup_api_key=os.environ['MEETUP_KEY']
 def gen_meetup_dict():
     categories_url = 'https://api.meetup.com/2/categories?key=%s&&sign=true' % meetup_api_key
     request_categories = requests.get(categories_url)
+    # TODO check status code 2xx aka "OK!" so that it doesnt return error message to the user of the site
     categories_dict = json.loads(request_categories.text)
     categories_list = categories_dict.get('results') 
 

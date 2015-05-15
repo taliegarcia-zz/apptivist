@@ -5,9 +5,12 @@ from jinja2 import StrictUndefined
 from flask import Flask, render_template, redirect, request, flash, session
 from flask_debugtoolbar import DebugToolbarExtension
 
-from model import User, Meetup, GlobalGiving, connect_to_db, db
+from model import User, Article, ArticleTag, Meetup, GlobalGiving, connect_to_db, db
 
-from suncongress import gen_rep_list
+from apis.suncongress import gen_rep_list
+
+#FIXME: This is just for temporarily adding articles through webform
+import datetime
 
 app = Flask(__name__)
 
@@ -64,7 +67,7 @@ def register_process():
 def login_form():
     """Show login form."""
 
-    return render_template("login_form.html")
+    return render_template("login.html")
 
 
 @app.route('/login', methods=['POST'])
@@ -72,22 +75,22 @@ def login_process():
     """Process login."""
 
     # Get form variables
-    email = request.form["email"]
+    name = request.form["name"]
     password = request.form["password"]
 
-    user = User.query.filter_by(email=email).first()
+    user = User.query.filter_by(name=name).first()
 
     if not user:
-        flash("No such user")
+        print "No such user"
         return redirect("/login")
 
     if user.password != password:
-        flash("Incorrect password")
+        print "Incorrect password"
         return redirect("/login")
 
     session["user_id"] = user.user_id
 
-    flash("Logged in")
+    print "Logged in"
 
     return redirect("/apptivist/%s" % user.user_id)
 
@@ -113,19 +116,79 @@ def get_user_by_id(id):
 
 @app.route("/congress")
 def display_congress():
+    """This function is only callable from the user's personal profile page,
+    and if they are logged in. It returns a congress page with a list of 
+    contact info for each of the congress members associated with the user's zipcode."""
 
     user_id = session.get("user_id")
-    
-    # if not user_id: ### FIXME : If the user is not logged in, the button should not appear!!!
-    #     # flash("You must be logged in to ")
-    #     return render_template('congress.html', con_dict={"Error:":"Sorry you are not logged in"})
-
+   
     user = User.query.filter_by(user_id=user_id).first()
     congress_list = gen_rep_list(user.zipcode)
     
     return render_template('congress.html', congress_list=congress_list)
 
+@app.route("/new_post")
+def post_an_article():
+    url = request.args.get('url')
+
+    tags = request.args.getlist('tag')
+    # TODO: consider changing the values of tags in the HTML to the tag_id numbers!
+    # right now the tags are strings/code names. 
+
+
+    print "()()()() This is the URL ()()()()", url
+    print "()()()() These are the tags: ()()()()", tags
+
+    return render_template("new_post.html")
+
+    ### Add New Article to the articles table ###
+    new_article = Article(title=title,
+                        url=url,
+                        img_src=img_src,
+                        date=date,
+                        user_id=session['user_id'])
+
+    db.session.add(new_article)
+    db.commit()
+
+    ### Add New ArticleTag Association(s) to the articletags tables ###
+    for tag_id in tags:
+        ref_tag = Tag.query.get(int(tag_id)).first()
+        new_atag = ArticleTag(tag_id=tag_id,
+                            article_id=new_article.article_id)
+        db.session.add(new_atag)
+
+    db.session.commit()
+    
+    return redirect("/article/%s" % new_article.article_id)
         
+@app.route("/add_article", methods=["GET", "POST"])
+def add_article():
+
+    if request.method == "POST":
+        title = request.args.get('title')
+        url = request.args.get('url')
+        img_src = request.args.get('img_src')
+        date_str = request.args.get('date')
+        date = datetime.datetime.strptime(date_str, "%d-%b-%Y")
+
+        new_article = Article(title=title,
+                            url=url,
+                            img_src=img_src,
+                            date=date,
+                            user_id=session['user_id'])
+
+        db.session.add(new_article)
+        print "()()()() Added:", Article.title
+
+        db.commit()
+
+
+    return render_template("add_article.html")
+
+# @app.route("/article/<int:id>")
+# def get_user_by_id(id):
+#     pass
 
 
 if __name__ == "__main__":
