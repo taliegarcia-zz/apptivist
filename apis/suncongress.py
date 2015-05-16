@@ -21,7 +21,7 @@ def gen_rep_list(zipcode_str):
 
 #### Test Run: ####'
 if __name__ == "__main__":
-    my_dict = gen_rep_list('94070')
+    my_dict = gen_rep_list('78209')
     print(my_dict)
 
 

@@ -121,7 +121,7 @@ def display_congress():
     contact info for each of the congress members associated with the user's zipcode."""
 
     user_id = session.get("user_id")
-   
+    
     user = User.query.filter_by(user_id=user_id).first()
     congress_list = gen_rep_list(user.zipcode)
     
