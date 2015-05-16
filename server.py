@@ -5,7 +5,7 @@ from jinja2 import StrictUndefined
 from flask import Flask, render_template, redirect, request, flash, session
 from flask_debugtoolbar import DebugToolbarExtension
 
-from model import User, Article, ArticleTag, Meetup, GlobalGiving, connect_to_db, db
+from model import User, Article, Meetup, GlobalGiving, connect_to_db, db
 
 from apis.suncongress import gen_rep_list
 

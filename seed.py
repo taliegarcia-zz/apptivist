@@ -2,19 +2,28 @@
 """Utility file to seed Apptivist database from third-party API's"""
 
 from model import connect_to_db, db
-from model import Meetup, GlobalGiving, User
+from model import Meetup, Article, GlobalGiving, User
 from server import app
 
 ## Modules for API's ##
 from apis.meetup import gen_meetup_dict
 from apis.global_giving import gen_gg_dict
 
+def load_articles():
+    article = Article(title="Mr. Smith Goes to Washington", 
+                      url="http://www.google.com",
+                      img_src="http://www.placekitten.com/300/300",
+                      user_id=942
+                    )
+    db.session.add(article)
+    db.session.commit()
+    
+
 def load_users():
     """Load users from u.user into database."""
     open_file = open("./seed_data/u.user")
 
     for line in open_file:
-        # user_info = line.readline() # creates string of each line, with ending \n character
         user_info = line.rstrip().split("|") # creates a list of the items on the line
         movie_user_id, age, zipcode = user_info[0], user_info[1], user_info[-1]
         new_user = User(name="name%s" % movie_user_id,
@@ -62,9 +71,21 @@ def load_giving():
     db.session.commit()
 
 
+
 if __name__ == "__main__":
     connect_to_db(app)
+    
     db.create_all()
+    print "Created Tables"
+    
     load_users()
+    print "Loaded Users"
+    
+    load_articles()
+    print "Loaded Articles"
+    
     load_meetup()
+    print "Loaded Meetup IDs"
+    
     load_giving()
+    print "Loaded Giving IDs"

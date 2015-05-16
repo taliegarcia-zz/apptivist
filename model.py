@@ -22,7 +22,7 @@ class User(db.Model):
 class Article(db.Model):
     """Information on the news article posted by a user."""
 
-    __tablename__ = "stories" 
+    __tablename__ = "articles" 
 
     article_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
@@ -31,7 +31,7 @@ class Article(db.Model):
     date = db.Column(db.DateTime(), nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
 
-    user = db.relationship("User", backref=db.backref("stories", order_by=article_id))
+    user = db.relationship("User", backref=db.backref("articles", order_by=article_id))
 
 class Tag(db.Model):
     """Tags table. The tag options are not yet defined on the website. 
@@ -51,22 +51,22 @@ class Tag(db.Model):
     ### Association Models ###
 
 ### Flask-SQLAlchemy Docs advised NOT to make models of associations, just create tables:
-class ArticleTag(db.Model):
-    __tablename__ = "articletags" 
-    atag_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    article_id = db.Column(db.Integer, db.ForeignKey('article.article_id'))
-    tag_id = db.Column(db.Integer, db.ForeignKey('tag.tag_id'))
+# class ArticleTag(db.Model):
+#     __tablename__ = "articletags" 
+#     atag_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+#     article_id = db.Column(db.Integer, db.ForeignKey('article.article_id'))
+#     tag_id = db.Column(db.Integer, db.ForeignKey('tag.tag_id'))
 
 
 
-sim_tags = db.Table('simtags',
-    db.Column('primary_tag_id', db.Integer, db.ForeignKey('tag.tag_id')),
-    db.Column('secondary_tag_id', db.Integer, db.ForeignKey('tag.tag_id'))
-)
+# sim_tags = db.Table('simtags',
+#     db.Column('primary_tag_id', db.Integer, db.ForeignKey('tag.tag_id')),
+#     db.Column('secondary_tag_id', db.Integer, db.ForeignKey('tag.tag_id'))
+# )
 
 
 # # class ArticleTag(db.Model):
-#     """Association between news stories and tags"""
+#     """Association between news articles and tags"""
 
 #     __tablename__ = "articletags" 
 
