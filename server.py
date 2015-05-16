@@ -182,6 +182,7 @@ def add_article():
 
         db.session.add(new_article)
         db.session.commit()
+
         print "()()()() Added:", new_article.title
 
     return render_template("add_article.html")
