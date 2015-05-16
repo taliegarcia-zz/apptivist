@@ -28,7 +28,7 @@ class Article(db.Model):
     title = db.Column(db.String(100), nullable=False)
     url = db.Column(db.String(200), nullable=False)
     img_src = db.Column(db.String(200), nullable=True)
-    date = db.Column(db.DateTime(), nullable=True)
+    date = db.Column(db.DateTime, nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
 
     user = db.relationship("User", backref=db.backref("articles", order_by=article_id))

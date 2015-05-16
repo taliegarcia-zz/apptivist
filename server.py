@@ -165,12 +165,14 @@ def post_an_article():
 @app.route("/add_article", methods=["GET", "POST"])
 def add_article():
 
-    if request.method == "POST":
+    if request.args:
         title = request.args.get('title')
         url = request.args.get('url')
         img_src = request.args.get('img_src')
         date_str = request.args.get('date')
-        date = datetime.datetime.strptime(date_str, "%d-%b-%Y")
+        # print "()()()() Date Printed:", date_str
+        # print "()()()() Date Type:", type(date_str)
+        date = datetime.datetime.strptime(date_str, "%Y-%m-%d")
 
         new_article = Article(title=title,
                             url=url,
@@ -179,10 +181,8 @@ def add_article():
                             user_id=session['user_id'])
 
         db.session.add(new_article)
-        print "()()()() Added:", Article.title
-
-        db.commit()
-
+        db.session.commit()
+        print "()()()() Added:", new_article.title
 
     return render_template("add_article.html")
 
