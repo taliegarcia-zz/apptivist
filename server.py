@@ -5,7 +5,7 @@ from jinja2 import StrictUndefined
 from flask import Flask, render_template, redirect, request, flash, session
 from flask_debugtoolbar import DebugToolbarExtension
 
-from model import User, Article, Meetup, GlobalGiving, connect_to_db, db
+from model import User, Article, Tag, Meetup, GlobalGiving, connect_to_db, db
 
 from apis.suncongress import gen_rep_list
 
@@ -127,37 +127,43 @@ def display_congress():
     
     return render_template('congress.html', congress_list=congress_list)
 
-@app.route("/new_post")
+@app.route("/new_post", methods=["GET", "POST"])
 def post_an_article():
-    url = request.args.get('url')
 
-    tags = request.args.getlist('tag')
-    # TODO: consider changing the values of tags in the HTML to the tag_id numbers!
-    # right now the tags are strings/code names. 
+    if request.args:
+        url = request.args.get('url')
+        title = request.args.get('title')
+        img_src = request.args.get('img_src')
+        date_str = request.args.get('date')
+        date = datetime.datetime.strptime(date_str, "%Y-%m-%d")
 
+        tags = request.args.getlist('tag')
+        # TODO: consider changing the values of tags in the HTML to the tag_id numbers!
+        # right now the tags are strings/code names. 
 
-    print "()()()() This is the URL ()()()()", url
-    print "()()()() These are the tags: ()()()()", tags
+        print "()()()() This is the URL ()()()()", url
+        print "()()()() These are the tags: ()()()()", tags
 
-    return render_template("new_post.html")
+        if not request.args:
+            return render_template("new_post.html")
 
-    ### Add New Article to the articles table ###
-    new_article = Article(title=title,
-                        url=url,
-                        img_src=img_src,
-                        date=date,
-                        user_id=session['user_id'])
+        ### Add New Article to the articles table ###
+        new_article = Article(title=title,
+                            url=url,
+                            img_src=img_src,
+                            date=date,
+                            user_id=session['user_id'])
+        db.session.add(new_article)
+        db.session.commit() # needs to be committed here before it can be added to article_tags table below
 
-    db.session.add(new_article)
+        ### Append New ArticleTag Association(s) to the articletags tables ###
+        for tag_name in tags:
+            tag = Tag.query.filter_by(tag_name=tag_name).first()
+            tag.children.append(new_article)
 
-    ### Append New ArticleTag Association(s) to the articletags tables ###
-    for tag_name in tags:
-        tag = Tag.query.filter_by(tag_name=tag_name)).first()
-        tag.children.append(new_article)
-
-    db.session.commit()
+        db.session.commit()
     
-    return redirect("/article/%s" % new_article.article_id)
+    return render_template("new_post.html")
         
 @app.route("/add_article", methods=["GET", "POST"])
 def add_article():
@@ -166,19 +172,23 @@ def add_article():
         title = request.args.get('title')
         url = request.args.get('url')
         img_src = request.args.get('img_src')
-        date_str = request.args.get('date')
-        date = datetime.datetime.strptime(date_str, "%Y-%m-%d")
+        # date_str = request.args.get('date')
+        # date = datetime.datetime.strptime(date_str, "%Y-%m-%d")
 
         new_article = Article(title=title,
                             url=url,
                             img_src=img_src,
-                            date=date,
+                            # date=date,
                             user_id=session['user_id'])
 
         db.session.add(new_article)
         db.session.commit()
 
         print "()()()() Added:", new_article.title
+
+        # TODO: this should eventually redirect to new article page:
+        # redirect("/article/<int:id>")
+        return redirect("/") 
 
     return render_template("add_article.html")
 

@@ -1,8 +1,9 @@
 
+
 """Utility file to seed Apptivist database from third-party API's"""
 
 from model import connect_to_db, db
-from model import Meetup, Article, GlobalGiving, User
+from model import Meetup, Article, Tag, GlobalGiving, User, article_tags
 from server import app
 
 ## Modules for API's ##

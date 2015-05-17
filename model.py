@@ -6,6 +6,21 @@ db = SQLAlchemy()
 
 
 ##############################################################################
+    ### Association Tables ###
+
+### Flask-SQLAlchemy Docs advised NOT to make models of associations, just create tables:
+article_tags = db.Table('articletags',
+    db.Column("article_id", db.Integer, db.ForeignKey('articles.article_id')),
+    db.Column("tag_id", db.Integer, db.ForeignKey('tags.tag_id')))
+
+
+sim_tags = db.Table('simtags',
+    db.Column('primary_tag_id', db.Integer, db.ForeignKey('tags.tag_id')),
+    db.Column('secondary_tag_id', db.Integer, db.ForeignKey('tags.tag_id'))
+)
+
+
+##############################################################################
     ### Front End Models ###
 
 class User(db.Model):
@@ -48,44 +63,8 @@ class Tag(db.Model):
     meetup = db.relationship("Meetup", backref=db.backref("tags", order_by=tag_id))
     giving = db.relationship("GlobalGiving", backref=db.backref("tags", order_by=tag_id))
 
-    children = db.relationship("Article",
-                    secondary=article_tags)
+    children = db.relationship("Article", secondary=article_tags)
 
-##############################################################################
-    ### Association Tables ###
-
-### Flask-SQLAlchemy Docs advised NOT to make models of associations, just create tables:
-article_tags = db.Table('articletags',
-    db.Column(db.Integer, db.ForeignKey('article.article_id')),
-    db.Column(db.Integer, db.ForeignKey('tag.tag_id')))
-
-
-sim_tags = db.Table('simtags',
-    db.Column('primary_tag_id', db.Integer, db.ForeignKey('tag.tag_id')),
-    db.Column('secondary_tag_id', db.Integer, db.ForeignKey('tag.tag_id'))
-)
-
-
-# # class ArticleTag(db.Model):
-#     """Association between news articles and tags"""
-
-#     __tablename__ = "articletags" 
-
-#     articletag_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-#     article_id = db.Column(db.Integer, db.ForeignKey('article.article_id'))
-#     tag_id = db.Column(db.Integer, db.ForeignKey('tags.tag_id'))
-   
-#     article = db.relationship("Article", backref=db.backref("articletags", order_by=articletag_id))
-#     tag = db.relationship("Tag", backref=db.backref("articletags", order_by=articletag_id))
-
-# class SimilarTag(db.Model):
-#     """Association between 2 similar tags"""
-
-#     __tablename__ = "similartags" 
-
-#     similar_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-#     primary_id = db.Column(db.Integer, db.ForeignKey('tags.tag_id'))
-#     secondary_id = db.Column(db.Integer, db.ForeignKey('tags.tag_id'))
 
 
 ##############################################################################
