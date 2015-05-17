@@ -22,13 +22,20 @@ app.secret_key = "ABC"
 app.jinja_env.undefined = StrictUndefined
 
 
-
-
 @app.route('/')
-def index():
-    """Display the homepage."""
+def show_newsfeed():
+    """Display newsfeed on Homepage"""
 
-    return render_template("homepage.html")
+    articles = Article.query.all()
+   
+    return render_template("newsfeed.html", articles=articles)
+
+# CLEAN: Do Not Need anymore...
+# @app.route('/')
+# def index():
+#     """Display the homepage."""
+
+#     return render_template("homepage.html")
 
 
 @app.route('/registration', methods=['GET'])
@@ -193,8 +200,9 @@ def add_article():
     return render_template("add_article.html")
 
 # @app.route("/article/<int:id>")
-# def get_user_by_id(id):
+# def get_article_by_id(id):
 #     pass
+
 
 
 if __name__ == "__main__":
