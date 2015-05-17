@@ -88,4 +88,4 @@ if __name__ == "__main__":
     print "Loaded Meetup IDs"
     
     load_giving()
-    print "Loaded Giving IDs"
+    print "Loaded Giving IDs"   

@@ -149,14 +149,11 @@ def post_an_article():
                         user_id=session['user_id'])
 
     db.session.add(new_article)
-    db.commit()
 
-    ### Add New ArticleTag Association(s) to the articletags tables ###
-    for tag_id in tags:
-        ref_tag = Tag.query.get(int(tag_id)).first()
-        new_atag = ArticleTag(tag_id=tag_id,
-                            article_id=new_article.article_id)
-        db.session.add(new_atag)
+    ### Append New ArticleTag Association(s) to the articletags tables ###
+    for tag_name in tags:
+        tag = Tag.query.filter_by(tag_name=tag_name)).first()
+        tag.children.append(new_article)
 
     db.session.commit()
     
@@ -170,8 +167,6 @@ def add_article():
         url = request.args.get('url')
         img_src = request.args.get('img_src')
         date_str = request.args.get('date')
-        # print "()()()() Date Printed:", date_str
-        # print "()()()() Date Type:", type(date_str)
         date = datetime.datetime.strptime(date_str, "%Y-%m-%d")
 
         new_article = Article(title=title,

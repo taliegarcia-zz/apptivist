@@ -27,11 +27,12 @@ class Article(db.Model):
     article_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
     url = db.Column(db.String(200), nullable=False)
-    img_src = db.Column(db.String(200), nullable=True)
+    img_src = db.Column(db.String(200), nullable=True, default="http://placekitten.com/220/220")
     date = db.Column(db.DateTime, nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
 
     user = db.relationship("User", backref=db.backref("articles", order_by=article_id))
+
 
 class Tag(db.Model):
     """Tags table. The tag options are not yet defined on the website. 
@@ -40,29 +41,29 @@ class Tag(db.Model):
     __tablename__ = "tags" 
 
     tag_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    tag_name = db.Column(db.String(20), nullable=False, unique=True)
     meetup_id = db.Column(db.Integer, db.ForeignKey('meetups.meetup_id'))
     gg_code = db.Column(db.String(64), db.ForeignKey('giving.gg_code'))
 
     meetup = db.relationship("Meetup", backref=db.backref("tags", order_by=tag_id))
     giving = db.relationship("GlobalGiving", backref=db.backref("tags", order_by=tag_id))
 
+    children = db.relationship("Article",
+                    secondary=article_tags)
 
 ##############################################################################
-    ### Association Models ###
+    ### Association Tables ###
 
 ### Flask-SQLAlchemy Docs advised NOT to make models of associations, just create tables:
-# class ArticleTag(db.Model):
-#     __tablename__ = "articletags" 
-#     atag_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-#     article_id = db.Column(db.Integer, db.ForeignKey('article.article_id'))
-#     tag_id = db.Column(db.Integer, db.ForeignKey('tag.tag_id'))
+article_tags = db.Table('articletags',
+    db.Column(db.Integer, db.ForeignKey('article.article_id')),
+    db.Column(db.Integer, db.ForeignKey('tag.tag_id')))
 
 
-
-# sim_tags = db.Table('simtags',
-#     db.Column('primary_tag_id', db.Integer, db.ForeignKey('tag.tag_id')),
-#     db.Column('secondary_tag_id', db.Integer, db.ForeignKey('tag.tag_id'))
-# )
+sim_tags = db.Table('simtags',
+    db.Column('primary_tag_id', db.Integer, db.ForeignKey('tag.tag_id')),
+    db.Column('secondary_tag_id', db.Integer, db.ForeignKey('tag.tag_id'))
+)
 
 
 # # class ArticleTag(db.Model):
