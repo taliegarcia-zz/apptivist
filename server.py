@@ -21,7 +21,8 @@ app.secret_key = "ABC"
 # This is horrible. Fix this so that, instead, it raises an error.
 app.jinja_env.undefined = StrictUndefined
 
-
+###############################################################################
+    ### Homepage ###
 @app.route('/')
 def show_newsfeed():
     """Display newsfeed on Homepage"""
@@ -30,14 +31,8 @@ def show_newsfeed():
    
     return render_template("newsfeed.html", articles=articles)
 
-# CLEAN: Do Not Need anymore...
-# @app.route('/')
-# def index():
-#     """Display the homepage."""
-
-#     return render_template("homepage.html")
-
-
+###############################################################################
+    ### User Registration ###
 @app.route('/registration', methods=['GET'])
 def register_form():
     """Show form for user signup."""
@@ -69,6 +64,8 @@ def register_process():
 
     return redirect("/")
 
+###############################################################################
+    ### User Login/Logout ###
 
 @app.route('/login', methods=['GET'])
 def login_form():
@@ -110,7 +107,8 @@ def logout():
     flash("Logged Out.")
     return redirect("/")
 
-
+###############################################################################
+    ### User Profile Page ###
 
 @app.route("/apptivist/<int:id>")
 def get_user_by_id(id):
@@ -120,8 +118,11 @@ def get_user_by_id(id):
 
     return render_template("profile.html", user=user)
 
+###############################################################################
+    ### Congress Lookup Page ###
 
-@app.route("/congress")
+# FIXME: make it so the app.route is "/congress/<zipcode>"
+@app.route("/congress", methods=["POST"])
 def display_congress():
     """This function is only callable from the user's personal profile page,
     and if they are logged in. It returns a congress page with a list of 
@@ -133,6 +134,10 @@ def display_congress():
     congress_list = gen_rep_list(user.zipcode)
     
     return render_template('congress.html', congress_list=congress_list)
+
+
+###############################################################################
+    ### Article Posting Pages ###
 
 @app.route("/new_post", methods=["GET", "POST"])
 def post_an_article():
@@ -171,7 +176,8 @@ def post_an_article():
         db.session.commit()
     
     return render_template("new_post.html")
-        
+
+# INTERNAL - this is an internal web form for me to add articles to my db quickly & easily       
 @app.route("/add_article", methods=["GET", "POST"])
 def add_article():
 
@@ -199,11 +205,35 @@ def add_article():
 
     return render_template("add_article.html")
 
-# @app.route("/article/<int:id>")
-# def get_article_by_id(id):
-#     pass
+
+###############################################################################
+    ### Article Page ###
+
+@app.route("/article/<int:article_id>", methods=['GET'])
+def article_detail(article_id):
+    """Show individual article page.
+
+    If a user is logged in, let them view possible actions.
+    """
+
+    article = Article.query.get(article_id)
+
+    user_id = session.get("user_id")
+
+    if user_id:
+        user = User.query.get(user_id)
+    
+
+    # else:
+    #     user_action = None
+
+    return render_template("article.html",
+                           user=user,
+                           article=article)
 
 
+###############################################################################
+    ### Article Page ###
 
 if __name__ == "__main__":
     # Run in debug mode

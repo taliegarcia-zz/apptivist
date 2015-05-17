@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <h2>Headline: {{ article.title }} </h2>
+    <div class="article-info">
+
+        <div class="img">
+          <img src="article.img_url" />
+        </div>
+        
+        <div>
+          Source: {{ article.url }}  
+        </div>
+
+        {# user related info #}
+        {% if user.user_id in session %}
+          <div>
+            Your Zipcode: {{ user.zipcode }}
+          </div>
+
+          <div>Actions: 
+           
+                <table class="action-list">
+  
+                  {# for loop, to list possible actions to take on this article #}
+                  <tr>
+                    <td><p></p></td>
+                    <td><p></p></td>
+                
+                </tr>
+                  {# endfor #}
+
+                </table>  
+
+          </div>
+          
+        {% else %}
+          <div>You must <a href="/login">log in</a> to take action!</div>
+        {% endif %}
+
+{% endblock %}
