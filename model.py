@@ -48,7 +48,7 @@ class Article(db.Model):
 
     user = db.relationship("User", backref=db.backref("articles", order_by=article_id))
 
-    tag_list = db.relationship("Article", secondary=article_tags)
+    tag_list = db.relationship("Tag", secondary=article_tags)
 
 class Tag(db.Model):
     """Tags table. The tag options are not yet defined on the website. 
