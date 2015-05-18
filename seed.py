@@ -10,29 +10,26 @@ from server import app
 from apis.meetup import gen_meetup_dict
 from apis.global_giving import gen_gg_dict
 
-def load_articles():
-    article = Article(title="Mr. Smith Goes to Washington", 
-                      url="http://www.google.com",
-                      img_src="http://www.placekitten.com/300/300",
-                      user_id=942
-                    )
-    db.session.add(article)
-    db.session.commit()
-    
-
 def load_users():
-    """Load users from u.user into database."""
-    open_file = open("./seed_data/u.user")
+    """Load users from users.csv into database."""
+    
+    print "Loading Users..."
 
-    for line in open_file:
-        user_info = line.rstrip().split("|") # creates a list of the items on the line
-        movie_user_id, age, zipcode = user_info[0], user_info[1], user_info[-1]
-        new_user = User(name="name%s" % movie_user_id,
-                        email="NULL", 
-                        password="NULL",  
-                        zipcode=zipcode)
+    for i, row in enumerate(open("seed_data/users.csv")):
+        row = row.rstrip().split(",")
+        user_id, name, email, password, zipcode = row
 
-        db.session.add(new_user)
+        user = User(user_id=user_id,
+                    name=name,
+                    email=email, 
+                    password=password,  
+                    zipcode=zipcode)
+
+        db.session.add(user)
+
+        # provide some sense of progress
+        if i % 100 == 0:
+            print i
 
     db.session.commit()
 
@@ -72,6 +69,86 @@ def load_giving():
     db.session.commit()
 
 
+###############################################################################
+### Seed Data Based on CSV Files ###
+
+def load_first_article():
+    """Hardcoded first article load function. Test."""
+
+    article = Article(title="Mr. Smith Goes to Washington", 
+                      url="http://www.google.com",
+                      img_src="http://www.placekitten.com/300/300",
+                      user_id=942)
+
+    db.session.add(article)
+    
+    db.session.commit()
+    
+
+
+def load_actual_articles():
+    """This will load the ~40 articles from actual_articles.csv"""
+
+    print "Articles Loading..."
+
+    for i, row in enumerate(open("seed_data/article_data/actual_articles.csv")):
+        row = row.rstrip().split(",")
+        article_id, title, url, empty_string, date, user_id = row
+
+        article = Article(
+                    article_id=article_id,
+                    title=title, 
+                    url=url,
+                    date=date,
+                    user_id=user_id)
+        db.session.add(article)
+
+        # provide some sense of progress
+        if i % 10 == 0:
+            print i
+
+    db.session.commit()
+
+def load_short_articles():
+    """This loads the few articles from short_article_list.csv
+    These articles already have associated tags so they will be 
+    good for experimenting with."""
+
+    print "Articles Loading..."
+
+    for i, row in enumerate(open("seed_data/article_data/short_article_list.csv")):
+        row = row.rstrip().split(",")
+        article_id, title, url, img_src, date, user_id = row
+
+        article = Article(
+                    article_id=article_id,
+                    title=title, 
+                    url=url,
+                    img_src=img_src,
+                    date=date,
+                    user_id=user_id)
+
+        db.session.add(article)
+
+    db.session.commit()
+
+
+def load_article_tags():
+    """Loads the few articletag connections I made already. 
+    Good for experimenting!"""
+
+    print "ArticleTags Loading..."
+
+    for i, row in enumerate(open("seed_data/articletags.csv")):
+        row = row.rstrip().split(",")
+        article_id, tag_id = row
+
+        article = Article.query.get(article_id)
+        article.tag_list.append(tag_id)
+
+        db.session.commit()        
+
+
 
 if __name__ == "__main__":
     connect_to_db(app)
@@ -82,8 +159,8 @@ if __name__ == "__main__":
     load_users()
     print "Loaded Users"
     
-    load_articles()
-    print "Loaded Articles"
+    load_short_articles()
+    print "Loaded Short Articles"
     
     load_meetup()
     print "Loaded Meetup IDs"

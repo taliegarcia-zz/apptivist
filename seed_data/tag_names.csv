@@ -1,9 +1,9 @@
 tag_id,tag_name,meetup_id,gg_code
-1,civil,,
-2,climate,,
-3,lgbt,,
-4,politics,,
-5,education,,
-6,finance,,
-7,technology,,
-8,animal,,
+1,civil,33,human
+2,climate,23,climate
+3,lgbt,12,rights
+4,politics,13,democ
+5,education,6,edu
+6,finance,2,finance
+7,technology,34,tech
+8,animal,26,animals

@@ -149,13 +149,6 @@ def post_an_article():
         date_str = request.args.get('date')
         date = datetime.datetime.strptime(date_str, "%Y-%m-%d")
 
-        tags = request.args.getlist('tag')
-        # TODO: consider changing the values of tags in the HTML to the tag_id numbers!
-        # right now the tags are strings/code names. 
-
-        if not request.args:
-            return render_template("new_post.html")
-
         ### Add New Article to the articles table ###
         article = Article(title=title,
                             url=url,
@@ -166,12 +159,15 @@ def post_an_article():
         db.session.commit() # needs to be committed here before it can be added to article_tags table below
 
         ### Append New ArticleTag Association(s) to the articletags tables ###
+        tags = request.args.getlist('tag')
+        # TODO: consider changing the values of tags in the HTML to the tag_id numbers!
+
         for tag_name in tags:
             tag = Tag.query.filter_by(tag_name=tag_name).first()
-            tag.children.append(article)
+            article.tag_list.append(tag.tag_id)
 
         db.session.commit()
-    
+            
     return render_template("new_post.html")
 
 # INTERNAL - this is an internal web form for me to add articles to my db quickly & easily       
