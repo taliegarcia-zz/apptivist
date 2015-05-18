@@ -19,9 +19,6 @@ def gen_meetup_dict():
 
     return meetup_dict
 
-if __name__ == "__main__":
-    my_dict = gen_meetup_dict()
-    print(my_dict)
 
 ###############################################################################
 #### Exploration of Meetup API for Upcoming Events ####
@@ -40,14 +37,15 @@ climate_dict = json.loads(climate_results.text)
 
 
 def climate_events(zipcode):
-    """Based on a zipcode, this will return a list of event info.
-    Each event's info is organized into dictionaries inside the master list."""
+    """Based on a zipcode, this will return a list of specific climate-change
+    event info. Each climate-change event's info is organized into dictionaries 
+    inside the master list. Right now it also prints the name of each group and the url to their event."""
 
     search_term = 'climate-change'
     url = 'https://api.meetup.com/2/open_events?zip=%s&topic=%s&page=20&key=%s' % (zipcode, climate, meetup_api_key)
-    request = requests.get(url)
-    climate_json = json.loads(request.text)
-    events_list = climate_json['results']
+    r = requests.get(url)
+    json_results = json.loads(r.text)
+    events_list = json_results['results']
 
     for event in events_list:
         print event['group']['name'].lstrip('0123456789')
@@ -55,5 +53,36 @@ def climate_events(zipcode):
 
     return events_list
 
+def list_events(zipcode, search_term):
+    """Based on a zipcode and search_term, 
+    this will return a list of event info.
+    Each event's info is organized into dictionaries inside the master list.
+    Right now it also prints the name of each group and the url to their event."""
 
+    url = 'https://api.meetup.com/2/open_events?zip=%s&topic=%s&page=20&key=%s' % (zipcode, search_term, meetup_api_key)
+    r = requests.get(url)
+    json_results = json.loads(r.text)
+
+    if r.status_code == 200:
+        events_list = json_results['results']
+
+        for event in events_list:
+            print event['group']['name'].lstrip('0123456789')
+            print event['event_url']
+
+    else:
+        print "No events found."
+        events_list = []
+
+    return events_list
+
+
+###############################################################################
+
+if __name__ == "__main__":
+    my_dict = gen_meetup_dict()
+    print my_dict
+    zipcode = '94110'
+    search_term = 'climate-change'
+    climate_events = list_events(zipcode, search_term)
 
