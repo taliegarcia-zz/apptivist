@@ -48,6 +48,7 @@ class Article(db.Model):
 
     user = db.relationship("User", backref=db.backref("articles", order_by=article_id))
 
+    tag_list = db.relationship("Article", secondary=article_tags)
 
 class Tag(db.Model):
     """Tags table. The tag options are not yet defined on the website. 
@@ -63,10 +64,7 @@ class Tag(db.Model):
     meetup = db.relationship("Meetup", backref=db.backref("tags", order_by=tag_id))
     giving = db.relationship("GlobalGiving", backref=db.backref("tags", order_by=tag_id))
 
-    children = db.relationship("Article", secondary=article_tags)
-
-
-
+    
 ##############################################################################
     ### Models relying on API's ###
 

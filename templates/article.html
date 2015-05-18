@@ -1,15 +1,16 @@
 {% extends 'base.html' %}
 {% block content %}
 
-    <h2>Headline: {{ article.title }} </h2>
+  <h2>Headline: {{ article.title }} </h2>
+  
     <div class="article-info">
 
         <div class="img">
-          <img src="article.img_url" />
-        </div>
+          <img src="{{ article.img_src }}" />
+        </div> 
         
         <div>
-          Source: {{ article.url }}  
+          <a href="{{ article.url }}">Link to Source</a>  
         </div>
 
         {# user related info #}
@@ -37,5 +38,26 @@
         {% else %}
           <div>You must <a href="/login">log in</a> to take action!</div>
         {% endif %}
+
+      <form>
+        <div>
+        <label>What's it all about? Check off at least one tag that describes your article:
+        <div>        
+            <p><input type="checkbox" name="tag" value="civil">Civil Rights</p>
+            <p><input type="checkbox" name="tag" value="climate">Climate Change</p>
+            <p><input type="checkbox" name="tag" value="lgbt">LGBT</p>
+            <p><input type="checkbox" name="tag" value="politics">Politics</p>
+            <p><input type="checkbox" name="tag" value="education">Education</p>
+            <p><input type="checkbox" name="tag" value="finance">Finance</p>
+            <p><input type="checkbox" name="tag" value="technology">Technology</p>
+            <p><input type="checkbox" name="tag" value="animal">Animal Rights</p>
+        </div>
+        </label>
+        </div>
+        <br>
+        <div>
+            <input type="submit" value="Assign tag">
+        </div>
+      </form>
 
 {% endblock %}

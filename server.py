@@ -153,25 +153,22 @@ def post_an_article():
         # TODO: consider changing the values of tags in the HTML to the tag_id numbers!
         # right now the tags are strings/code names. 
 
-        print "()()()() This is the URL ()()()()", url
-        print "()()()() These are the tags: ()()()()", tags
-
         if not request.args:
             return render_template("new_post.html")
 
         ### Add New Article to the articles table ###
-        new_article = Article(title=title,
+        article = Article(title=title,
                             url=url,
                             img_src=img_src,
                             date=date,
                             user_id=session['user_id'])
-        db.session.add(new_article)
+        db.session.add(article)
         db.session.commit() # needs to be committed here before it can be added to article_tags table below
 
         ### Append New ArticleTag Association(s) to the articletags tables ###
         for tag_name in tags:
             tag = Tag.query.filter_by(tag_name=tag_name).first()
-            tag.children.append(new_article)
+            tag.children.append(article)
 
         db.session.commit()
     
@@ -188,16 +185,16 @@ def add_article():
         # date_str = request.args.get('date')
         # date = datetime.datetime.strptime(date_str, "%Y-%m-%d")
 
-        new_article = Article(title=title,
+        article = Article(title=title,
                             url=url,
                             img_src=img_src,
                             # date=date,
                             user_id=session['user_id'])
 
-        db.session.add(new_article)
+        db.session.add(article)
         db.session.commit()
 
-        print "()()()() Added:", new_article.title
+        print "()()()() Added:", article.title
 
         # TODO: this should eventually redirect to new article page:
         # redirect("/article/<int:id>")
@@ -224,12 +221,26 @@ def article_detail(article_id):
         user = User.query.get(user_id)
     
 
+    # INTERNAL : just for adding tags to articles already in the DB
+    if request.args:
+        tags = request.args.getlist('tag')
+
+        ### Append New ArticleTag Association(s) to the articletags tables ###
+        for tag_name in tags:
+            tag = Tag.query.filter_by(tag_name=tag_name).first()
+            tag.children.append(article)
+
+        db.session.commit()
+
+    tags = articletags.query
+
     # else:
     #     user_action = None
 
     return render_template("article.html",
                            user=user,
-                           article=article)
+                           article=article,
+                           tags=tags)
 
 
 ###############################################################################
