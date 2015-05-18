@@ -122,7 +122,7 @@ def get_user_by_id(id):
     ### Congress Lookup Page ###
 
 # FIXME: make it so the app.route is "/congress/<zipcode>"
-@app.route("/congress", methods=["POST"])
+@app.route("/congress", methods=["GET"])
 def display_congress():
     """This function is only callable from the user's personal profile page,
     and if they are logged in. It returns a congress page with a list of 
@@ -211,6 +211,11 @@ def article_detail(article_id):
 
     article = Article.query.get(article_id)
 
+    for tag in article.tag_list:
+        print "()()()() The type of thing is: ", type(tag)
+        print "()()()() This is an associated tag: ", tag.tag_name
+        
+
     user_id = session.get("user_id")
 
     if user_id:
@@ -218,26 +223,22 @@ def article_detail(article_id):
     
 
     # INTERNAL : just for adding tags to articles already in the DB
-    if request.args:
-        tags = request.args.getlist('tag')
+    # if request.args:
+    #     tags = request.args.getlist('tag')
 
-        ### Append New ArticleTag Association(s) to the articletags tables ###
-        for tag_name in tags:
-            tag = Tag.query.filter_by(tag_name=tag_name).first()
-            tag.children.append(article)
+    #     ### Append New ArticleTag Association(s) to the articletags tables ###
+    #     for tag_name in tags:
+    #         tag = Tag.query.filter_by(tag_name=tag_name).first()
+    #         article.tag_list.append(tag)
 
-        db.session.commit()
+    #     db.session.commit()
 
-    tags = articletags.query
-
-    # else:
-    #     user_action = None
 
     return render_template("article.html",
                            user=user,
                            article=article,
-                           tags=tags)
-
+                           # tags=tags
+                        )
 
 ###############################################################################
     ### Article Page ###

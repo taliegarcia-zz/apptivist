@@ -200,7 +200,7 @@ if __name__ == "__main__":
     connect_to_db(app)
     
     db.create_all()
-    print "Created Tables"
+    print "Tables Set Up"
     
     load_users()
     
