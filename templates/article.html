@@ -29,17 +29,9 @@
 
           <div>Actions: 
            
-                <table class="action-list">
-
-                  <tr>
-                    <td><p></p></td>
-                    <td><p></p></td>
-                
-                </tr>
-
-
-                </table>  
-
+              <p><a href="/meetup/{{ article.article_id }}">Meet</a></p>
+              <p><a href="/give/{{ article.article_id }}">Give<a></p>
+      
           </div>
           
           
@@ -47,6 +39,7 @@
           <div>You must <a href="/login">log in</a> to take action!</div>
         {% endif %}
 
+      {# hidden now while I experiment with current tags --
       <form>
         <div>
         <label>What's it all about? Check off at least one tag that describes your article:
@@ -67,5 +60,6 @@
             <input type="submit" value="Assign tag">
         </div>
       </form>
+      -- end hidden section #}
 
 {% endblock %}
