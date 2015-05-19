@@ -25,6 +25,7 @@ app.jinja_env.undefined = StrictUndefined
 
 ###############################################################################
     ### Homepage ###
+    
 @app.route('/')
 def show_newsfeed():
     """Display newsfeed on Homepage"""
@@ -122,7 +123,7 @@ def get_user_by_id(id):
 
 
 ###############################################################################
-    ### Article Posting Pages ###
+    ### Post New Article Pages ###
 
 @app.route("/new_post", methods=["GET", "POST"])
 def post_an_article():
@@ -185,7 +186,7 @@ def add_article():
 
 
 ###############################################################################
-    ### Article Page ###
+    ### Display Article Page ###
 
 @app.route("/article/<int:article_id>", methods=['GET'])
 def article_detail(article_id):
