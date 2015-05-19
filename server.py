@@ -8,6 +8,7 @@ from flask_debugtoolbar import DebugToolbarExtension
 from model import User, Article, Tag, Meetup, GlobalGiving, connect_to_db, db
 
 from apis.suncongress import gen_rep_list
+from apis.meetup import list_events
 
 #FIXME: This is just for temporarily adding articles through webform
 import datetime
@@ -220,28 +221,51 @@ def article_detail(article_id):
 
     if user_id:
         user = User.query.get(user_id)
-    
-
-    # INTERNAL : just for adding tags to articles already in the DB
-    # if request.args:
-    #     tags = request.args.getlist('tag')
-
-    #     ### Append New ArticleTag Association(s) to the articletags tables ###
-    #     for tag_name in tags:
-    #         tag = Tag.query.filter_by(tag_name=tag_name).first()
-    #         article.tag_list.append(tag)
-
-    #     db.session.commit()
-
 
     return render_template("article.html",
                            user=user,
                            article=article,
-                           # tags=tags
                         )
 
 ###############################################################################
-    ### Article Page ###
+    ### API Results Pages ###
+
+@app.route("/meet/<int:article_id>", methods=['GET'])
+def display_meetups(article_id):
+    """This will display meetup info based on 
+    tags associated with this article"""
+
+    article = Article.query.get(article_id)
+
+    user = User.query.get(session['user_id'])
+
+    if user:
+        for tag in article.tag_list:
+            meetup_events = list_events(user.zipcode, tag.meetup_id)
+
+    return render_template("meet.html", article=article, meetup_events=meetup_events)
+
+@app.route("/give/<int:article_id>", methods=['GET'])
+def display_giving_orgs(article_id):
+    """This will display meetup info based on 
+    tags associated with this article"""
+
+    article = Article.query.get(article_id)
+
+    user = User.query.get(session['user_id'])
+
+    if user:
+        for tag in article.tag_list:
+            giving_orgs = list_orgs(tag.gg_code)
+
+    if not giving_orgs:
+        giving_orgs = "Nope."
+        
+    return render_template("give.html", article=article, giving_orgs=giving_orgs)
+
+
+###############################################################################
+    ### Run Server ###
 
 if __name__ == "__main__":
     # Run in debug mode

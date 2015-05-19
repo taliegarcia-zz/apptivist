@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+
+  <h1>Open up Your Heart and Give!</h1>
+
+  <h3>You just read: {{ article.title }}</h3>
+
+  <p>These projects could use your help:</p>
+
+      <h3>Global Giving Results:</h3>
+      	{# TODO. Consider best way to display this info...table? #}
+        {% for org in giving_orgs %}
+        	<li>
+        		<a href="{{  }}">
+        			{{  }}
+        		</a>
+        	</li>
+
+        {% endfor %}
+        </ul>
+
+
+	  <div>Tags: 
+            <ul>
+            {% for tag in article.tag_list %}
+              <li>{{ tag.tag_name }}</li>
+            {% endfor %}
+            </ul>
+      </div>
+
+
+{% endblock %}

@@ -3,13 +3,30 @@
 
   <h1>Meetup Info</h1>
 
+  <h3>You just read: {{ article.title }}</h3>
+
   <p>Based on your location and interest, you may like these meetups:</p>
 
-	  <ul>
-	  {# for rep in congress_list #}
-	  	<li>{{  }}</li>
-	  {# endfor #}
-	  </ul>
+      <h3>Meetup Results:</h3>
+      	{# TODO. Make table with group name, event, date, time, etc. #}
+        {% for event in meetup_events %}
+        	<li>
+        		<a href="{{ event['event_url'] }}">
+        			{{ event['group']['name'].lstrip('0123456789') }}
+        		</a>
+        	</li>
+
+        {% endfor %}
+        </ul>
+
+
+	  <div>Tags: 
+            <ul>
+            {% for tag in article.tag_list %}
+              <li>{{ tag.tag_name }}</li>
+            {% endfor %}
+            </ul>
+      </div>
+
 
 {% endblock %}
-

@@ -4,8 +4,13 @@ import json
 
 meetup_api_key=os.environ['MEETUP_KEY']
 
+###############################################################################
+### General Lookup for Categories ###
 
 def gen_meetup_dict():
+    """First call to API. 
+    This returns a dictionary of Meetup's Category_id's."""
+
     categories_url = 'https://api.meetup.com/2/categories?key=%s&&sign=true' % meetup_api_key
     request_categories = requests.get(categories_url)
     # TODO check status code 2xx aka "OK!" so that it doesnt return error message to the user of the site
@@ -17,24 +22,10 @@ def gen_meetup_dict():
 
         meetup_dict[str(category['id'])] = str(category['shortname']) 
 
-    return meetup_dict
-
+    return sorted(meetup_dict)
 
 ###############################################################################
-#### Exploration of Meetup API for Upcoming Events ####
-## using python -i meetup.py ##
-events_url = "https://api.meetup.com/2/open_events?zip=94110&time=,1w&key=%s" % meetup_api_key
-request_events = requests.get(events_url)
-
-
-# NVM. topic = climate-change delivers the best results for topics.
-climate = 'climate-change'
-zipcode = '10012'
-climate_topics_url = 'https://api.meetup.com/2/open_events?zip=%s&topic=%s&page=20&key=%s' % (zipcode, climate, meetup_api_key)
-climate_results = requests.get(climate_topics_url)
-climate_dict = json.loads(climate_results.text)
-###############################################################################
-
+### Looking for upcoming events related to Topics ###
 
 def climate_events(zipcode):
     """Based on a zipcode, this will return a list of specific climate-change
@@ -53,13 +44,13 @@ def climate_events(zipcode):
 
     return events_list
 
-def list_events(zipcode, search_term):
+def list_events(zipcode, topic):
     """Based on a zipcode and search_term, 
     this will return a list of event info.
     Each event's info is organized into dictionaries inside the master list.
     Right now it also prints the name of each group and the url to their event."""
 
-    url = 'https://api.meetup.com/2/open_events?zip=%s&topic=%s&page=20&key=%s' % (zipcode, search_term, meetup_api_key)
+    url = 'https://api.meetup.com/2/open_events?zip=%s&topic=%s&page=20&key=%s' % (zipcode, topic, meetup_api_key)
     r = requests.get(url)
     json_results = json.loads(r.text)
 
@@ -82,7 +73,7 @@ def list_events(zipcode, search_term):
 if __name__ == "__main__":
     my_dict = gen_meetup_dict()
     print my_dict
-    zipcode = '94110'
+    zipcode = '94043'
     search_term = 'climate-change'
     climate_events = list_events(zipcode, search_term)
 

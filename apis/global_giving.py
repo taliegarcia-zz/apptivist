@@ -21,9 +21,13 @@ def gen_gg_dict():
 
     return gg_dict
 
+def list_climate_orgs(gg_code):
+    projects_url = 'https://api.globalgiving.org/api/public/projectservice/themes/%s/projects/active?api_key=%s' % (gg_code, gg_api_key)
+    r = requests.get(projects_url, headers=headers)
+
 
 if __name__ == "__main__":
-    print(gen_gg_dict())
-
+    # print(gen_gg_dict())
+    gg_code = 'climate'
 
 
