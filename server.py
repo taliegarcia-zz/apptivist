@@ -120,23 +120,6 @@ def get_user_by_id(id):
 
     return render_template("profile.html", user=user)
 
-###############################################################################
-    ### Congress Lookup Page ###
-
-# FIXME: make it so the app.route is "/congress/<zipcode>"
-@app.route("/congress", methods=["GET"])
-def display_congress():
-    """This function is only callable from the user's personal profile page,
-    and if they are logged in. It returns a congress page with a list of 
-    contact info for each of the congress members associated with the user's zipcode."""
-
-    user_id = session.get("user_id")
-    
-    user = User.query.filter_by(user_id=user_id).first()
-    congress_list = gen_rep_list(user.zipcode)
-    
-    return render_template('congress.html', congress_list=congress_list)
-
 
 ###############################################################################
     ### Article Posting Pages ###
@@ -262,6 +245,18 @@ def display_giving_projs(article_id):
         giving_projs = "Nope."
 
     return render_template("give.html", article=article, giving_projs=giving_projs)
+
+
+@app.route("/congress/<zipcode>", methods=["GET"])
+def lookup_congress(zipcode):
+    """This returns a congress page with a list of 
+    contact info for each of the congress members associated 
+    with the user's zipcode."""
+
+    congress_list = gen_rep_list(zipcode)
+    
+    return render_template('congress.html', congress_list=congress_list)
+
 
 
 ###############################################################################

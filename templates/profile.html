@@ -6,7 +6,7 @@
   <p>Zipcode: {{ user.zipcode }}</p>
 
   {% if user.user_id == session["user_id"] %}
-    <form action="/congress" method="GET">
+    <form action="/congress/{{ user.zipcode }}" method="GET">
       <div>
           <input type="submit" value="Where's my rep??">
       </div>
@@ -22,14 +22,14 @@
       <table>
     
         <tr>
-    
-          <!-- <td><a href="/articles/{# article_id #}">{# article.title #}</a></td> -->
-<!--     
+    <!-- <td><a href="/articles/{# article_id #}">{# article.title #}</a></td> -->
+    <!--     
           <td>
           {# if action.taken #}
             Action Taken: {# action #}
           {# else #}
-          </td> -->
+          </td> 
+    -->
     
         </tr>
 
