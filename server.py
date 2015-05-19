@@ -9,7 +9,7 @@ from model import User, Article, Tag, Meetup, GlobalGiving, connect_to_db, db
 
 from apis.suncongress import gen_rep_list
 from apis.meetup import list_events
-from apis.global_giving import list_giving_orgs
+from apis.global_giving import list_giving_projs
 
 #FIXME: This is just for temporarily adding articles through webform
 import datetime
