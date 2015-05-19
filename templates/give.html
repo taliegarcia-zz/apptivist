@@ -9,11 +9,12 @@
 
       <h3>Global Giving Results:</h3>
       	{# TODO. Consider best way to display this info...table? #}
-        {% for org in giving_orgs %}
+        {% for project in giving_projs %}
         	<li>
-        		<a href="{{  }}">
-        			{{  }}
+        		<a href="{{ project['projectLink'] }}">
+        			{{ project['title'] }}
         		</a>
+            <p>{{ project['summary'] }}
         	</li>
 
         {% endfor %}

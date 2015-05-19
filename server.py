@@ -9,6 +9,7 @@ from model import User, Article, Tag, Meetup, GlobalGiving, connect_to_db, db
 
 from apis.suncongress import gen_rep_list
 from apis.meetup import list_events
+from apis.global_giving import list_giving_orgs
 
 #FIXME: This is just for temporarily adding articles through webform
 import datetime
@@ -246,9 +247,8 @@ def display_meetups(article_id):
     return render_template("meet.html", article=article, meetup_events=meetup_events)
 
 @app.route("/give/<int:article_id>", methods=['GET'])
-def display_giving_orgs(article_id):
-    """This will display meetup info based on 
-    tags associated with this article"""
+def display_giving_projs(article_id):
+    """This will display list of Global Giving Projects"""
 
     article = Article.query.get(article_id)
 
@@ -256,12 +256,12 @@ def display_giving_orgs(article_id):
 
     if user:
         for tag in article.tag_list:
-            giving_orgs = list_orgs(tag.gg_code)
+            giving_projs = list_giving_projs(tag.gg_code)
 
-    if not giving_orgs:
-        giving_orgs = "Nope."
-        
-    return render_template("give.html", article=article, giving_orgs=giving_orgs)
+    if not giving_projs:
+        giving_projs = "Nope."
+
+    return render_template("give.html", article=article, giving_projs=giving_projs)
 
 
 ###############################################################################
