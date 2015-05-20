@@ -74,6 +74,6 @@ if __name__ == "__main__":
     my_dict = gen_meetup_dict()
     print my_dict
     zipcode = '94043'
-    search_term = 'climate-change'
+    search_term = 'feminism'
     climate_events = list_events(zipcode, search_term)
 

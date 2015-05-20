@@ -4,22 +4,6 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
-
-##############################################################################
-    ### Association Tables ###
-
-### Flask-SQLAlchemy Docs advised NOT to make models of associations, just create tables:
-article_tags = db.Table('articletags',
-    db.Column("article_id", db.Integer, db.ForeignKey('articles.article_id')),
-    db.Column("tag_id", db.Integer, db.ForeignKey('tags.tag_id')))
-
-
-sim_tags = db.Table('simtags',
-    db.Column('primary_tag_id', db.Integer, db.ForeignKey('tags.tag_id')),
-    db.Column('secondary_tag_id', db.Integer, db.ForeignKey('tags.tag_id'))
-)
-
-
 ##############################################################################
     ### Front End Models ###
 
@@ -35,7 +19,7 @@ class User(db.Model):
     zipcode = db.Column(db.String(20), nullable=False) # essential for lookup, joining
 
 class Article(db.Model):
-    """Information on the news article posted by a user."""
+    """News article posted by user."""
 
     __tablename__ = "articles" 
 
@@ -51,8 +35,7 @@ class Article(db.Model):
     tag_list = db.relationship("Tag", secondary=article_tags)
 
 class Tag(db.Model):
-    """Tags table. The tag options are not yet defined on the website. 
-    User will be able to select multiple tag objects per article they post to the website."""
+    """Tag - a keyword used to distinguish topics on the Apptivist news site."""
 
     __tablename__ = "tags" 
 
@@ -69,7 +52,7 @@ class Tag(db.Model):
     ### Models relying on API's ###
 
 class Meetup(db.Model):
-    """Meetup.com object"""
+    """Meetup.com object, with a category id and name from the meetup website"""
 
     __tablename__ = "meetups" 
 
@@ -83,7 +66,8 @@ class Meetup(db.Model):
 
 
 class GlobalGiving(db.Model):
-    """Global Giving object"""
+    """Global Giving object referncing the global giving code and name,
+    organized by Theme from Global Giving website"""
 
     __tablename__ = "giving" 
 
@@ -95,9 +79,23 @@ class GlobalGiving(db.Model):
 
         return "<GlobalGiving gg_code=%s gg_name=%s>" % (self.gg_code, self.gg_name)
 
+##############################################################################
+    ### Association Tables ###
+
+# Association between an article and a tag keyword
+article_tags = db.Table('articletags',
+    db.Column("article_id", db.Integer, db.ForeignKey('articles.article_id')),
+    db.Column("tag_id", db.Integer, db.ForeignKey('tags.tag_id')))
+
+# Association between two similar tag keywords
+sim_tags = db.Table('simtags',
+    db.Column('primary_tag_id', db.Integer, db.ForeignKey('tags.tag_id')),
+    db.Column('secondary_tag_id', db.Integer, db.ForeignKey('tags.tag_id'))
+)
+
 
 ##############################################################################
-# Helper functions
+    ### Helper Functions ###
 
 def connect_to_db(app):
     """Connect the database to our Flask app."""
