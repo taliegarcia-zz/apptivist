@@ -4,7 +4,7 @@
 
 
 Doing:
-- studying javascript for front end inspiration
+- creating more correct tag names for articles on site...to link with meetup and global giving
 
 To Do:
 - data model for tracking user actions on articles
