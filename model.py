@@ -41,22 +41,44 @@ class Tag(db.Model):
 
     tag_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     tag_name = db.Column(db.String(20), nullable=False, unique=True)
-    meetup_id = db.Column(db.Integer, db.ForeignKey('meetups.meetup_id'))
+    meetup_topic = db.Column(db.String(64), db.ForeignKey('meetups.meetup_code'))
     gg_code = db.Column(db.String(64), db.ForeignKey('giving.gg_code'))
 
     meetup = db.relationship("Meetup", backref=db.backref("tags", order_by=tag_id))
     giving = db.relationship("GlobalGiving", backref=db.backref("tags", order_by=tag_id))
 
+    sim_tag_list = db.relationship("Tag", secondary=sim_tags)
+
+##############################################################################
+    ### Association Tables ###
+
+# Association between an article and a tag keyword
+article_tags = db.Table('articletags',
+    db.Column("articletag_id", db.Integer, autoincrement=True, primary_key=True),
+    db.Column("article_id", db.Integer, db.ForeignKey('articles.article_id')),
+    db.Column("tag_id", db.Integer, db.ForeignKey('tags.tag_id')))
+
+# Association between two similar tag keywords
+sim_tags = db.Table('simtags',
+    db.Column("simtag_id", db.Integer, autoincrement=True, primary_key=True),
+    db.Column('primary_tag_id', db.Integer, db.ForeignKey('tags.tag_id')),
+    db.Column('secondary_tag_id', db.Integer, db.ForeignKey('tags.tag_id'))
+)
+
     
 ##############################################################################
     ### Models relying on API's ###
 
+# TODO: Change this to be Meetup topics, not Meetup category_ids
 class Meetup(db.Model):
-    """Meetup.com object, with a category id and name from the meetup website"""
+    """Meetup.com object, with topic and name from the meetup website.
+    This might become obsolete if I just hardcode the topics into the Tag table.
+    Seems redundant."""
 
     __tablename__ = "meetups" 
 
     meetup_id = db.Column(db.Integer, primary_key=True)
+    # TODO: Set up Meetup topic field. 
     meetup_name = db.Column(db.String(64), nullable=True)
     
     def __repr__(self):
@@ -78,20 +100,6 @@ class GlobalGiving(db.Model):
         """Provide helpful representation when printed. """
 
         return "<GlobalGiving gg_code=%s gg_name=%s>" % (self.gg_code, self.gg_name)
-
-##############################################################################
-    ### Association Tables ###
-
-# Association between an article and a tag keyword
-article_tags = db.Table('articletags',
-    db.Column("article_id", db.Integer, db.ForeignKey('articles.article_id')),
-    db.Column("tag_id", db.Integer, db.ForeignKey('tags.tag_id')))
-
-# Association between two similar tag keywords
-sim_tags = db.Table('simtags',
-    db.Column('primary_tag_id', db.Integer, db.ForeignKey('tags.tag_id')),
-    db.Column('secondary_tag_id', db.Integer, db.ForeignKey('tags.tag_id'))
-)
 
 
 ##############################################################################

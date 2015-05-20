@@ -34,7 +34,9 @@ def load_users():
     db.session.commit()
     print "Users table loaded."
 
-
+# FIXME. If I decide to load a meetup table at all, it should be based on
+# the topics, not category_ids. Below function is still based on category_ids.
+# the correct meetup topics are now stored in "/seed_data/tagnames.csv"
 def load_meetup():
     """Load Meetup Items from the Meetup site. 
     The items come from the Meetup module which sends a request to the Meetup API 
