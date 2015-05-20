@@ -5,6 +5,22 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 ##############################################################################
+    ### Association Tables ###
+
+# Association between an article and a tag keyword
+article_tags = db.Table('articletags',
+    db.Column("articletag_id", db.Integer, autoincrement=True, primary_key=True),
+    db.Column("article_id", db.Integer, db.ForeignKey('articles.article_id')),
+    db.Column("tag_id", db.Integer, db.ForeignKey('tags.tag_id')))
+
+# Association between two similar tag keywords
+sim_tags = db.Table('simtags',
+    db.Column("simtag_id", db.Integer, autoincrement=True, primary_key=True),
+    db.Column('primary_tag_id', db.Integer, db.ForeignKey('tags.tag_id')),
+    db.Column('secondary_tag_id', db.Integer, db.ForeignKey('tags.tag_id'))
+)
+
+##############################################################################
     ### Front End Models ###
 
 class User(db.Model):
@@ -48,22 +64,6 @@ class Tag(db.Model):
     giving = db.relationship("GlobalGiving", backref=db.backref("tags", order_by=tag_id))
 
     sim_tag_list = db.relationship("Tag", secondary=sim_tags)
-
-##############################################################################
-    ### Association Tables ###
-
-# Association between an article and a tag keyword
-article_tags = db.Table('articletags',
-    db.Column("articletag_id", db.Integer, autoincrement=True, primary_key=True),
-    db.Column("article_id", db.Integer, db.ForeignKey('articles.article_id')),
-    db.Column("tag_id", db.Integer, db.ForeignKey('tags.tag_id')))
-
-# Association between two similar tag keywords
-sim_tags = db.Table('simtags',
-    db.Column("simtag_id", db.Integer, autoincrement=True, primary_key=True),
-    db.Column('primary_tag_id', db.Integer, db.ForeignKey('tags.tag_id')),
-    db.Column('secondary_tag_id', db.Integer, db.ForeignKey('tags.tag_id'))
-)
 
     
 ##############################################################################
