@@ -1,4 +1,3 @@
-user_id,name,email,password,zipcode
 1,name1,NULL,abc,85711
 2,name2,NULL,abc,94043
 3,name3,NULL,abc,32067
