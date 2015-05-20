@@ -5,24 +5,25 @@ import json
 meetup_api_key=os.environ['MEETUP_KEY']
 
 ###############################################################################
+# NOT using this function anymore. Instead of Category_ids, using Topics now. #
 ### General Lookup for Categories ###
 
-def gen_meetup_dict():
-    """First call to API. 
-    This returns a dictionary of Meetup's Category_id's."""
+# def gen_meetup_dict():
+#     """First call to API. 
+#     This returns a dictionary of Meetup's Category_id's."""
 
-    categories_url = 'https://api.meetup.com/2/categories?key=%s&&sign=true' % meetup_api_key
-    request_categories = requests.get(categories_url)
-    # TODO check status code 2xx aka "OK!" so that it doesnt return error message to the user of the site
-    categories_dict = json.loads(request_categories.text)
-    categories_list = categories_dict.get('results') 
+#     categories_url = 'https://api.meetup.com/2/categories?key=%s&&sign=true' % meetup_api_key
+#     request_categories = requests.get(categories_url)
+#     # TODO check status code 2xx aka "OK!" so that it doesnt return error message to the user of the site
+#     categories_dict = json.loads(request_categories.text)
+#     categories_list = categories_dict.get('results') 
 
-    meetup_dict = {}
-    for category in categories_list:
+#     meetup_dict = {}
+#     for category in categories_list:
 
-        meetup_dict[str(category['id'])] = str(category['shortname']) 
+#         meetup_dict[str(category['id'])] = str(category['shortname']) 
 
-    return sorted(meetup_dict)
+#     return sorted(meetup_dict)
 
 ###############################################################################
 ### Looking for upcoming events related to Topics ###
@@ -54,6 +55,8 @@ def list_events(zipcode, topic):
     r = requests.get(url)
     json_results = json.loads(r.text)
 
+    # FIXME: Might also want to include if 200 AND json_results['results']:
+    # right now it looks like the request can get a 200 response code but still have empty results list
     if r.status_code == 200:
         events_list = json_results['results']
 
@@ -71,9 +74,7 @@ def list_events(zipcode, topic):
 ###############################################################################
 
 if __name__ == "__main__":
-    my_dict = gen_meetup_dict()
-    print my_dict
     zipcode = '94043'
     search_term = 'feminism'
-    climate_events = list_events(zipcode, search_term)
+    upcoming_events = list_events(zipcode, search_term)
 
