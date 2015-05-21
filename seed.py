@@ -8,7 +8,7 @@ from server import app
 import datetime
 
 ## Modules for API's ##
-from apis.meetup import gen_meetup_dict
+# from apis.meetup import gen_meetup_dict
 from apis.global_giving import gen_gg_dict
 
 def load_users():
@@ -37,23 +37,40 @@ def load_users():
 # FIXME. If I decide to load a meetup table at all, it should be based on
 # the topics, not category_ids. Below function is still based on category_ids.
 # the correct meetup topics are now stored in "/seed_data/tagnames.csv"
-def load_meetup():
-    """Load Meetup Items from the Meetup site. 
+# def load_meetup_by_api():
+#     """Load Meetup Items from the Meetup site. 
+#     The items come from the Meetup module which sends a request to the Meetup API 
+#     and returns a dictionary"""
+
+#     meetup_dict = gen_meetup_dict()
+
+#     for item in meetup_dict.items():
+#         meetup_id_str, meetup_name = item
+#         meetup_id = int(meetup_id_str)
+#         new_meetup_item = Meetup(meetup_id=meetup_id,
+#                             meetup_name=meetup_name
+#                             )
+#         db.session.add(new_meetup_item)
+
+#     db.session.commit()
+#     print "Loaded Meetup IDs"
+
+def load_meetup_by_csv():
+    """Load Meetup Items from tagnames.csv now. 
     The items come from the Meetup module which sends a request to the Meetup API 
     and returns a dictionary"""
 
-    meetup_dict = gen_meetup_dict()
+    for i, row in enumerate(open("seed_data/tagnames.csv")):
+        row = row.rstrip().split(",")
+        meetup_topic = row[2]
 
-    for item in meetup_dict.items():
-        meetup_id_str, meetup_name = item
-        meetup_id = int(meetup_id_str)
-        new_meetup_item = Meetup(meetup_id=meetup_id,
-                            meetup_name=meetup_name
-                            )
-        db.session.add(new_meetup_item)
+        meetup = Meetup(meetup_topic=meetup_topic)
+
+        db.session.add(meetup)
 
     db.session.commit()
-    print "Loaded Meetup IDs"
+    print "Meetup topics table loaded."
+
 
 
 def load_giving():
@@ -161,13 +178,13 @@ def load_tags():
 
     print "Tags Loading..."
 
-    for i, row in enumerate(open("seed_data/tag_names.csv")):
+    for i, row in enumerate(open("seed_data/tagnames.csv")):
         row = row.rstrip().split(",")
-        tag_id, tag_name, meetup_id, gg_code = row
+        tag_id, tag_name, meetup_topic, gg_code = row
 
         tag = Tag(
                 tag_name=tag_name,
-                meetup_id=meetup_id,
+                meetup_topic=meetup_topic,
                 gg_code=gg_code
                 )
         
@@ -201,17 +218,17 @@ def load_article_tags():
 if __name__ == "__main__":
     connect_to_db(app)
     
-    db.create_all()
-    print "Tables Set Up"
+    # db.create_all()
+    # print "Tables Set Up"
     
-    load_users()
+    # load_users()
     
-    load_short_articles()
+    # load_short_articles()
 
-    load_tags()
+    # load_tags()
   
-    load_meetup()
+    # # load_meetup_by_api()
     
-    load_giving()
+    # load_giving()
 
-    load_article_tags()
+    # load_article_tags()

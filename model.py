@@ -14,11 +14,11 @@ article_tags = db.Table('articletags',
     db.Column("tag_id", db.Integer, db.ForeignKey('tags.tag_id')))
 
 # Association between two similar tag keywords
-sim_tags = db.Table('simtags',
-    db.Column("simtag_id", db.Integer, autoincrement=True, primary_key=True),
-    db.Column('primary_tag_id', db.Integer, db.ForeignKey('tags.tag_id')),
-    db.Column('secondary_tag_id', db.Integer, db.ForeignKey('tags.tag_id'))
-)
+# sim_tags = db.Table('simtags',
+#     # db.Column("simtag_id", db.Integer, autoincrement=True, primary_key=True),
+#     db.Column('primary_tag_id', db.Integer, db.ForeignKey('tags.tag_id')),
+#     db.Column('secondary_tag_id', db.Integer, db.ForeignKey('tags.tag_id'))
+# )
 
 ##############################################################################
     ### Front End Models ###
@@ -57,13 +57,13 @@ class Tag(db.Model):
 
     tag_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     tag_name = db.Column(db.String(20), nullable=False, unique=True)
-    meetup_topic = db.Column(db.String(64), db.ForeignKey('meetups.meetup_code'))
+    meetup_topic = db.Column(db.String(64), db.ForeignKey('meetups.meetup_topic'))
     gg_code = db.Column(db.String(64), db.ForeignKey('giving.gg_code'))
 
     meetup = db.relationship("Meetup", backref=db.backref("tags", order_by=tag_id))
     giving = db.relationship("GlobalGiving", backref=db.backref("tags", order_by=tag_id))
 
-    sim_tag_list = db.relationship("Tag", secondary=sim_tags)
+    # sim_tag_list = db.relationship("Tag", secondary=sim_tags)
 
     
 ##############################################################################
@@ -79,12 +79,12 @@ class Meetup(db.Model):
 
     meetup_id = db.Column(db.Integer, primary_key=True)
     # TODO: Set up Meetup topic field. 
-    meetup_name = db.Column(db.String(64), nullable=True)
+    meetup_topic = db.Column(db.String(64), nullable=True)
     
     def __repr__(self):
         """Provide helpful representation when printed. """
 
-        return "<Meetup meetup_id=%s meetup_name=%s>" % (self.meetup_id, self.meetup_name)
+        return "<Meetup meetup_id=%s meetup_topic=%s>" % (self.meetup_id, self.meetup_topic)
 
 
 class GlobalGiving(db.Model):
