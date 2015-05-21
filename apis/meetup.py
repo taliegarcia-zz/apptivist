@@ -49,7 +49,7 @@ def list_events(zipcode, topic):
     """Based on a zipcode and search_term, 
     this will return a list of event info.
     Each event's info is organized into dictionaries inside the master list.
-    Right now it also prints the name of each group and the url to their event."""
+    Right now it also prints (in the console) the name of each group and the url to their event."""
 
     url = 'https://api.meetup.com/2/open_events?zip=%s&topic=%s&page=20&key=%s' % (zipcode, topic, meetup_api_key)
     r = requests.get(url)

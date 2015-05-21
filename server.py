@@ -125,6 +125,7 @@ def get_user_by_id(id):
 ###############################################################################
     ### Post New Article Pages ###
 
+# FIXME. new articles should be posted by "POST" method, not "GET", since it is communicating with my db
 @app.route("/new_post", methods=["GET", "POST"])
 def post_an_article():
 
@@ -156,7 +157,8 @@ def post_an_article():
             
     return render_template("new_post.html")
 
-# INTERNAL - this is an internal web form for me to add articles to my db quickly & easily       
+# INTERNAL - this is an internal web form for me to add articles to my db quickly & easily  
+# FIXME. new articles should be posted by "POST" method, not "GET", since it is communicating with my db     
 @app.route("/add_article", methods=["GET", "POST"])
 def add_article():
 
@@ -229,7 +231,11 @@ def display_meetups(article_id):
         for tag in article.tag_list:
             meetup_events.append(list_events(user.zipcode, tag.meetup_topic))
 
-    return render_template("meet.html", article=article, meetup_events=meetup_events)
+        meetup_dict_by_tag = {}
+        for tag in article.tag_list:
+            meetup_dict_by_tag[tag] = list_events(user.zipcode, tag.meetup_topic)
+
+    return render_template("meet.html", article=article, meetup_events=meetup_events, meetup_dict=meetup_dict_by_tag)
 
 @app.route("/give/<int:article_id>", methods=['GET'])
 def display_giving_projs(article_id):
