@@ -10,16 +10,19 @@
 
       <h3>Meetup Results:</h3>
       	{# TODO. Make table with group name, event, date, time, etc. #}
-        <ul>
-        {% for event in meetup_events %}
-        	<li>
-        		<a href="{{ event['event_url'] }}">
-        			{{ event['group']['name'].lstrip('0123456789') }}
-        		</a>
-        	</li>
 
+        {% for tagged_meetups in meetup_events %}
+          <ul>
+          {% for event in tagged_meetups %}
+          	<li>
+          		<a href="{{ event['event_url'] }}">
+          			{{ event['group']['name'].lstrip('0123456789') }}
+          		</a>
+          	</li>
+
+          {% endfor %}
+          </ul>
         {% endfor %}
-        </ul>
   </div>
 
 	<div>

@@ -225,8 +225,9 @@ def display_meetups(article_id):
     user = User.query.get(session['user_id'])
 
     if user:
+        meetup_events = []
         for tag in article.tag_list:
-            meetup_events = list_events(user.zipcode, tag.meetup_topic)
+            meetup_events.append(list_events(user.zipcode, tag.meetup_topic))
 
     return render_template("meet.html", article=article, meetup_events=meetup_events)
 
