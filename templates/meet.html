@@ -12,7 +12,7 @@
       	{# TODO. Make table with group name, event, date, time, etc. #}
 
         {% for tagged_meetups in meetup_events %}
-          <ul>
+          <ul class='meetuplinks'>
           {% for event in tagged_meetups %}
           	<li>
           		<a href="{{ event['event_url'] }}">
