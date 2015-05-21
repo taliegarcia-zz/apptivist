@@ -226,7 +226,7 @@ def display_meetups(article_id):
 
     if user:
         for tag in article.tag_list:
-            meetup_events = list_events(user.zipcode, tag.meetup_id)
+            meetup_events = list_events(user.zipcode, tag.meetup_topic)
 
     return render_template("meet.html", article=article, meetup_events=meetup_events)
 
