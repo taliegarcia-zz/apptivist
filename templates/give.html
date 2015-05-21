@@ -8,8 +8,11 @@
   <p>These projects could use your help:</p>
 
       <h3>Global Giving Results:</h3>
-      	{# TODO. Consider best way to display this info...table? #}
-        {% for project in giving_projs %}
+      {# TODO. Consider best way to display this info...table? #}
+      
+      {% for tagged_projs in giving_projs %}
+      
+        {% for project in tagged_projs %}
         	<li>
         		<a href="{{ project['projectLink'] }}">
         			{{ project['title'] }}
@@ -19,6 +22,8 @@
 
         {% endfor %}
         </ul>
+      
+      {% endfor %}
 
 
 	  <div>Tags: 
