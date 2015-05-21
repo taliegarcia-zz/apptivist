@@ -220,7 +220,11 @@ def article_detail(article_id):
 @app.route("/meet/<int:article_id>", methods=['GET'])
 def display_meetups(article_id):
     """This will display meetup info based on 
-    tags associated with this article"""
+    tags associated with this article.
+    Trying two different ways right now:
+    1) meetup_events is a nice list of events, queries for all associated tags,
+    2) meetup_dict_by_tag keeps the tag object with the generated meetup info,
+    this keeps things organized and separate on the results page."""
 
     article = Article.query.get(article_id)
 
