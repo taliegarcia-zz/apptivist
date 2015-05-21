@@ -242,18 +242,11 @@ def display_giving_projs(article_id):
         giving_projs = []
         for tag in article.tag_list:
             giving_projs.append(list_giving_projs(tag.gg_code)) 
-            # this creates a list that stores one list per tag
-            # each of those inner lists contains a list of dictionaries per tag
-            # giving_projs[0] contains 10 dictionaries
-
-
+           
     if not giving_projs:
         giving_projs = "Nope."
 
-    print "()()() This is the length of giving_projs List ()()():", len(giving_projs)
-    print "()()() Keys of giving_projs[0][0] - first dictionary of first list ()()():", giving_projs[0][0].keys()
-    # return redirect('/')
-    # DEBUG. commented out to debug.
+    # TODO. would it be faster to put the giving_projs in a dictionary? Also would give more random/intermixed output.
     return render_template("give.html", article=article, giving_projs=giving_projs)
 
 
