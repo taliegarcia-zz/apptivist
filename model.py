@@ -69,6 +69,11 @@ class Tag(db.Model):
 ##############################################################################
     ### Models relying on API's ###
 
+# FIXME: I think these are redundant...why do I need to keep this information at all really?
+# it was neat for figuing things out and finding the terms and calling the apis
+# and above too...why would I even need a backreference to the meetup and giving tables?
+
+
 # TODO: Change this to be Meetup topics, not Meetup category_ids
 class Meetup(db.Model):
     """Meetup.com object, with topic and name from the meetup website.
