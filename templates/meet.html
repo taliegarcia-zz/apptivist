@@ -12,7 +12,7 @@
       	{# TODO. Make table with group name, event, date, time, etc. #}
 
         {% for tagged_meetups in meetup_events %}
-          <ul class='actionlinks' topic='meetup'>
+          <ul class='actionlinks'>
 
           {% for event in tagged_meetups %}
           	<li>
@@ -33,7 +33,7 @@
   {% for tag, tagged_meetups in meetup_dict.items() %}
     <h4>{{ tag.tag_name }}</h4>
     {% for event in tagged_meetups %}
-            <ul class='{{ tag.tag_name }}' reaction='meetup'>
+            <ul class='{{ tag.tag_name }}'>
             <li>
               <a href="{{ event['event_url'] }}">
                 {{ event['group']['name'].lstrip('0123456789') }}
