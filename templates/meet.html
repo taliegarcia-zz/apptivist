@@ -33,8 +33,7 @@
   {% for tag, tagged_meetups in meetup_dict.items() %}
     <h4>{{ tag.tag_name }}</h4>
     {% for event in tagged_meetups %}
-            <ul class='{{ tag.tag_name }}'>
-            <li>
+            <ul class='meetup-{{ tag.tag_name }}'> 
               <a href="{{ event['event_url'] }}">
                 {{ event['group']['name'].lstrip('0123456789') }}
               </a>
