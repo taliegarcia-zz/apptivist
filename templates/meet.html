@@ -5,33 +5,10 @@
 
   <h3>You just read: {{ article.title }}</h3>
 
-  <div class='meetup-live-events'>
-  <p>Based on your location and interest, you may like these meetups:</p>
-
-      <h3>Meetup Results:</h3>
-      	{# TODO. Make table with group name, event, date, time, etc. #}
-
-        {% for tagged_meetups in meetup_events %}
-          <ul class='actionlinks'>
-
-          {% for event in tagged_meetups %}
-          	<li>
-          		<a href="{{ event['event_url'] }}">
-          			{{ event['group']['name'].lstrip('0123456789') }}
-          		</a>
-          	</li>
-
-          {% endfor %}
-          </ul>
-        {% endfor %}
-  </div>
-
-  <div class='experiment'> 
-  <font color='green'>
-  <h3>Meetup Dictionary Experiment:</h3>
+  <div class='meetup-live-events'> 
 
   {% for tag, tagged_meetups in meetup_dict.items() %}
-    <h4>{{ tag.tag_name }}</h4>
+    <h4>Upcoming events related to: {{ tag.tag_name }}</h4>
     {% for event in tagged_meetups %}
             <ul class='meetuplinks'> 
               <a href="{{ event['event_url'] }}" data-tagId="{{ tag.tag_id }}" data-linkType='meetup'>
@@ -42,7 +19,6 @@
     {% endfor %}
 
   {% endfor %}
-  </font>
   </div>
 	
   <div>

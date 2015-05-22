@@ -190,14 +190,14 @@ def add_article():
 ###############################################################################
     ### Display Article Page ###
 
-@app.route("/article/<int:article_id>", methods=['GET'])
-def article_detail(article_id):
+@app.route("/article/<title>", methods=['GET'])
+def article_page(title):
     """Show individual article page.
 
     If a user is logged in, let them view possible actions.
     """
 
-    article = Article.query.get(article_id)
+    article = Article.query.filter_by(title=title).first()
 
     for tag in article.tag_list:
         print "()()()() The type of thing is: ", type(tag)
@@ -214,11 +214,12 @@ def article_detail(article_id):
                            article=article,
                         )
 
+
 ###############################################################################
     ### API Results Pages ###
 
-@app.route("/meet/<int:article_id>", methods=['GET'])
-def display_meetups(article_id):
+@app.route("/meet/<title>", methods=['GET'])
+def display_meetups(title):
     """This will display meetup info based on 
     tags associated with this article.
     Trying two different ways right now:
@@ -226,7 +227,7 @@ def display_meetups(article_id):
     2) meetup_dict_by_tag keeps the tag object with the generated meetup info,
     this keeps things organized and separate on the results page."""
 
-    article = Article.query.get(article_id)
+    article = Article.query.filter_by(title=title).first()
 
     user = User.query.get(session['user_id'])
 
@@ -241,11 +242,11 @@ def display_meetups(article_id):
 
     return render_template("meet.html", article=article, meetup_events=meetup_events, meetup_dict=meetup_dict_by_tag)
 
-@app.route("/give/<int:article_id>", methods=['GET'])
-def display_giving_projs(article_id):
+@app.route("/give/<title>", methods=['GET'])
+def display_giving_projs(title):
     """This will display list of Global Giving Projects"""
 
-    article = Article.query.get(article_id)
+    article = Article.query.filter_by(title=title).first()
 
     user = User.query.get(session['user_id'])
 
