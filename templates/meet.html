@@ -33,8 +33,8 @@
   {% for tag, tagged_meetups in meetup_dict.items() %}
     <h4>{{ tag.tag_name }}</h4>
     {% for event in tagged_meetups %}
-            <ul class='meetup-{{ tag.tag_name }}'> 
-              <a href="{{ event['event_url'] }}">
+            <ul class='meetuplinks'> 
+              <a href="{{ event['event_url'] }}" data-tagId="{{ tag.tag_id }}" data-linkType='meetup'>
                 {{ event['group']['name'].lstrip('0123456789') }}
               </a>
             </li>
@@ -53,6 +53,15 @@
         {% endfor %}
         </ul>
   </div>
+
+  <script>
+    var articleId = {{ article.article_id }}
+    
+    $('.meetuplinks a').click(function(event) { 
+                                  event.preventDefault();
+                                  return console.log(this.href, articleId); 
+                                });
+  </script>
 
 
 {% endblock %}

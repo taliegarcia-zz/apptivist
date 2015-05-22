@@ -14,11 +14,11 @@ article_tags = db.Table('articletags',
     db.Column("tag_id", db.Integer, db.ForeignKey('tags.tag_id')))
 
 # Association between two similar tag keywords
-# sim_tags = db.Table('simtags',
-#     # db.Column("simtag_id", db.Integer, autoincrement=True, primary_key=True),
-#     db.Column('primary_tag_id', db.Integer, db.ForeignKey('tags.tag_id')),
-#     db.Column('secondary_tag_id', db.Integer, db.ForeignKey('tags.tag_id'))
-# )
+sim_tags = db.Table('simtags',
+    # db.Column("simtag_id", db.Integer, autoincrement=True, primary_key=True),
+    db.Column('primary_tag_id', db.Integer, db.ForeignKey('tags.tag_id')),
+    db.Column('secondary_tag_id', db.Integer, db.ForeignKey('tags.tag_id'))
+)
 
 ##############################################################################
     ### Front End Models ###
