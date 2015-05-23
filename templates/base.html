@@ -54,10 +54,20 @@
             // Need to figure out how to send the data to the server
             // using post?
             $.post("/action",
-                actionObj, 
-                success: function() {
-                    alert('wow');
-                });
+                    actionObj, // referencing the variable defined above 
+                    success: function() {
+                        alert('wow');
+                    });
+
+            // or combine with variable...and function...
+             var actionObj = $('.actionLinks a').click( function(event) { 
+                                                        event.preventDefault;
+                                                        $.post("/action",
+                                                            this.dataset, 
+                                                            success: function() {
+                                                                alert('wow');
+                                                            });
+                                                    });
 
 
             // the following is code examples I was looking at...
