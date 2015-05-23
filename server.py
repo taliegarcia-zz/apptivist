@@ -236,6 +236,7 @@ def display_meetups(title):
 
     return render_template("meet.html", article=article, meetup_dict=meetup_dict_by_tag)
 
+
 @app.route("/give/<title>", methods=['GET'])
 def display_giving_projs(title):
     """This will display list of Global Giving Projects"""
@@ -269,7 +270,14 @@ def lookup_congress(zipcode):
 ###############################################################################
     ### Tracking Routes - Tracking Usage Behaviour on the site ###
 
-# @app.route('/action/')
+
+# @app.route('/action/<action_object>', methods=['POST'])
+# def add_action_to_db(action_object):
+    
+    
+#     db.session.add(new_action)
+#     db.session.commit()
+#     return "Added action to db" 
 
 
 ###############################################################################

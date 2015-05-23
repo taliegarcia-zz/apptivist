@@ -70,7 +70,7 @@ class Tag(db.Model):
 ##############################################################################
     ### Usage Tracking ###
 
-class Usage(db.Model):
+class Action(db.Model):
     """I want a table that tracks usage on the site.
     This will keep track of usage/actions associated with users, articles,
     and 'action links': meetup, global giving, and congress.
