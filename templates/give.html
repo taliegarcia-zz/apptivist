@@ -16,7 +16,7 @@
         <ul class="actionLinks">
         
         	<li>
-        		<a href="{{ project['projectLink'] }}" data-linkType='give' data-tagId="{{ tag.tag_id }}">
+        		<a href="{{ project['projectLink'] }}" data-linkType='give' data-tagId="{{ tag.tag_id }}" data-articleId="{{ article.article_id }}">
         			{{ project['title'] }}
         		</a>
             <p>{{ project['summary'] }}</p>
@@ -36,11 +36,11 @@
     </div>
 
     <script>
-    var articleId = {{ article.article_id }}
     
     $('.actionLinks a').click(function(event) { 
                                   event.preventDefault();
-                                  return console.log(this.href, this.dataset, articleId); 
+                                  var myObj = this.dataset
+                                  return console.log(this.href, myObj); 
                                 });
     </script>
 

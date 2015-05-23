@@ -11,7 +11,7 @@
     <h4>Upcoming events related to: {{ tag.tag_name }}</h4>
     {% for event in tagged_meetups %}
             <ul class='actionLinks'> 
-              <a href="{{ event['event_url'] }}" data-linkType='meetup' data-tagId="{{ tag.tag_id }}">
+              <a href="{{ event['event_url'] }}" data-linkType='meetup' data-tagId="{{ tag.tag_id }}" data-articleId="{{ article.article_id }}">
                 {{ event['group']['name'].lstrip('0123456789') }}
               </a>
             </li>
@@ -31,13 +31,12 @@
   </div>
 
   <script>
-    var articleId = {{ article.article_id }}
     
     $('.actionLinks a').click(function(event) { 
                                   event.preventDefault();
-                                  return console.log(this.href, this.dataset, articleId); 
+                                  var myObj = this.dataset
+                                  return console.log(this.href, myObj.articleid, myObj.tagid, myObj.linktype); 
                                 });
   </script>
-
 
 {% endblock %}
