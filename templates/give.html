@@ -11,17 +11,19 @@
       
       {% for tag, tagged_projs in giving_projs.items() %}
         <h4>Charities related to: {{ tag.tag_name }}</h4>
+        
         {% for project in tagged_projs %}
         <ul class="actionLinks">
+        
         	<li>
         		<a href="{{ project['projectLink'] }}" data-linkType='give' data-tagId="{{ tag.tag_id }}">
         			{{ project['title'] }}
         		</a>
-            <p>{{ project['summary'] }}
+            <p>{{ project['summary'] }}</p>
         	</li>
-
-        {% endfor %}
         </ul>
+        {% endfor %}
+        
       
       {% endfor %}
 

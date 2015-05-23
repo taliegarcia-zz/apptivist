@@ -222,9 +222,7 @@ def display_article(title):
 def display_meetups(title):
     """This will display meetup info based on 
     tags associated with this article.
-    Trying two different ways right now:
-    1) meetup_events is a nice list of events, queries for all associated tags,
-    2) meetup_dict_by_tag keeps the tag object with the generated meetup info,
+    meetup_dict_by_tag keeps the tag object with the generated meetup info,
     this keeps things organized and separate on the results page."""
 
     article = Article.query.filter_by(title=title).first()
@@ -252,10 +250,9 @@ def display_giving_projs(title):
             giving_dict_by_tag[tag] = list_giving_projs(tag.gg_code)
 
            
-    if not giving_projs:
-        giving_projs = "Nope."
+    if not giving_dict_by_tag:
+        giving_dict_by_tag["Error"] = "Sorry no results found."
 
-    # TODO. would it be faster to put the giving_projs in a dictionary? Also would give more random/intermixed output.
     return render_template("give.html", article=article, giving_projs=giving_dict_by_tag)
 
 
