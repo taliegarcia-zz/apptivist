@@ -46,6 +46,8 @@ class Article(db.Model):
     date = db.Column(db.Integer, nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
 
+    # TODO. consider renaming this to: posted_user, 
+    # to disambiguate between user-that-posted-article and user-that-read/clicked-article 
     user = db.relationship("User", backref=db.backref("articles", order_by=article_id))
 
     tag_list = db.relationship("Tag", secondary=article_tags)
@@ -65,14 +67,32 @@ class Tag(db.Model):
 
     # sim_tag_list = db.relationship("Tag", secondary=sim_tags)
 
-    
+##############################################################################
+    ### Usage Tracking ###
+
+class Usage(db.Model):
+    """I want a table that tracks usage on the site.
+    This will keep track of usage/actions associated with users, articles,
+    and 'action links': meetup, global giving, and congress.
+    Not sure if this will be a data model or just an association table"""
+
+    __tablename__ = "actions" 
+
+    action_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    tag_id = db.Column(db.Integer, db.ForeignKey('tags.tag_id'))
+    article_id = db.Column(db.Integer, db.ForeignKey('articles.article_id'))
+    action_user = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+    action_type = db.Column(db.String(64), nullable=False)
+
+
 ##############################################################################
     ### Models relying on API's ###
 
 # FIXME: I think these are redundant...why do I need to keep this information at all really?
 # it was neat for figuing things out and finding the terms and calling the apis
 # and above too...why would I even need a backreference to the meetup and giving tables?
-
+# The global giving table is handy as a referene...doesnt need to be connected at all really, 
+# could just be a static csv I look at sometimes!
 
 # TODO: Change this to be Meetup topics, not Meetup category_ids
 class Meetup(db.Model):

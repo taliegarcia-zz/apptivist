@@ -2,9 +2,12 @@
 <html>
     <head>
      
-      <title>Apptivist</title>
-      <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-      <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+        <title>Apptivist</title>
+        <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+        <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
+        <script src="/static/jscripts.js"></script>
+
     </head>
 
     <body>
@@ -38,6 +41,17 @@
                 Put your body here.
             {% endblock %}
 
-</body>
+        <script>
+
+            $('.actionLinks a').click(function(event) { 
+                                      event.preventDefault();
+                                      var actionObj = this.dataset
+                                      return console.log(actionObj); 
+                                    });
+            
+            
+        </script>
+
+    </body>
 
 </html>
