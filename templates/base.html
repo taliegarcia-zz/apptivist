@@ -52,40 +52,40 @@
                                     });
 
             // will this work out here? or will it try to run before actionObj is defined
-            console.log(actionObj);
+            // console.log(actionObj);
 
-            $.post( "/action",
-                actionObj, // could call above .click function here and that would return actionObj here
-                function (result) { console.log(result) }
-            );
+            // $.post( "/action",
+            //     actionObj, // could call above .click function here and that would return actionObj here
+            //     function (result) { console.log(result) }
+            // );
 
-            $.post( "/new-student",
-                { name: 'Jessica', age: 27 },
-                function (result) { alert(result) }
-              );
+            // $('.actionLinks a').post("/action",
+            //     { name: 'Jessica', age: 27 },
+            //     function (result) { alert(result) }
+            //   );
 
 
-            actionObj = {
-                "linktype": 'meetup',
-                "articlId": '2',
-                "tagId": '5'
-            }
+            // actionObj = {
+            //     "linktype": 'meetup',
+            //     "articlId": '2',
+            //     "tagId": '5'
+            // }
 
-            @app.route('/new-student', methods=['POST'])
-            def add_student():
-                name = request.form.get("name")
-                age = request.form.get("age")
-                # add to database here
-                return "Added %s (age=%s)" % (name, age)
+            // @app.route('/new-student', methods=['POST'])
+            // def add_student():
+            //     name = request.form.get("name")
+            //     age = request.form.get("age")
+            //     # add to database here
+            //     return "Added %s (age=%s)" % (name, age)
 
-            @app.route('/action/<action_object>', methods=['POST'])
-            def add_action_to_db(action_object):
-                action_obj = jsonify(action_object)
+            // @app.route('/action/<action_object>', methods=['POST'])
+            // def add_action_to_db(action_object):
+            //     action_obj = jsonify(action_object)
                
-                action_obj = Action(
-                    ===
-                    )
-                return "Added %s (age=%s)" % (name, age)
+            //     action_obj = Action(
+            //         ===
+            //         )
+            //     return "Added %s (age=%s)" % (name, age)
 
 
         </script>
