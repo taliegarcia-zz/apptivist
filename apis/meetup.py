@@ -60,9 +60,9 @@ def list_events(zipcode, topic):
     if r.status_code == 200:
         events_list = json_results['results']
 
-        for event in events_list:
-            print event['group']['name'].lstrip('0123456789')
-            print event['event_url']
+        # for event in events_list:
+        #     print event['group']['name'].lstrip('0123456789')
+        #     print event['event_url']
 
     else:
         print "No events found."

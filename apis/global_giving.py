@@ -35,8 +35,8 @@ def list_giving_projs(gg_code):
     dictionary = json.loads(r.text)
     list_of_project_dictionaries = dictionary['projects']['project']
 
-    for project in list_of_project_dictionaries:
-        print project
+    # for project in list_of_project_dictionaries:
+    #     print project
 
     return list_of_project_dictionaries
 
