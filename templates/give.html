@@ -8,13 +8,13 @@
   <p>These projects could use your help:</p>
 
       <h3>Global Giving Results:</h3>
-      {# TODO. Consider best way to display this info...table? #}
       
-      {% for tagged_projs in giving_projs %}
-      
+      {% for tag, tagged_projs in giving_projs.items() %}
+        <h4>Charities related to: {{ tag.tag_name }}</h4>
         {% for project in tagged_projs %}
+        <ul class="actionLinks">
         	<li>
-        		<a href="{{ project['projectLink'] }}">
+        		<a href="{{ project['projectLink'] }}" data-linkType='give' data-tagId="{{ tag.tag_id }}">
         			{{ project['title'] }}
         		</a>
             <p>{{ project['summary'] }}
@@ -25,14 +25,23 @@
       
       {% endfor %}
 
-
 	  <div>Tags: 
             <ul>
             {% for tag in article.tag_list %}
               <li>{{ tag.tag_name }}</li>
             {% endfor %}
             </ul>
-      </div>
+    </div>
+
+    <script>
+    var articleId = {{ article.article_id }}
+    
+    $('.actionLinks a').click(function(event) { 
+                                  event.preventDefault();
+                                  return console.log(this.href, this.dataset, articleId); 
+                                });
+    </script>
+
 
 
 {% endblock %}

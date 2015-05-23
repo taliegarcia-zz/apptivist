@@ -191,7 +191,7 @@ def add_article():
     ### Display Article Page ###
 
 @app.route("/article/<title>", methods=['GET'])
-def article_page(title):
+def display_article(title):
     """Show individual article page.
 
     If a user is logged in, let them view possible actions.
@@ -232,15 +232,11 @@ def display_meetups(title):
     user = User.query.get(session['user_id'])
 
     if user:
-        meetup_events = []
-        for tag in article.tag_list:
-            meetup_events.append(list_events(user.zipcode, tag.meetup_topic))
-
         meetup_dict_by_tag = {}
         for tag in article.tag_list:
             meetup_dict_by_tag[tag] = list_events(user.zipcode, tag.meetup_topic)
 
-    return render_template("meet.html", article=article, meetup_events=meetup_events, meetup_dict=meetup_dict_by_tag)
+    return render_template("meet.html", article=article, meetup_dict=meetup_dict_by_tag)
 
 @app.route("/give/<title>", methods=['GET'])
 def display_giving_projs(title):
@@ -251,15 +247,16 @@ def display_giving_projs(title):
     user = User.query.get(session['user_id'])
 
     if user:
-        giving_projs = []
+        giving_dict_by_tag = {}
         for tag in article.tag_list:
-            giving_projs.append(list_giving_projs(tag.gg_code)) 
+            giving_dict_by_tag[tag] = list_giving_projs(tag.gg_code)
+
            
     if not giving_projs:
         giving_projs = "Nope."
 
     # TODO. would it be faster to put the giving_projs in a dictionary? Also would give more random/intermixed output.
-    return render_template("give.html", article=article, giving_projs=giving_projs)
+    return render_template("give.html", article=article, giving_projs=giving_dict_by_tag)
 
 
 @app.route("/congress/<zipcode>", methods=["GET"])
