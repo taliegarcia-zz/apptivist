@@ -271,9 +271,12 @@ def lookup_congress(zipcode):
     ### Tracking Routes - Tracking Usage Behaviour on the site ###
 
 
-# @app.route('/action/<action_object>', methods=['POST'])
-# def add_action_to_db(action_object):
-    
+@app.route('/action', methods=['POST'])
+def add_action_to_db():
+    name = request.form.get('name')
+    age = request.form.get('age')
+    print name, age
+    return "Added %s and %s" % (name, age)
     
 #     db.session.add(new_action)
 #     db.session.commit()

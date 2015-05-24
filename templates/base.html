@@ -44,124 +44,15 @@
 
         <script>
 
-            // This give me the data I want when a user clicks the form
-            var actionObj = $('.actionLinks a').click( function(event) { 
-                                      event.preventDefault();
-                                      console.log(this.dataset)
-                                      return this.dataset; 
-                                    });
-
-            // Need to figure out how to send the data to the server
-            // using post?
-            $.post("/action",
-                    actionObj, // referencing the variable defined above 
-                    success: function() {
-                        alert('wow');
-                    });
-
-            // or combine with variable...and function...
-             var actionObj = $('.actionLinks a').click( function(event) { 
-                                                        event.preventDefault;
-                                                        $.post("/action",
-                                                            this.dataset, 
-                                                            success: function() {
-                                                                alert('wow');
-                                                            });
-                                                    });
-
-
-            // the following is code examples I was looking at...
-
-            // function get_action() { 
-            //     $('.actionLinks a').click( function(event) { 
-            //                           event.preventDefault();
-            //                           console.log(this.dataset);
-            //                           return this.dataset; 
-            //                         }
-            //                         );
-            // };
-
-            // function acceptChallenge(evt) {
-            //         var data = $(evt.currentTarget).data();
-            //         console.log(data.donation_item)
-            //         var data_obj = { original_items: $("#orig").text(),
-            //                         alternative_items: $(".alt").text(),
-            //                         qty: $("#qty").val(),
-            //                         donation_item: data.donation_item};
-            //         var form = document.createElement('form');
-            //         $(form).attr("method", "post").attr("action", "/profile");
-            //         _.each(data_obj, function(value, key) {
-            //             $("<input>").attr({
-            //                 name: key,
-            //                 value: value
-            //             }).appendTo(form);
-            //         });
-            //         $(form).submit();
-            //     }
-
-        //     $("#submit_bttn").on("click", function (evt) {
-        //                                     evt.preventDefault();
-        //                                     var translated_text = $("#text_form_ta").val();
-
-        //         $.ajax({
-        //         url: "/save_text",
-        //         data: $('form').serialize() + "&p_id=" + paragraphId,
-        //         type: "POST",
-        //         success: function(response) {
-        //             $("#translate_textarea").hide();
-        //             placeParagraph(response.translated_text, response.paragraph_id);
-        //         },
-        //         error: function(error) {
-        //             console.log(error);
-        //         }
-        //     });
-        // });
-
-
-
-            // $.ajax({
-            //     url: "/action",
-            //     data: actionObj
-            //     type: "POST",
-
-
-
-            // // will this work out here? or will it try to run before actionObj is defined
-            // // console.log(actionObj);
-
-            // $('.actionLinks a').post( "/action",
-            //     actionObj, // could call above .click function here and that would return actionObj here
-            //     function (result) { console.log(result) }
-            // );
-
-            // $('.actionLinks a').post("/action",
-            //     { name: 'Jessica', age: 27 },
-            //     function (result) { alert(result) }
-            //   );
-
-
-            // actionObj = {
-            //     "linktype": 'meetup',
-            //     "articlId": '2',
-            //     "tagId": '5'
-            // }
-
-            // @app.route('/new-student', methods=['POST'])
-            // def add_student():
-            //     name = request.form.get("name")
-            //     age = request.form.get("age")
-            //     # add to database here
-            //     return "Added %s (age=%s)" % (name, age)
-
-            // @app.route('/action/<action_object>', methods=['POST'])
-            // def add_action_to_db(action_object):
-            //     action_obj = jsonify(action_object)
-               
-            //     action_obj = Action(
-            //         ===
-            //         )
-            //     return "Added %s (age=%s)" % (name, age)
-
+        $('.actionLinks a').click( function(event) { 
+                          event.preventDefault();
+                          var actionObj = this.dataset;
+                          console.log(actionObj); 
+                            $.post("/action", 
+                                  { name: 'Jessica', age: 27 }, 
+                                  function (result) { alert(result) }
+                                  );
+                                  });
 
         </script>
 
