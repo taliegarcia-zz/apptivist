@@ -273,14 +273,13 @@ def lookup_congress(zipcode):
 
 @app.route('/action', methods=['POST'])
 def add_action_to_db():
-    name = request.form.get('name')
-    age = request.form.get('age')
-    print name, age
-    return "Added %s and %s" % (name, age)
-    
-#     db.session.add(new_action)
-#     db.session.commit()
-#     return "Added action to db" 
+    tag_id = request.form.get('tag_id')
+    article_id = request.form.get('article_id')
+    link_type = request.form.get('link_type')
+    print tag_id, article_id, link_type
+
+    return "Added %s and %s and %s" % (tag_id, article_id, link_type)    
+
 
 
 ###############################################################################
