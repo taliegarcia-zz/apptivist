@@ -75,6 +75,6 @@ def list_events(zipcode, topic):
 
 if __name__ == "__main__":
     zipcode = '94043'
-    search_term = 'feminism'
+    search_term = 'politics'
     upcoming_events = list_events(zipcode, search_term)
 

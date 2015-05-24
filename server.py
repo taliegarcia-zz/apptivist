@@ -5,7 +5,7 @@ from jinja2 import StrictUndefined
 from flask import Flask, render_template, redirect, request, flash, session
 from flask_debugtoolbar import DebugToolbarExtension
 
-from model import User, Article, Tag, Meetup, GlobalGiving, connect_to_db, db
+from model import User, Article, Tag, Meetup, GlobalGiving, Action, connect_to_db, db
 
 from apis.suncongress import gen_rep_list
 from apis.meetup import list_events
@@ -199,10 +199,9 @@ def display_article(title):
 
     article = Article.query.filter_by(title=title).first()
 
-    for tag in article.tag_list:
-        print "()()()() The type of thing is: ", type(tag)
-        print "()()()() This is an associated tag: ", tag.tag_name
-        
+    # for tag in article.tag_list:
+    #     print "()()()() The type of thing is: ", type(tag)
+    #     print "()()()() This is an associated tag: ", tag.tag_name
 
     user_id = session.get("user_id")
 
@@ -275,10 +274,18 @@ def lookup_congress(zipcode):
 def add_action_to_db():
     tag_id = request.form.get('tag_id')
     article_id = request.form.get('article_id')
-    link_type = request.form.get('link_type')
-    print tag_id, article_id, link_type
+    action_type = request.form.get('action_type')
+    print tag_id, article_id, action_type
 
-    return "Added %s and %s and %s" % (tag_id, article_id, link_type)    
+    new_action = Action(tag_id=int(tag_id),
+                        article_id=int(article_id),
+                        action_user=session['user_id'],
+                        action_type=action_type)
+
+    db.session.add(new_action)
+    db.session.commit()
+
+    return "Successfully added a new action to db."   
 
 
 
