@@ -44,19 +44,18 @@
 
         <script>
 
-
-        $('.actionLinks a').click( function(event) { 
-                          event.preventDefault();
-                            var actionObj = this.dataset;
-                            console.log(actionObj); 
-                            $.post("/action", 
-                                 { tag_id: actionObj.tagid,
-                                    article_id: actionObj.articleid,
-                                    link_type: actionObj.linktype
-                                  }, 
-                                  function (result) { alert(result) }
-                                  );
-                                  });
+            $('.actionLinks a').click( function(event) { 
+                  event.preventDefault();
+                    var actionObj = this.dataset;
+                    console.log(actionObj); 
+                    $.post("/action", 
+                         { tag_id: actionObj.tagid,
+                            article_id: actionObj.articleid,
+                            link_type: actionObj.linktype
+                          }, 
+                          function (result) { alert(result) }
+                          );
+                          });
 
         </script>
 
