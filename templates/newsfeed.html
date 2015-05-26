@@ -8,7 +8,10 @@
     
     <li>
     <a href="/article/{{ article.title }}">{{ article.title }}</a>
-     Posted by user# {{ article.user_id }} named, <a href="/apptivist/{{ article.user_id }}">{{ article.user.name }}</a>
+     Posted by <a href="/apptivist/{{ article.user_id }}">{{ article.user.name }}</a>
+     	<ul class='tags'>
+     	<li> Tags: [ {% for tag in article.tag_list %} * {{ tag.tag_name }} * {% endfor %} ]</li>
+     	</ul>
     </li>
 
 {% endfor %}
