@@ -4,12 +4,17 @@
      
         <title>Apptivist</title>
         <link type="text/css" rel="stylesheet" href="/static/stylesheet.css" />
+        
+        {# bxslider style sheet #}
+        <link type="text/css" rel="stylesheet" href="/static/jquery.bxslider.css" />
 
+        {# jQuery library #}
         <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
         <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
         
-        {# this script-src address is not working #}
-        <script src="/static/jscripts.js"></script>
+        {# my js files #}
+        <script src="/static/js/jscripts.js"></script>
+        <script src="/static/js/jquery.bxslider.min.js"></script>
 
     </head>
 
@@ -46,18 +51,6 @@
 
         <script>
 
-            $('.actionLinks a').click( function(event) { 
-                  event.preventDefault();
-                    var actionObj = this.dataset;
-                    console.log(actionObj); 
-                    $.post("/action", 
-                         { tag_id: actionObj.tagid,
-                            article_id: actionObj.articleid,
-                            action_type: actionObj.linktype
-                          }, 
-                          function (result) { alert(result) }
-                          );
-                          });
 
         </script>
 

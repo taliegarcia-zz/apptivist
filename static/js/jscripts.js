@@ -18,4 +18,7 @@ $('.actionLinks a').click( function(event) {
                           });
 
 
-
+$(document).ready(function(){
+  $('.bxslider').bxSlider();
+});
+console.log('bxslider ready.')
