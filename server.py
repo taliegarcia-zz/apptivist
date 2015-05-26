@@ -36,6 +36,7 @@ def show_newsfeed():
 
 ###############################################################################
     ### User Registration ###
+
 @app.route('/registration', methods=['GET'])
 def register_form():
     """Show form for user signup."""
@@ -207,6 +208,8 @@ def display_article(title):
 
     if user_id:
         user = User.query.get(user_id)
+    else:
+        user = None
 
     return render_template("article.html",
                            user=user,
