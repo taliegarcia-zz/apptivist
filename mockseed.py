@@ -55,7 +55,8 @@ def load_mock_articles():
                     url=url,
                     img_src=img_src,
                     date=date,
-                    user_id=user_id)
+                    user_id=user_id,
+                    tag_list=[])
 
         db.session.add(article)
 
@@ -93,7 +94,8 @@ def load_tags():
 
 
 def load_mock_article_tags():
-    """This loads mocked articletag associations"""
+    """This loads mocked articletag associations.
+    Not working. """
 
     print "Mock ArticleTags Loading..."
 
@@ -104,11 +106,18 @@ def load_mock_article_tags():
         article_id = int(article_id_str)
         tag_id = int(tag_id_str)
 
-        if Article.query.get(article_id):
-            article = Article.query.get(article_id)
-            tag = Tag.query.get(tag_id)
+        article = Article.query.get(article_id)
+        tag = Tag.query.get(tag_id)
+
+        if article.tag_list:
+            if tag not in article.tag_list:                        
+                article.tag_list.append(tag)
+                db.session.commit()
+        else:
+            article.tag_list = []
             article.tag_list.append(tag)
-            db.session.commit()    
+            db.session.commit()
+
 
     print "Mock ArticleTags table loaded."    
 
@@ -126,6 +135,7 @@ def load_mock_actions():
 
         action_id = int(action_id_str)
         tag_id = int(tag_id_str)
+        article_id = int(article_id_str)
         action_user = int(action_user_str)
 
         action = Action(
