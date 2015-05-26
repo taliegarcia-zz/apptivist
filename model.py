@@ -73,7 +73,7 @@ class Tag(db.Model):
 class Action(db.Model):
     """I want a table that tracks usage on the site.
     This will keep track of usage/actions associated with users, articles,
-    and 'action links': meetup, global giving, and congress.
+    and 'action links': meetup, give, and congress.
     Not sure if this will be a data model or just an association table"""
 
     __tablename__ = "actions" 

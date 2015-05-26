@@ -1,6 +1,5 @@
 
-// I don't know how to link this to my html pages yet!
-// FIXME. how do I link to this on the base.html
+// the link to js is working now!
 
 console.log("linked jscript working!");
 
@@ -18,9 +17,5 @@ $('.actionLinks a').click( function(event) {
                           );
                           });
 
-// $('.actionLinks a').click(function(event) { 
-//                           event.preventDefault();
-//                           var myObj = this.dataset;
-//                           return console.log(myObj); 
-//                         });
+
 
