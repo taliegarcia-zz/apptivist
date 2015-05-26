@@ -9,15 +9,19 @@ import datetime
 
 
 def load_mock_users():
-    """Load users from users.csv into database."""
+    """Load users from users-50-topcities.csv into database.
+        Working. """
     
     print "Loading Mock Users..."
 
     for i, row in enumerate(open("seed_data/mockaroo/users-50-topcities.csv")):
         row = row.rstrip().split(",")
-        user_id, name, email, password, zipcode = row
+        user_id_str, name, email, password, zipcode = row
 
-        user = User(name=name,
+        user_id = int(user_id_str)
+
+        user = User(user_id=user_id,
+                    name=name,
                     email=email, 
                     password=password,  
                     zipcode=zipcode)
@@ -32,19 +36,21 @@ def load_mock_users():
 ### Article Loads ###
 
 def load_mock_articles():
-    """This loads the few articles from short_article_list.csv
-    These articles already have associated tags so they will be 
-    good for experimenting with."""
+    """This loads the mockaroo articles.
+    Working."""
 
     print "Mockaroo Articles Loading..."
 
-    for i, row in enumerate(open("seed_data/mockaroo/articles100.csv")):
+    for i, row in enumerate(open("seed_data/mockaroo/articles-100.csv")):
         row = row.rstrip().split(",")
-        article_id, title, url, img_src, date_str, user_id = row
+        article_id_str, title, url, img_src, date_str, user_id_str = row
 
-        date = datetime.datetime.strptime(date_str, "%Y-%b-%d")
+        article_id = int(article_id_str)
+        user_id = int(user_id_str)
 
-        article = Article(
+        date = datetime.datetime.strptime(date_str, '%Y-%m-%d %H:%M:%S')
+
+        article = Article(article_id=article_id,
                     title=title, 
                     url=url,
                     img_src=img_src,
@@ -63,15 +69,18 @@ def load_mock_articles():
 
 def load_tags():
     """Loads the few articletag connections I made already. 
-    Good for experimenting!"""
+    Good for experimenting!
+    Working."""
 
     print "Tags Loading..."
 
     for i, row in enumerate(open("seed_data/tagnames.csv")):
         row = row.rstrip().split(",")
-        tag_id, tag_name, meetup_topic, gg_code = row
+        tag_id_str, tag_name, meetup_topic, gg_code = row
 
-        tag = Tag(
+        tag_id = int(tag_id_str)
+
+        tag = Tag(tag_id=tag_id,
                 tag_name=tag_name,
                 meetup_topic=meetup_topic,
                 gg_code=gg_code
@@ -90,14 +99,16 @@ def load_mock_article_tags():
 
     for i, row in enumerate(open("seed_data/mockaroo/articletags.csv")):
         row = row.rstrip().split(",")
-        article_id, tag_id = row
+        article_id_str, tag_id_str = row
+
+        article_id = int(article_id_str)
+        tag_id = int(tag_id_str)
 
         if Article.query.get(article_id):
             article = Article.query.get(article_id)
             tag = Tag.query.get(tag_id)
             article.tag_list.append(tag)
-
-        db.session.commit()    
+            db.session.commit()    
 
     print "Mock ArticleTags table loaded."    
 
@@ -111,7 +122,11 @@ def load_mock_actions():
 
     for i, row in enumerate(open("seed_data/mockaroo/actionitems.csv")):
         row = row.rstrip().split(",")
-        action_id,tag_id,article_id,action_user,action_type = row
+        action_id_str, tag_id_str, article_id_str, action_user_str, action_type = row
+
+        action_id = int(action_id_str)
+        tag_id = int(tag_id_str)
+        action_user = int(action_user_str)
 
         action = Action(
                     action_id=action_id,
