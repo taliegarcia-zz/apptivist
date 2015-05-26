@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
+<div class="kitten-news">
 <table>
 	<thead>
 	    <th><th>Apptivist</th></th>
@@ -23,7 +24,33 @@
 	    </tr>
 	</tbody>
 	</table>
+</div>
 
+<br>
+
+<br>
+
+<div class="newstable">
+
+<table>
+<thead>
+	<th>Apptivist Newsfeed</th>
+</thead>
+
+{% for article in articles %}
+<TR>
+   <TD class="c1"><IMG src="http://www.placekitten.com/220/220" /></TD>
+   <TD class="c2">{{ article.title }}
+   <br>
+   Tags: [ {% for tag in article.tag_list %} * {{ tag.tag_name }} * {% endfor %} ]
+   </TD>
+   <TD class="c3">{{ article.user.name }}</TD>
+</TR>
+{% endfor %}
+</table>
+</div>
+
+<div class="newslist">
 <ul>
 {% for article in articles %}
     
@@ -37,8 +64,9 @@
 
 {% endfor %}
 </ul>
-	
-	</body>
+</div>
+
+</body>
 </html>
 
 {% endblock %}
