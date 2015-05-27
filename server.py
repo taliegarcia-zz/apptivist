@@ -126,6 +126,10 @@ def get_user_by_id(id):
 ###############################################################################
     ### Post New Article Pages ###
 
+@app.route("/postarticle", methods=["GET", "POST"])
+def modal_post():
+    return render_template("postarticlemodal.html")
+
 # FIXME. new articles should be posted by "POST" method, not "GET", since it is communicating with my db
 @app.route("/new_post", methods=["GET", "POST"])
 def post_an_article():

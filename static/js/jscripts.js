@@ -22,7 +22,7 @@ $(document).ready(function(){
   $('.slider1').bxSlider({
     slideWidth: 200,
     minSlides: 3,
-    maxSlides: 7,
+    maxSlides: 5,
     slideMargin: 10
   });
 });
@@ -31,3 +31,4 @@ $(document).ready(function(){
 // Center mode
 // "Slider Syncing" = the centered slide takes up the top bar, featured
 // http://kenwheeler.github.io/slick/
+
