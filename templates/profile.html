@@ -5,39 +5,21 @@
 
   <p>Zipcode: {{ user.zipcode }}</p>
 
+  <div class="myInfo">
   {% if user.user_id == session["user_id"] %}
     <form action="/congress/{{ user.zipcode }}" method="GET">
       <div>
           <input type="submit" value="Where's my rep??">
       </div>
     </form>
+    <div class="myActions">
+    {% if user.actions %}
+    <h3>Your actions:</h3>
+      {% for action in user.actions %}
+        <p>{{ action.action_type }}</p>
+      {% endfor %}
+    {% endif %}
+    </div>
   {% endif %}
   
-
-  {# if : this will be for "if this user has read articles, list the articles" #} 
-    <!-- Probably want to include Articles Read as header of the table below... -->
-    <h2>Articles Read:</h2>
-    
-    {# for article in user.articles #}
-      <table>
-    
-        <tr>
-    <!-- <td><a href="/articles/{# article_id #}">{# article.title #}</a></td> -->
-    <!--     
-          <td>
-          {# if action.taken #}
-            Action Taken: {# action #}
-          {# else #}
-          </td> 
-    -->
-    
-        </tr>
-
-      </table>
-    {# endfor #}
-    
-  {# endif #}
-
-
-
 {% endblock %}

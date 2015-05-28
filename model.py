@@ -37,9 +37,6 @@ class Action(db.Model):
     action_user = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     action_type = db.Column(db.String(64), nullable=False)
 
-    user = db.relationship("User", backref=db.backref("actions", order_by=action_id))
-
-
 ##############################################################################
     ### Front End Models ###
 
@@ -54,7 +51,7 @@ class User(db.Model):
     password = db.Column(db.String(30), nullable=True)
     zipcode = db.Column(db.String(20), nullable=False) # essential for lookup, joining
 
-    # actions = db.relationship("Action", backref=db.backref("users", order_by=user_id))
+    actions = db.relationship("Action", backref=db.backref("users", order_by=user_id))
 
 class Article(db.Model):
     """News article posted by user."""
