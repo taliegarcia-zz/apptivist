@@ -3,15 +3,7 @@
 
 user_id = session['user_id']
 
-def influence(user_id):
 
-	articles = Article.query.filter_by(user_id=9).all
-
-	for a in articles:
-		actions = Action.query.filter_by(article_id=a.article_id).all()
-		
-		for act in actions:
-			print a.title, act.action_type, act.action_user
 
 ######
 var data = [

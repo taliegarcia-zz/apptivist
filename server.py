@@ -317,28 +317,39 @@ def get_influences_json():
 
     user_info = UserSerializer(user).data
 
-    influences['user'] = user_info
-    print "()()()() influences['user']", influences['user']
+    influences['name'] = user_info
+    # print "()()()() influences['user']", influences['user']
 
-    influences['user']['articles'] = []
-    print "()()()() influences with user and articles", influences
+    influences['name']['children'] = []
+    # print "()()()() influences with user and articles", influences
 
     articles = Article.query.filter_by(user_id=session["user_id"]).all()
 
     for a in articles:
         a_info = ArticleSerializer(a).data
+        a_info['name'] = a_info['title']
         actions = Action.query.filter_by(article_id=a.article_id).all()
         if actions:
-            a_info['actions'] = []
+            a_info['children'] = []
             for act in a.actions:
-                a_info['actions'].append(ActionSerializer(act).data)
-                print "()()()() Article Appending action", a_info
+                act_info = ActionSerializer(act).data
+                act_info['name'] = act_info['action_type']
+                a_info['children'].append(act_info)
+                # print "()()()() Article Appending action", a_info
 
-        influences['user']['articles'].append(a_info)
-        print "()()()() Influencces Appending ArticleSerializer", influences
+        influences['name']['children'].append(a_info)
+        # print "()()()() Influencces Appending ArticleSerializer", influences
 
-    return render_template("serial.html", data=influences, myjson=jsonify(influences)) 
+    # return render_template("serial.html", data=influences, myjson=jsonify(influences)) 
+    return jsonify(influences)
 
+@app.route("/d3tree")
+def show_tree():
+    return render_template("d3tree.html")
+
+@app.route("/dford8")
+def user_tree():
+    return render_template("dford8.json")
 
 ###############################################################################
     ### Run Server ###
