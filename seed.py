@@ -3,7 +3,7 @@
 """Utility file to seed Apptivist database from third-party API's"""
 
 from model import connect_to_db, db
-from model import Meetup, Article, Tag, GlobalGiving, User, article_tags
+from model import Meetup, Article, Tag, GlobalGiving, User, Action, article_tags
 from server import app
 import datetime
 

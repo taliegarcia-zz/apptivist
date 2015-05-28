@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="main-content">
+    <!-- Your Content Here -->
+    <p>Please <a class="show-popup" href="#" data-showpopup="1" >click here</a> to see the popup 1</p>
+    <p>Try <a class="show-popup" href="#" data-showpopup="2" >clicking here</a> to see the popup 2</p>
+    <p>Now try <a class="show-popup" href="#" data-showpopup="3" >clicking here</a> to see the popup 3</p>
+</div>
+
+<div class="overlay-bg">
+</div>
+<div class="overlay-content popup1">
+    <p>Oh My! This is a popup!</p>
+    <button class="close-btn">Close</button>
+</div>
+<div class="overlay-content popup2">
+    <p>This is the content for Popup #2</p>
+    <button class="close-btn">Close</button>
+</div>
+<div class="overlay-content popup3">
+    <p>This is the content for Popup #3</p>
+    <button class="close-btn">Close</button>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+{# -- 
+<p><button id="modal_open">Post a News Article</button></p>
+
+<div id="modal_wrapper">
+<div id="modal_window">
+
+<div style="text-align: right;"><a id="modal_close" href="#">close <b>X</b></a></div>
+
+<p>Complete the form below to post a new article:</p>
+
+<form id="newPost" method="POST" action="#" accept-charset="UTF-8">
+    <div>
+        <label>Title:
+            <input type="title" name="title" required>
+        </label>
+    </div> 
+
+    <div>
+        <label>Article URL:
+            <input type="url" name="url" required>
+        </label>
+    </div> 
+    
+    <div>
+        <label>Image:
+            <input type="img_src" name="img_src">
+        </label>
+    </div>
+
+    <div>
+        <label>Date:
+            <input type="date" name="date">
+        </label>
+    </div> 
+    <br>
+    <div>
+        <label>What's it all about? Check off at least one tag that describes your article:
+        <div>        
+            <p><input type="checkbox" name="tag" value="civil">Civil Rights</p>
+            <p><input type="checkbox" name="tag" value="climate">Climate Change</p>
+            <p><input type="checkbox" name="tag" value="lgbt">LGBT</p>
+            <p><input type="checkbox" name="tag" value="politics">Politics</p>
+            <p><input type="checkbox" name="tag" value="education">Education</p>
+            <p><input type="checkbox" name="tag" value="finance">Finance</p>
+            <p><input type="checkbox" name="tag" value="technology">Technology</p>
+            <p><input type="checkbox" name="tag" value="animal">Animal Rights</p>
+        </div>
+        </label>
+    </div>
+    <br>
+
+    <div>
+        <input type="submit" id="submitbtn" name="newPostForm" value="Post Article">
+    </div>
+
+</form>
+
+</div>
+</div>
+
+-- #}
+
+{% endblock %}

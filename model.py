@@ -21,6 +21,26 @@ sim_tags = db.Table('simtags',
 )
 
 ##############################################################################
+    ### Usage Tracking ###
+
+class Action(db.Model):
+    """I want a table that tracks usage on the site.
+    This will keep track of usage/actions associated with users, articles,
+    and 'action links': meetup, give, and congress.
+    Not sure if this will be a data model or just an association table"""
+
+    __tablename__ = "actions" 
+
+    action_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    tag_id = db.Column(db.Integer, db.ForeignKey('tags.tag_id'))
+    article_id = db.Column(db.Integer, db.ForeignKey('articles.article_id'))
+    action_user = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+    action_type = db.Column(db.String(64), nullable=False)
+
+    user = db.relationship("User", backref=db.backref("actions", order_by=action_id))
+
+
+##############################################################################
     ### Front End Models ###
 
 class User(db.Model):
@@ -33,6 +53,8 @@ class User(db.Model):
     email = db.Column(db.String(100), nullable=True)
     password = db.Column(db.String(30), nullable=True)
     zipcode = db.Column(db.String(20), nullable=False) # essential for lookup, joining
+
+    # actions = db.relationship("Action", backref=db.backref("users", order_by=user_id))
 
 class Article(db.Model):
     """News article posted by user."""
@@ -52,6 +74,10 @@ class Article(db.Model):
 
     tag_list = db.relationship("Tag", secondary=article_tags)
 
+    # maybe add reference back to actions
+    actions = db.relationship("Action", backref=db.backref("articles", order_by=article_id))
+
+
 class Tag(db.Model):
     """Tag - a keyword used to distinguish topics on the Apptivist news site."""
 
@@ -66,23 +92,6 @@ class Tag(db.Model):
     giving = db.relationship("GlobalGiving", backref=db.backref("tags", order_by=tag_id))
 
     # sim_tag_list = db.relationship("Tag", secondary=sim_tags)
-
-##############################################################################
-    ### Usage Tracking ###
-
-class Action(db.Model):
-    """I want a table that tracks usage on the site.
-    This will keep track of usage/actions associated with users, articles,
-    and 'action links': meetup, give, and congress.
-    Not sure if this will be a data model or just an association table"""
-
-    __tablename__ = "actions" 
-
-    action_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    tag_id = db.Column(db.Integer, db.ForeignKey('tags.tag_id'))
-    article_id = db.Column(db.Integer, db.ForeignKey('articles.article_id'))
-    action_user = db.Column(db.Integer, db.ForeignKey('users.user_id'))
-    action_type = db.Column(db.String(64), nullable=False)
 
 
 ##############################################################################

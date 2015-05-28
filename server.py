@@ -2,10 +2,11 @@
 
 from jinja2 import StrictUndefined
 
-from flask import Flask, render_template, redirect, request, flash, session
+from flask import Flask, render_template, redirect, request, flash, session, jsonify
 from flask_debugtoolbar import DebugToolbarExtension
 
 from model import User, Article, Tag, Meetup, GlobalGiving, Action, connect_to_db, db
+from serializer import UserSerializer, ArticleSerializer, ActionSerializer
 
 from apis.suncongress import gen_rep_list
 from apis.meetup import list_events
@@ -294,6 +295,49 @@ def add_action_to_db():
 
     return "Successfully added a new action to db."   
 
+
+###############################################################################
+    ### d3 Playtime ###
+
+@app.route("/d3")
+def d3_tutorial():
+    return render_template("index.html")
+
+@app.route("/serial")
+def serialize():
+    action = Action.query.get(1)
+    data = ActionSerializer(action).data
+    return render_template("serial.html", data=data, action=action)
+
+@app.route("/influences")
+def get_influences_json():
+    influences = {}
+
+    user = User.query.get(session["user_id"])
+
+    user_info = UserSerializer(user).data
+
+    influences['user'] = user_info
+    print "()()()() influences['user']", influences['user']
+
+    influences['user']['articles'] = []
+    print "()()()() influences with user and articles", influences
+
+    articles = Article.query.filter_by(user_id=session["user_id"]).all()
+
+    for a in articles:
+        a_info = ArticleSerializer(a).data
+        actions = Action.query.filter_by(article_id=a.article_id).all()
+        if actions:
+            a_info['actions'] = []
+            for act in a.actions:
+                a_info['actions'].append(ActionSerializer(act).data)
+                print "()()()() Article Appending action", a_info
+
+        influences['user']['articles'].append(a_info)
+        print "()()()() Influencces Appending ArticleSerializer", influences
+
+    return render_template("serial.html", data=influences, myjson=jsonify(influences)) 
 
 
 ###############################################################################

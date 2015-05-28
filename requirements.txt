@@ -11,10 +11,13 @@ itsdangerous==0.24
 jellyfish==0.2.1
 Jinja2==2.7.3
 MarkupSafe==0.23
+marshmallow==1.2.6
 ndg-httpsclient==0.4.0
 pyasn1==0.1.7
 pycparser==2.13
 pyOpenSSL==0.15.1
+pysqlite==2.6.3
+pyzipcode==0.4
 requests==2.7.0
 six==1.9.0
 SQLAlchemy==1.0.3
