@@ -10,6 +10,9 @@
         {# bxslider style sheet #}
         <link type="text/css" rel="stylesheet" href="/static/jquery.bxslider.css" /> 
 
+        {# formbox style sheet #}
+        <link type="text/css" rel="stylesheet" href="/static/formbox.css" /> 
+
     </head>
 
     <body>
@@ -22,7 +25,7 @@
             <!-- show if logged in or not -->
             {% if "user_id" in session %}
                 <p><a href="/apptivist/{{ session["user_id"] }}">Profile Me</a></p>
-                <p><a href="/new_post">Post a New Article</a></p>
+                <p><a href="http://i.telegraph.co.uk/multimedia/archive/01456/ppet1_1456179c.jpg" class="formbox">Post a New Article</a></p>
                 <p><a href="/logout">Log Out</a></p>
             {% else %}
                 <p><a href="/login">Log In</a></p>
@@ -51,7 +54,7 @@
         {# my js files #}
         <script src="/static/js/jscripts.js"></script>
         <script src="/static/js/jquery.bxslider.min.js"></script>
-
+        <script src="/static/js/formbox.js"></script>
 
         <script>
 
