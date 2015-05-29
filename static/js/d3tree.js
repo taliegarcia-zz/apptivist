@@ -1,89 +1,3 @@
-var dford8json = {
-  "user": {
-    "articles": [
-      {
-        "actions": [
-          {
-            "action_id": 42, 
-            "action_type": "congress", 
-            "action_user": 19, 
-            "article_id": 8, 
-            "tag_id": 7
-          }, 
-          {
-            "action_id": 135, 
-            "action_type": "meetup", 
-            "action_user": 7, 
-            "article_id": 8, 
-            "tag_id": 5
-          }, 
-          {
-            "action_id": 192, 
-            "action_type": "congress", 
-            "action_user": 7, 
-            "article_id": 8, 
-            "tag_id": 4
-          }
-        ], 
-        "article_id": 8, 
-        "date": "2014-07-30", 
-        "img_src": "http://placekitten.com/220/220", 
-        "title": "risus dapibus augue vel accumsan tellus", 
-        "url": "http://fotki.com", 
-        "user_id": 9
-      }, 
-      {
-        "article_id": 24, 
-        "date": "2015-04-21", 
-        "img_src": "http://placekitten.com/220/220", 
-        "title": "sodales sed tincidunt eu", 
-        "url": "http://spiegel.de", 
-        "user_id": 9
-      }, 
-      {
-        "actions": [
-          {
-            "action_id": 1, 
-            "action_type": "congress", 
-            "action_user": 24, 
-            "article_id": 59, 
-            "tag_id": 6
-          }, 
-          {
-            "action_id": 7, 
-            "action_type": "meetup", 
-            "action_user": 9, 
-            "article_id": 59, 
-            "tag_id": 1
-          }, 
-          {
-            "action_id": 109, 
-            "action_type": "give", 
-            "action_user": 22, 
-            "article_id": 59, 
-            "tag_id": 5
-          }, 
-          {
-            "action_id": 167, 
-            "action_type": "congress", 
-            "action_user": 32, 
-            "article_id": 59, 
-            "tag_id": 9
-          }
-        ], 
-        "article_id": 59, 
-        "date": "2014-06-28", 
-        "img_src": "http://placekitten.com/220/220", 
-        "title": "vel nulla eget eros elementum pellentesque quisque porta volutpat erat", 
-        "url": "https://eventbrite.com", 
-        "user_id": 9
-      }
-    ], 
-    "name": "dford8", 
-    "user_id": 9, 
-    "zipcode": "94110"
-  }
-}
 
 var margin = {top: 20, right: 120, bottom: 20, left: 120},
     width = 960 - margin.right - margin.left,
@@ -99,7 +13,7 @@ var tree = d3.layout.tree()
 var diagonal = d3.svg.diagonal()
     .projection(function(d) { return [d.y, d.x]; });
 
-var svg = d3.select("body").append("svg")
+var svg = d3.select(".actions").append("svg")
     .attr("width", width + margin.right + margin.left)
     .attr("height", height + margin.top + margin.bottom)
   .append("g")

@@ -309,11 +309,16 @@ def serialize():
     data = ActionSerializer(action).data
     return render_template("serial.html", data=data, action=action)
 
-@app.route("/influences")
-def get_influences_json():
+@app.route("/influences/<int:id>", methods=["GET"])
+def get_influences_json(id):
+
+    # user = User.query.get(id)
+    user = User.query.get(id)
+    print "()()() The user page we are on: ()()()()", user
+
     influences = {}
 
-    user = User.query.get(session["user_id"])
+    # user = User.query.get(user_page.user_id)
 
     user_info = UserSerializer(user).data
 
@@ -323,7 +328,7 @@ def get_influences_json():
     influences['name']['children'] = []
     # print "()()()() influences with user and articles", influences
 
-    articles = Article.query.filter_by(user_id=session["user_id"]).all()
+    articles = Article.query.filter_by(user_id=user.user_id).all()
 
     for a in articles:
         a_info = ArticleSerializer(a).data

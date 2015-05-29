@@ -1,18 +1,20 @@
 {% extends 'base.html' %}
+
+
 {% block content %}
 
   <h1>{{ user.name }} ({{ user.user_id }})</h1>
 
   <p>Zipcode: {{ user.zipcode }}</p>
 
-  <div class="myInfo">
+  <div class="info">
   {% if user.user_id == session["user_id"] %}
     <form action="/congress/{{ user.zipcode }}" method="GET">
       <div>
           <input type="submit" value="Where's my rep??">
       </div>
     </form>
-    <div class="myActions">
+    <div class="actions">
     {% if user.actions %}
     <h3>Your actions:</h3>
       {% for action in user.actions %}
@@ -21,5 +23,15 @@
     {% endif %}
     </div>
   {% endif %}
+
+  <div class="influence">
+  </div>
+
+{# d3 library #}
+<script src="http://d3js.org/d3.v3.min.js"></script>        
+<script src="/static/js/influencetree.js"></script>
+<script>
+  console.log("d3 data model is active on this page!")
+</script>
   
 {% endblock %}
