@@ -7,6 +7,7 @@ enum34==1.0.4
 Flask==0.10.1
 Flask-DebugToolbar==0.10.0
 Flask-SQLAlchemy==2.0
+HTMLParser==0.0.2
 itsdangerous==0.24
 jellyfish==0.2.1
 Jinja2==2.7.3
@@ -15,6 +16,7 @@ marshmallow==1.2.6
 ndg-httpsclient==0.4.0
 pyasn1==0.1.7
 pycparser==2.13
+PyOpenGraph==0.2
 pyOpenSSL==0.15.1
 pysqlite==2.6.3
 pyzipcode==0.4

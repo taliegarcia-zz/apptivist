@@ -39,10 +39,7 @@ function startOverlay(overlayLink) {
 	});
 }
 		
-
-
-
-console.log("read formbox - with opacity")
+console.log("read formbox - with /new_form")
 
 
 function removeOverlay() {
