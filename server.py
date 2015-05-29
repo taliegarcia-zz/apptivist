@@ -300,16 +300,6 @@ def add_action_to_db():
 ###############################################################################
     ### d3 Playtime ###
 
-@app.route("/d3")
-def d3_tutorial():
-    return render_template("index.html")
-
-@app.route("/serial")
-def serialize():
-    action = Action.query.get(1)
-    data = ActionSerializer(action).data
-    return render_template("serial.html", data=data, action=action)
-
 @app.route("/influences/<int:id>", methods=["GET"])
 def get_influences_json(id):
 
@@ -353,9 +343,6 @@ def get_influences_json(id):
 def show_tree():
     return render_template("d3tree.html")
 
-@app.route("/dford8")
-def user_tree():
-    return render_template("dford8.json")
 
 ###############################################################################
     ### Run Server ###
