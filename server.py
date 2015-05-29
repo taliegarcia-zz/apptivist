@@ -8,9 +8,10 @@ from flask_debugtoolbar import DebugToolbarExtension
 from model import User, Article, Tag, Meetup, GlobalGiving, Action, connect_to_db, db
 from serializer import UserSerializer, ArticleSerializer, ActionSerializer
 
-from apis.suncongress import gen_rep_list
-from apis.meetup import list_events
-from apis.global_giving import list_giving_projs
+from modules.suncongress import gen_rep_list
+from modules.meetup import list_events
+from modules.global_giving import list_giving_projs
+from modules.og import PyOpenGraph
 
 #FIXME: This is just for temporarily adding articles through webform
 import datetime
