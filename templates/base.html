@@ -65,24 +65,9 @@
                   "/preview",
                   { url: $("#url-field").val() },
                   function (result) {
-                    $("#status").html(result.title);
-                    var article = [ { title: result.title },
-                                    { img: result.img },
-                                    { desc: result.desc }
-                                ];
-                    article.forEach( 
-                        function (d) { 
-                            for (var key in d) {
-                              if (d.hasOwnProperty(key)) {
-                                $("#status").append(d[key] + "<br>");
-                                alert(key + " -> " + d[key]);
-                              }
-                            }
-                            console.log(d);
-                         }
-                        );
-                    
-                    return article;
+                    $("#status").html('<strong>Headline:</strong> ' + result.title 
+                                        + '<br><img src="' + result.img 
+                                        + '" /><br><strong>Description:</strong>' + result.desc);
                   }
                 );
               }
