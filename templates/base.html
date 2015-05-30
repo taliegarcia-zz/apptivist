@@ -58,25 +58,6 @@
         {# "/static/js/formbox.js" #}
         <script type="text/javascript" src="/static/js/easyModal.js-master/jquery.easyModal.js"></script>
 
-           <script>
-              function getPreview(evt) {
-                evt.preventDefault();
-                $.post(
-                  "/preview",
-                  { url: $("#url-field").val() },
-                  function (result) {
-                    $("#status").html('<strong>Headline:</strong> ' + result.title 
-                                        + '<br><img src="' + result.img 
-                                        + '" /><br><strong>Description:</strong>' + result.desc);
-                  }
-                );
-              }
-
-
-              $("#preview-form").on("submit", getPreview);
-
-    </script>
-
 
     </body>
 

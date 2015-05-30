@@ -354,6 +354,9 @@ def show_url():
 
     og_data = pyog(url).metadata
 
+    print og_data
+    
+
     # return "Added %s" % og_data['title']
     return jsonify(title=og_data['title'], 
                     img=og_data['image'],

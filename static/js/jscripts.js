@@ -3,6 +3,7 @@
 
 console.log("linked jscript working!");
 
+// This function enables the site to track users' action-items, such as meetup/giving/congress
 console.log("activated actionLinks!");
 $('.actionLinks a').click( function(event) { 
                   event.preventDefault();
@@ -17,19 +18,22 @@ $('.actionLinks a').click( function(event) {
                           );
                           });
 
-// changed slider to carousel mode
-// $(document).ready(function(){
-//   $('.slider1').bxSlider({
-//     slideWidth: 200,
-//     minSlides: 3,
-//     maxSlides: 5,
-//     slideMargin: 10
-//   });
-// });
+// Preview article posting, getting Headline, Image, and Description 
+function getPreview(evt) {
+                evt.preventDefault();
+                $.post(
+                  "/preview",
+                  { url: $("#url-field").val() },
+                  function (result) {
+                    $("#preview").html('<strong>Headline:</strong> ' + result.title 
+                                        + '<br><img src="' + result.img 
+                                        + '" /><br><strong>Description: </strong>' + result.desc);
+                  }
+                );
+              }
 
-// toDo. Check out slick carousel slider for the more options like:
-// Center mode
-// "Slider Syncing" = the centered slide takes up the top bar, featured
-// http://kenwheeler.github.io/slick/
+
+              $("#preview-form").on("submit", getPreview);
+
 
  
