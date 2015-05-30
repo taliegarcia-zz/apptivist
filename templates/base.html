@@ -8,7 +8,7 @@
         <link type="text/css" rel="stylesheet" href="/static/tree.css" />
         
         {# bxslider style sheet #}
-        <link type="text/css" rel="stylesheet" href="/static/jquery.bxslider.css" /> 
+        {# <link type="text/css" rel="stylesheet" href="/static/jquery.bxslider.css" /> #}
 
         {# formbox style sheet #}
         {# "/static/formbox.css" #}
@@ -35,7 +35,7 @@
         
         </div>
 
-
+        
         <!-- Show flashed messages -->    
         <hr>
 
@@ -53,13 +53,26 @@
         
         {# my js files #}
         <script src="/static/js/jscripts.js"></script>
-        <script src="/static/js/jquery.bxslider.min.js"></script>
+        {# <script src="/static/js/jquery.bxslider.min.js"></script> #}
         {# lightbox, might use for form overlay but I think I need modal instead #}
         {# "/static/js/formbox.js" #}
+        <script type="text/javascript" src="/static/js/easyModal.js-master/jquery.easyModal.js"></script>
 
-        <script>
+           <script>
+      function getPreview(evt) {
+        evt.preventDefault();
+        $.post(
+          "/preview",
+          { url: $("#url-field").val() },
+          function (result) {
+            alert(result);
+          }
+        );
+      }
 
-        </script>
+      $("#preview-form").on("submit", getPreview);
+    </script>
+
 
     </body>
 

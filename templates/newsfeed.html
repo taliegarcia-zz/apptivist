@@ -1,12 +1,22 @@
 {% extends 'base.html' %}
 {% block content %}
 
+<table class="modaltable">
+	<thead></thead>
+	<tbody>
+		<tr><td>1</td><td>2</td><td>3</td></tr>
+	</tbody>
+</table>
+
 <div class="slider1">
 {% for article in articles %}
   <div class="slide">
   	<a href="/article/{{ article.title }}">{{ article.title }}</a>
+  	<br>
   	<img src="{{ article.img_src }}">
+  	<br>
   	Posted by <a href="/apptivist/{{ article.user_id }}">{{ article.user.name }}</a>
+  	<br>
   	<ul class='tags'>
      	<li> Tags: [ {% for tag in article.tag_list %} * {{ tag.tag_name }} * {% endfor %} ]</li>
      </ul>
@@ -14,7 +24,28 @@
 {% endfor %}  
 </div>
 
+
+
+<div class="xxx">
+{% for article in articles %}
+  <div class="slide">
+  	<a href="/article/{{ article.title }}">{{ article.title }}</a>
+  	<br>
+  	<img src="{{ article.img_src }}">
+  	<br>
+  	Posted by <a href="/apptivist/{{ article.user_id }}">{{ article.user.name }}</a>
+  	<br>
+  	<ul class='tags'>
+     	<li> Tags: [ {% for tag in article.tag_list %} * {{ tag.tag_name }} * {% endfor %} ]</li>
+     </ul>
+  </div>
+{% endfor %}  
+</div>
+
+
 </body>
+
+
 </html>
 
 {% endblock %}

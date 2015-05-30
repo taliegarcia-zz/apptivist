@@ -18,17 +18,18 @@ $('.actionLinks a').click( function(event) {
                           });
 
 // changed slider to carousel mode
-$(document).ready(function(){
-  $('.slider1').bxSlider({
-    slideWidth: 200,
-    minSlides: 3,
-    maxSlides: 5,
-    slideMargin: 10
-  });
-});
+// $(document).ready(function(){
+//   $('.slider1').bxSlider({
+//     slideWidth: 200,
+//     minSlides: 3,
+//     maxSlides: 5,
+//     slideMargin: 10
+//   });
+// });
 
 // toDo. Check out slick carousel slider for the more options like:
 // Center mode
 // "Slider Syncing" = the centered slide takes up the top bar, featured
 // http://kenwheeler.github.io/slick/
 
+ 

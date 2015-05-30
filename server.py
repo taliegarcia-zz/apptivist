@@ -11,7 +11,7 @@ from serializer import UserSerializer, ArticleSerializer, ActionSerializer
 from modules.suncongress import gen_rep_list
 from modules.meetup import list_events
 from modules.global_giving import list_giving_projs
-from modules.og import PyOpenGraph
+from modules.og import PyOpenGraph as pyog
 
 #FIXME: This is just for temporarily adding articles through webform
 import datetime
@@ -343,6 +343,19 @@ def get_influences_json(id):
 def show_tree():
     return render_template("d3tree.html")
 
+###############################################################################
+    ### OpenGraph ###
+
+@app.route("/preview", methods=['POST'])
+def show_url():
+    """Add a student to our database."""
+
+    url = request.form.get("url")
+
+    og_data = pyog(url).metadata
+
+    print "\n\n** ADDED", url, "\n\n"
+    return "Added %s" % og_data['title']
 
 ###############################################################################
     ### Run Server ###

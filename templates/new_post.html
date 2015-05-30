@@ -2,6 +2,32 @@
 {% block content %}
 
 <h1>Post a News Article </h1>
+    
+<h2>Preview Form</h2>
+
+    <form id="preview-form" method="post" action="/preview">
+      <div class="form-group">
+        <label for="url-field">Preview URL</label> 
+        <input type="url" class="form-control" name="name" id="url-field">
+      </div>
+      
+      <div class="form-group">
+        <input type="submit" class="btn btn-primary">
+      </div>
+    </form>
+
+
+
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
 <form action="new_post" method="GET">
 
@@ -13,7 +39,7 @@
 
     <div>
         <label>Article URL:
-            <input type="url" name="url" required>
+            <input type="url" name="url" id="url" required>
         </label>
     </div> 
     
@@ -50,5 +76,8 @@
     </div>
 
 </form>
+
+ 
+
 
 {% endblock %}
