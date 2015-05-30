@@ -59,28 +59,40 @@
         <script type="text/javascript" src="/static/js/easyModal.js-master/jquery.easyModal.js"></script>
 
            <script>
-      function getPreview(evt) {
-        evt.preventDefault();
-        $.post(
-          "/preview",
-          { url: $("#url-field").val() },
-          function (result) {
-            $("#status").html(result.title);
-            var article = { title: result.title,
-                            img: result.img,
-                            desc: result.desc
-                        };
-            return article;
-          }
-        );
-      }
+              function getPreview(evt) {
+                evt.preventDefault();
+                $.post(
+                  "/preview",
+                  { url: $("#url-field").val() },
+                  function (result) {
+                    $("#status").html(result.title);
+                    var article = [ { title: result.title },
+                                    { img: result.img },
+                                    { desc: result.desc }
+                                ];
+                    article.forEach( 
+                        function (d) { 
+                            for (var key in d) {
+                              if (d.hasOwnProperty(key)) {
+                                $("#status").append(d[key] + "<br>");
+                                alert(key + " -> " + d[key]);
+                              }
+                            }
+                            console.log(d);
+                         }
+                        );
+                    
+                    return article;
+                  }
+                );
+              }
 
-      var newArticle
+              var newArticle
 
-      $("#preview-form").on("submit", getPreview);
+              $("#preview-form").on("submit", getPreview);
 
 
-      {# $("#status").load("/preview", { url : $(#url-field).val() }, ); #}
+              {# $("#status").load("/preview", { url : $(#url-field).val() }, ); #}
 
     </script>
 
