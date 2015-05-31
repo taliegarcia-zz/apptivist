@@ -161,36 +161,40 @@ def post_an_article():
             article.tag_list.append(tag.tag_id)
 
         db.session.commit()
-    
-    if request.method == "POST":
-        print "()()()() Info: ", request.form
-        url = request.form.get('url')
-        title = request.form.get('title')
-        img_src = request.form.get('img_src')
-        date_str = request.form.get('date')
-        date = datetime.datetime.strptime(date_str, "%Y-%m-%d")
 
-        ### Add New Article to the articles table ###
-        article = Article(title=title,
-                            url=url,
-                            img_src=img_src,
-                            date=date,
-                            user_id=session['user_id'])
+    return render_template('new_post.html')
 
-        db.session.add(article)
-        db.session.commit() # needs to be committed here before it can be added to article_tags table below
+@app.route("/post_article", methods=["POST"])
+def post_to_db():
 
-        ### Append New ArticleTag Association(s) to the articletags tables ###
-        tags = request.form.getlist('tag')
-        # TODO: consider changing the values of tags in the HTML to the tag_id numbers!
+    print "()()()() Info: ", request.form
+    # url = request.form.get('url')
+    # title = request.form.get('title')
+    # img_src = request.form.get('img_src')
+    # date_str = request.form.get('date')
+    # date = datetime.datetime.strptime(date_str, "%Y-%m-%d")
 
-        for tag_name in tags:
-            tag = Tag.query.filter_by(tag_name=tag_name).first()
-            article.tag_list.append(tag.tag_id)
+    # ### Add New Article to the articles table ###
+    # article = Article(title=title,
+    #                     url=url,
+    #                     img_src=img_src,
+    #                     date=date,
+    #                     user_id=session['user_id'])
 
-        db.session.commit()
+    # db.session.add(article)
+    # db.session.commit() # needs to be committed here before it can be added to article_tags table below
 
-    return render_template("new_post.html")
+    # ### Append New ArticleTag Association(s) to the articletags tables ###
+    # tags = request.form.getlist('tag')
+    # # TODO: consider changing the values of tags in the HTML to the tag_id numbers!
+
+    # for tag_name in tags:
+    #     tag = Tag.query.filter_by(tag_name=tag_name).first()
+    #     article.tag_list.append(tag.tag_id)
+
+    # db.session.commit()
+
+    return request.form
 
 # INTERNAL - this is an internal web form for me to add articles to my db quickly & easily  
 # FIXME. new articles should be posted by "POST" method, not "GET", since it is communicating with my db     

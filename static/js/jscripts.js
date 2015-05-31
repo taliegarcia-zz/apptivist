@@ -26,19 +26,23 @@ function checkUrl(url) {
 // Preview article posting, getting Headline, Image, and Description 
 function getPreview(data) {
                 $.post(
+
+                  // post url in form to server, returns opengraph data based on url
                   "/preview",
                   { url: data },
-                  function (result) {
-                   
+
+                  // insert preview into html
+                  function (result) { 
                   $("#previewDiv").html('<strong>Headline: </strong>' + result.title 
                                         + '<br><img src="' + result.img 
                                         + '" /><br><strong>Description: </strong>' + result.desc);
-                    
-                    
-
-                  }
-                );
+                  $("#newArticle").attr({
+                      "data-title" : result.title,
+                      "data-img" : result.img,
+                    });
+                 });
               }
+
 // new problem. now need to post this to my server. 
               $("#url-field").change( function() { 
                                       if (checkUrl($(this).val())) {
@@ -49,11 +53,5 @@ function getPreview(data) {
                                     });
 
 // working on posting to "/new_post"
-                  $("#newpost-form").on("submit", function () { $.post('/new_post',
-                                                      article,                                                       
-                                                      function () {
-                                                        alert("posted new article!");
-                                                      })  
-                                                      });
-
+   
  
