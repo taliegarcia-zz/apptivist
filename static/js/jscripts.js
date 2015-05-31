@@ -57,23 +57,33 @@ $("#newArticle")
 
 $("#postArticle").submit( function(e) { 
             e.preventDefault(); 
-            var formInfo; 
+   
             var allTags = [];
                 $("input:checked").each(function () {
                   allTags.push($(this).val());
+                  return allTags;
                 });
+            
+            console.log("Tags after first assignment: " + allTags);
 
-            console.log("Print array of all tags: " + allTags);
-
-            console.log(allTags);
-
-            formInfo = { title: this.dataset.title,
+            var formInfo = { title: this.dataset.title,
               img_src: this.dataset.img,
               url: $("#url-field").val(),
-              date: $("#url-field").val(),
+              date: $("#date-field").val(),
               tag_list: allTags
             }
-            console.log(formInfo);
+
+            console.log("Obj first assigned: " + formInfo);
+            console.log("Tags after object is assigned: " + allTags);
+
+            $.post("/post_article", formInfo, 
+                function(r) {
+                   alert("Got " + r); 
+                });
+
+            console.log("Obj after posting to db: " + formInfo)
+            console.log("Tags after posted to db: " + allTags);
+
            });
 
 
