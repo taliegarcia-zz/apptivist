@@ -36,9 +36,9 @@ function getPreview(data) {
                   $("#previewDiv").html('<strong>Headline: </strong>' + result.title 
                                         + '<br><img src="' + result.img 
                                         + '" /><br><strong>Description: </strong>' + result.desc);
-                  $("#newArticle").attr({
+                  $("#postArticle").attr({
                       "data-title" : result.title,
-                      "data-img" : result.img,
+                      "data-img" : result.img
                     });
                  });
               }
@@ -52,6 +52,24 @@ function getPreview(data) {
                                       };
                                     });
 
-// working on posting to "/new_post"
+// working on posting to "/post_article"
+$("#newArticle")
+
+$("#postArticle").submit( function(e) { 
+            e.preventDefault(); 
+            console.log(this.dataset.title); 
+            console.log(this.dataset.img); 
+            console.log($("#date-field").val());
+            console.log($("#url-field").val());
+            // console.log("Checked for checkboxes: " + $("input:checked").val());
+            var allTags = [];
+            $("input:checked").each(function () {
+              allTags.push($(this).val());
+            });
+            console.log("Print array of all tags: " + allTags);
+            console.log(allTags);
+           });
+
+
    
  
