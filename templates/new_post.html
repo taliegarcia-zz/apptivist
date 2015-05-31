@@ -6,25 +6,21 @@
 <h3>Preview Post</h3>
 <blockquote id="previewDiv"></blockquote>
 
-    <form id="preview-form" method="post" action="preview">
+
+    <form id="newpost-form" action="new_post" method="POST">
+
         <div class="form-group">
         <label for="url-field">Article URL</label> 
         <input type="url" class="form-control" name="name" id="url-field"><span class="msg" id="checkURL"></span>
         </div>
 
         <div class="form-group">
-        <label for="date-field">Date:
+        <label for="date-field">Date Published:
         <input type="date" name="date" id="date-field">
         </label>
         </div> 
       
-        <div class="form-group">
-        <input type="submit" class="btn btn-primary" value="preview">
-        </div>
-    </form>
-    
     <br>
-    <form action="new_post" method="GET">
     <br>
     <div>
         <label>What's it all about? Check off at least one tag that describes your article:
