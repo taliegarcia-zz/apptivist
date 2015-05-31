@@ -34,6 +34,7 @@ function getPreview(evt) {
 
 
               $("#preview-form").on("submit", getPreview);
+              $("#url-field").change( function() { console.log("Value: " + $(this).val()); alert("entered url!" + " " + $(this).val()); } );
 
 
  
