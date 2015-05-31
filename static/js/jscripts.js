@@ -25,7 +25,7 @@ function getPreview(evt) {
                   "/preview",
                   { url: $("#url-field").val() },
                   function (result) {
-                    $("#preview").html('<strong>Headline:</strong> ' + result.title 
+                    $("#previewDiv").html('<strong>Headline:</strong> ' + result.title 
                                         + '<br><img src="' + result.img 
                                         + '" /><br><strong>Description: </strong>' + result.desc);
                   }
