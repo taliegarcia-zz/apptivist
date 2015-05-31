@@ -3,12 +3,13 @@
 
 <h1>Post a News Article </h1>
     
-<h2>Preview Form</h2>
+<h3>Preview Post</h3>
+<blockquote id="previewDiv"></blockquote>
 
     <form id="preview-form" method="post" action="preview">
         <div class="form-group">
         <label for="url-field">Article URL</label> 
-        <input type="url" class="form-control" name="name" id="url-field">
+        <input type="url" class="form-control" name="name" id="url-field"><span class="msg" id="checkURL"></span>
         </div>
 
         <div class="form-group">
@@ -21,8 +22,6 @@
         <input type="submit" class="btn btn-primary" value="preview">
         </div>
     </form>
-
-    <div id="previewDiv"></div>
     
     <br>
     <form action="new_post" method="GET">

@@ -18,12 +18,16 @@ $('.actionLinks a').click( function(event) {
                           );
                           });
 
+// function for checking valid url, using regex from msdn.microsoft.com
+function checkUrl(url) {
+    return /^(ht|f)tp(s?)\:\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9\-\.\?\,\'\/\\\+&amp;%\$#_]*)?$/.test(url);
+}
+
 // Preview article posting, getting Headline, Image, and Description 
-function getPreview(evt) {
-                evt.preventDefault();
+function getPreview(data) {
                 $.post(
                   "/preview",
-                  { url: $("#url-field").val() },
+                  { url: data },
                   function (result) {
                     $("#previewDiv").html('<strong>Headline:</strong> ' + result.title 
                                         + '<br><img src="' + result.img 
@@ -32,9 +36,13 @@ function getPreview(evt) {
                 );
               }
 
-
-              $("#preview-form").on("submit", getPreview);
-              $("#url-field").change( function() { console.log("Value: " + $(this).val()); alert("entered url!" + " " + $(this).val()); } );
+              $("#url-field").change( function() { 
+                                      if (checkUrl($(this).val())) {
+                                        getPreview($(this).val());
+                                      } else {
+                                        $("#checkURL").html("Please enter a valid url.");
+                                      };
+                                    });
 
 
  
