@@ -57,17 +57,23 @@ $("#newArticle")
 
 $("#postArticle").submit( function(e) { 
             e.preventDefault(); 
-            console.log(this.dataset.title); 
-            console.log(this.dataset.img); 
-            console.log($("#date-field").val());
-            console.log($("#url-field").val());
-            // console.log("Checked for checkboxes: " + $("input:checked").val());
+            var formInfo; 
             var allTags = [];
-            $("input:checked").each(function () {
-              allTags.push($(this).val());
-            });
+                $("input:checked").each(function () {
+                  allTags.push($(this).val());
+                });
+
             console.log("Print array of all tags: " + allTags);
+
             console.log(allTags);
+
+            formInfo = { title: this.dataset.title,
+              img_src: this.dataset.img,
+              url: $("#url-field").val(),
+              date: $("#url-field").val(),
+              tag_list: allTags
+            }
+            console.log(formInfo);
            });
 
 
