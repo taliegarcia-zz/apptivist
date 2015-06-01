@@ -24,7 +24,7 @@ function checkUrl(url) {
 }
 
 // add data attributes to post article form:
-function formDataAttr(data, divId) { $(divId).attr({
+function addDataAttr(data, elementId) { $(elementId).attr({
                       "data-title" : data.title,
                       "data-img" : data.img
                     });
@@ -43,22 +43,20 @@ function getPreview(data) {
                   $("#previewDiv").html('<strong>Headline: </strong>' + result.title 
                                         + '<br><img src="' + result.img 
                                         + '" /><br><strong>Description: </strong>' + result.desc);
-                  formDataAttr(result, "#postArticle");
+                  addDataAttr(result, "#postArticle");
                  });
               }
 
 // new problem. now need to post this to my server. 
-              $("#url-field").change( function() { 
-                                      if (checkUrl($(this).val())) {
-                                        getPreview($(this).val());
-                                      } else {
-                                        $("#checkURL").html("Please enter a valid url.");
-                                      };
-                                    });
+$("#url-field").change( function() { 
+                        if (checkUrl($(this).val())) {
+                          getPreview($(this).val());
+                        } else {
+                          $("#checkURL").html("Please enter a valid url.");
+                        };
+                      });
 
 // working on posting to "/post_article"
-$("#newArticle")
-
 $("#postArticle").submit( function(e) { 
             e.preventDefault(); 
    
