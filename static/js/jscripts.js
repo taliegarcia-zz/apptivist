@@ -23,6 +23,13 @@ function checkUrl(url) {
     return /^(ht|f)tp(s?)\:\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9\-\.\?\,\'\/\\\+&amp;%\$#_]*)?$/.test(url);
 }
 
+// add data attributes to post article form:
+function formDataAttr(data, divId) { $(divId).attr({
+                      "data-title" : data.title,
+                      "data-img" : data.img
+                    });
+                    }
+
 // Preview article posting, getting Headline, Image, and Description 
 function getPreview(data) {
                 $.post(
@@ -36,10 +43,7 @@ function getPreview(data) {
                   $("#previewDiv").html('<strong>Headline: </strong>' + result.title 
                                         + '<br><img src="' + result.img 
                                         + '" /><br><strong>Description: </strong>' + result.desc);
-                  $("#postArticle").attr({
-                      "data-title" : result.title,
-                      "data-img" : result.img
-                    });
+                  formDataAttr(result, "#postArticle");
                  });
               }
 
