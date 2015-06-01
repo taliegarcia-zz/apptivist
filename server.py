@@ -174,9 +174,10 @@ def post_to_db():
     print "Image: ", img_src
     date_str = request.form.get('date')
     print "Date_str: ", date_str
-    tag_list = request.form.get('tag_list')
+    tagList = request.form.getlist('tagList[]')
+    print request.form
 
-    print url, title, img_src, date_str, "[", tag_list, "]"
+    print url, title, img_src, date_str, "[", tagList, "]"
 
     return "working"
 

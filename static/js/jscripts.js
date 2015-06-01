@@ -23,12 +23,30 @@ function checkUrl(url) {
     return /^(ht|f)tp(s?)\:\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9\-\.\?\,\'\/\\\+&amp;%\$#_]*)?$/.test(url);
 }
 
-// add data attributes to post article form:
+// add data attributes to element by id:
 function addDataAttr(data, elementId) { $(elementId).attr({
                       "data-title" : data.title,
                       "data-img" : data.img
                     });
-                    }
+}
+
+function getPreviewAttr(previewUrl) {
+                  // post url in form to server, returns opengraph data based on url
+                  $.post("/preview",
+                    
+                      // send previewUrl
+                      { url: previewUrl },
+                        // extract preview data
+                        function (result) { 
+                        var previewObj = { 
+                          title: result.title, 
+                          img: result.img, 
+                          desc: result.desc
+                        };
+                        console.log(previewObj);
+                        return previewObj;
+                        });
+}
 
 // Preview article posting, getting Headline, Image, and Description 
 function getPreview(data) {
@@ -45,7 +63,7 @@ function getPreview(data) {
                                         + '" /><br><strong>Description: </strong>' + result.desc);
                   addDataAttr(result, "#postArticle");
                  });
-              }
+ }
 
 // new problem. now need to post this to my server. 
 $("#url-field").change( function() { 
@@ -54,7 +72,7 @@ $("#url-field").change( function() {
                         } else {
                           $("#checkURL").html("Please enter a valid url.");
                         };
-                      });
+});
 
 // working on posting to "/post_article"
 $("#postArticle").submit( function(e) { 
@@ -72,7 +90,7 @@ $("#postArticle").submit( function(e) {
               img_src: this.dataset.img,
               url: $("#url-field").val(),
               date: $("#date-field").val(),
-              tag_list: allTags
+              tagList: allTags
             }
 
             console.log("Obj first assigned: " + formInfo);
@@ -86,7 +104,7 @@ $("#postArticle").submit( function(e) {
             console.log("Obj after posting to db: " + formInfo)
             console.log("Tags after posted to db: " + allTags);
 
-           });
+});
 
 
    
