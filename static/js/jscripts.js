@@ -6,7 +6,7 @@ console.log("linked jscript working!");
 // This function enables the site to track users' action-items, such as meetup/giving/congress
 console.log("activated actionLinks!");
 $('.actionLinks a').click( function(event) { 
-                  event.preventDefault();
+
                     var actionObj = this.dataset;
                     console.log(actionObj); 
                     $.post("/action", 
