@@ -225,8 +225,23 @@ def display_meetups(title):
         for tag in article.tag_list:
             meetup_dict_by_tag[tag] = list_events(user.zipcode, tag.meetup_topic)
 
+    for tag, tagged_meetups in meetup_dict_by_tag.items():
+        for event in tagged_meetups:
+            print event['event_url']
+            print pyog(event['event_url'])
+
+
     return render_template("meet.html", article=article, meetup_dict=meetup_dict_by_tag)
 
+    # og_data = pyog(url).metadata
+
+    # print og_data
+
+    # return jsonify(title=og_data['title'], 
+    #                 img=og_data['image'],
+    #                 desc=og_data['description'])
+
+    
 
 @app.route("/give/<title>", methods=['GET'])
 def display_giving_projs(title):
@@ -319,8 +334,8 @@ def get_influences_json(id):
     ### OpenGraph ###
 
 @app.route("/preview", methods=['POST'])
-def show_url():
-    """Add a student to our database."""
+def preview_article():
+    """Get OpenGraph Metadata to preview article post"""
 
     url = request.form.get("url")
 
@@ -328,8 +343,6 @@ def show_url():
 
     print og_data
 
-
-    # return "Added %s" % og_data['title']
     return jsonify(title=og_data['title'], 
                     img=og_data['image'],
                     desc=og_data['description'])

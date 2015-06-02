@@ -1,6 +1,7 @@
-img {
+#previewDiv img {
 	width:100px;
 	height:100px;
+    object-fit: contain;
 }
 
 table, td {
