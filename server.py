@@ -227,8 +227,8 @@ def display_meetups(title):
 
     for tag, tagged_meetups in meetup_dict_by_tag.items():
         for event in tagged_meetups:
-            print event['event_url']
-            print pyog(event['event_url'])
+            print type(event['event_url'])
+    #         print pyog(event['event_url'])
 
 
     return render_template("meet.html", article=article, meetup_dict=meetup_dict_by_tag)
