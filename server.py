@@ -126,40 +126,11 @@ def get_user_by_id(id):
 
 
 ###############################################################################
-    ### Post New Article Pages ###
+    ### Post New Article Page ###
 
-
-# FIXME. new articles should be posted by "POST" method, not "GET", since it is communicating with my db
-@app.route("/new_post", methods=["GET", "POST"])
-def post_an_article():
-
-    if request.args:
-        url = request.args.get('url')
-        title = request.args.get('title')
-        img_src = request.args.get('img_src')
-        date_str = request.args.get('date')
-        date = datetime.datetime.strptime(date_str, "%Y-%m-%d")
-
-        ### Add New Article to the articles table ###
-        article = Article(title=title,
-                            url=url,
-                            img_src=img_src,
-                            date=date,
-                            user_id=session['user_id'])
-        db.session.add(article)
-        db.session.commit() # needs to be committed here before it can be added to article_tags table below
-
-        ### Append New ArticleTag Association(s) to the articletags tables ###
-        tags = request.args.getlist('tag')
-        # TODO: consider changing the values of tags in the HTML to the tag_id numbers!
-
-        for tag_name in tags:
-            tag = Tag.query.filter_by(tag_name=tag_name).first()
-            article.tag_list.append(tag.tag_id)
-
-        db.session.commit()
-
-    return render_template('new_post.html')
+@app.route("/new_post")
+def new_post_form():
+    return render_template("new_post.html")
 
 @app.route("/post_article", methods=["POST"])
 def post_to_db():
@@ -191,24 +162,16 @@ def post_to_db():
     db.session.add(article)
     db.session.commit() # needs to be committed here before it can be added to article_tags table below
     print "SUCCESSFULLY added new article!!!"
+
     ### Append New ArticleTag Association(s) to the articletags tables ###
-    # if article.tag_list:
-    #     print "this it the pre-existing a.tag_list", article.tag_list
-    # else:
-    #     print "There is not article tag list. initiating:"
-    #     article.tag_list = []
-    #     print "Empty tag list", article.tag_list
-    
     for tag_name in tags:
-        print "This is the tag_name: ", tag_name
         tag = Tag.query.filter_by(tag_name=tag_name).first()
-        print "This tag object: ", tag
-        print "This is the tag id: ", tag.tag_id
-        print "This is still the article: ", article.title
-        article.tag_list.append(tag.tag_id)
-        print "This is the article's list of tags: ", article.tag_list
+        article.tag_list.append(tag)
 
     db.session.commit()
+
+    article_address = "/article/" + article.title
+    print "Redirect URL: ", article_address
 
     return redirect("/")
 

@@ -69,7 +69,7 @@ class Article(db.Model):
     # to disambiguate between user-that-posted-article and user-that-read/clicked-article 
     user = db.relationship("User", backref=db.backref("articles", order_by=article_id))
 
-    tag_list = db.relationship("Tag", secondary=article_tags)
+    tag_list = db.relationship("Tag", secondary=article_tags, backref=db.backref("articles", order_by=article_id))
 
     # maybe add reference back to actions
     actions = db.relationship("Action", backref=db.backref("articles", order_by=article_id))
