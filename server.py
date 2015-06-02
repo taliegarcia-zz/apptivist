@@ -285,22 +285,18 @@ def add_action_to_db():
 
 @app.route("/influences/<int:id>", methods=["GET"])
 def get_influences_json(id):
+    """Create JSON tree based on user's articles and 
+    the actions associated with those articles"""
 
-    # user = User.query.get(id)
     user = User.query.get(id)
-    print "()()() The user page we are on: ()()()()", user
 
     influences = {}
-
-    # user = User.query.get(user_page.user_id)
 
     user_info = UserSerializer(user).data
 
     influences['name'] = user_info
-    # print "()()()() influences['user']", influences['user']
 
     influences['name']['children'] = []
-    # print "()()()() influences with user and articles", influences
 
     articles = Article.query.filter_by(user_id=user.user_id).all()
 
@@ -314,17 +310,10 @@ def get_influences_json(id):
                 act_info = ActionSerializer(act).data
                 act_info['name'] = act_info['action_type']
                 a_info['children'].append(act_info)
-                # print "()()()() Article Appending action", a_info
 
         influences['name']['children'].append(a_info)
-        # print "()()()() Influencces Appending ArticleSerializer", influences
 
-    # return render_template("serial.html", data=influences, myjson=jsonify(influences)) 
     return jsonify(influences)
-
-@app.route("/d3tree")
-def show_tree():
-    return render_template("d3tree.html")
 
 ###############################################################################
     ### OpenGraph ###
