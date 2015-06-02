@@ -228,19 +228,10 @@ def display_meetups(title):
     for tag, tagged_meetups in meetup_dict_by_tag.items():
         for event in tagged_meetups:
             print type(event['event_url'])
-    #         print pyog(event['event_url'])
-
+    #       print pyog(event['event_url']).metadata
+    # PyOg is not working on meetup.com.
 
     return render_template("meet.html", article=article, meetup_dict=meetup_dict_by_tag)
-
-    # og_data = pyog(url).metadata
-
-    # print og_data
-
-    # return jsonify(title=og_data['title'], 
-    #                 img=og_data['image'],
-    #                 desc=og_data['description'])
-
     
 
 @app.route("/give/<title>", methods=['GET'])
@@ -256,12 +247,18 @@ def display_giving_projs(title):
         for tag in article.tag_list:
             giving_dict_by_tag[tag] = list_giving_projs(tag.gg_code)
 
-           
-    if not giving_dict_by_tag:
+    if giving_dict_by_tag:
+        for tag, tagged_projs in giving_dict_by_tag.items():  
+            for project in tagged_projs:
+                print project['projectLink']
+                print pyog(project['projectLink']).metadata
+    else:
         giving_dict_by_tag["Error"] = "Sorry no results found."
 
     return render_template("give.html", article=article, giving_projs=giving_dict_by_tag)
 
+
+    
 
 @app.route("/congress/<zipcode>", methods=["GET"])
 def lookup_congress(zipcode):
