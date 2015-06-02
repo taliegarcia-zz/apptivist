@@ -5,7 +5,7 @@ from jinja2 import StrictUndefined
 from flask import Flask, render_template, redirect, request, flash, session, jsonify
 from flask_debugtoolbar import DebugToolbarExtension
 
-from model import User, Article, Tag, Meetup, GlobalGiving, Action, connect_to_db, db
+from model import User, Article, Tag, Meetup, GlobalGiving, Action, article_tags, connect_to_db, db
 from serializer import UserSerializer, ArticleSerializer, ActionSerializer
 
 from modules.suncongress import gen_rep_list
@@ -164,7 +164,6 @@ def post_an_article():
 @app.route("/post_article", methods=["POST"])
 def post_to_db():
 
-    # print "()()()() Request.form: ", request.form
     print "()()()() Info: "
     url = request.form.get('url')
     print "URL: ", url
@@ -174,41 +173,45 @@ def post_to_db():
     print "Image: ", img_src
     date_str = request.form.get('date')
     print "Date_str: ", date_str
-    tagList = request.form.getlist('tagList[]')
-    print request.form
+    date = datetime.datetime.strptime(date_str, "%Y-%m-%d")
+    print "Datetme date:", date
+    tags = request.form.getlist('tagList[]')
+    print "List of tags: ", tags
 
-    print url, title, img_src, date_str, "[", tagList, "]"
+    print url, title, img_src, date_str, date, tags
 
-    return "working"
 
-# INTERNAL - this is an internal web form for me to add articles to my db quickly & easily  
-# FIXME. new articles should be posted by "POST" method, not "GET", since it is communicating with my db     
-@app.route("/add_article", methods=["GET", "POST"])
-def add_article():
+    ### Add New Article to the articles table ###
+    article = Article(title=title,
+                        url=url,
+                        img_src=img_src,
+                        date=date,
+                        user_id=session['user_id'])
 
-    if request.args:
-        title = request.args.get('title')
-        url = request.args.get('url')
-        img_src = request.args.get('img_src')
-        # date_str = request.args.get('date')
-        # date = datetime.datetime.strptime(date_str, "%Y-%m-%d")
+    db.session.add(article)
+    db.session.commit() # needs to be committed here before it can be added to article_tags table below
+    print "SUCCESSFULLY added new article!!!"
+    ### Append New ArticleTag Association(s) to the articletags tables ###
+    # if article.tag_list:
+    #     print "this it the pre-existing a.tag_list", article.tag_list
+    # else:
+    #     print "There is not article tag list. initiating:"
+    #     article.tag_list = []
+    #     print "Empty tag list", article.tag_list
+    
+    for tag_name in tags:
+        print "This is the tag_name: ", tag_name
+        tag = Tag.query.filter_by(tag_name=tag_name).first()
+        print "This tag object: ", tag
+        print "This is the tag id: ", tag.tag_id
+        print "This is still the article: ", article.title
+        article.tag_list.append(tag.tag_id)
+        print "This is the article's list of tags: ", article.tag_list
 
-        article = Article(title=title,
-                            url=url,
-                            img_src=img_src,
-                            # date=date,
-                            user_id=session['user_id'])
+    db.session.commit()
 
-        db.session.add(article)
-        db.session.commit()
+    return redirect("/")
 
-        print "()()()() Added:", article.title
-
-        # TODO: this should eventually redirect to new article page:
-        # redirect("/article/<int:id>")
-        return redirect("/") 
-
-    return render_template("add_article.html")
 
 
 ###############################################################################
