@@ -4,6 +4,12 @@
     object-fit: contain;
 }
 
+img {
+    width:200px;
+    height:200px;
+    object-fit: contain;
+}
+
 table, td {
 	border: 1px #70b8ff dashed;
 }

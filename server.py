@@ -32,7 +32,7 @@ app.jinja_env.undefined = StrictUndefined
 def show_newsfeed():
     """Display newsfeed on Homepage"""
 
-    articles = Article.query.all()
+    articles = Article.query.order_by(Article.date.desc()).all()
    
     return render_template("newsfeed.html", articles=articles)
 
