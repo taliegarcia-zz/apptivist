@@ -15,9 +15,11 @@ table, td {
 }
 
 
-#meetup_event {
+.actionLinks {
     border: 5px solid #999;
     border-radius: 10px;
+    text-align: center;
+    max-width: 600px;
 }
 
 #modal_wrapper.overlay:before {

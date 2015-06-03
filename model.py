@@ -35,6 +35,8 @@ class Action(db.Model):
     action_user = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     action_type = db.Column(db.String(64), nullable=False)
 
+    tag = db.relationship("Tag")
+
 ##############################################################################
     ### Front End Models ###
 
@@ -50,6 +52,13 @@ class User(db.Model):
     zipcode = db.Column(db.String(20), nullable=False) # essential for lookup, joining
 
     actions = db.relationship("Action", backref=db.backref("users", order_by=user_id))
+
+    def most_tagged():
+        """Returns the keyword tag that the user takes action on the most.
+        In a SQLAlchemy Query this would be looking for the highest count
+        of a tag when joining the actions and articles tables together."""
+
+
 
 class Article(db.Model):
     """News article posted by user."""
@@ -70,7 +79,7 @@ class Article(db.Model):
     tag_list = db.relationship("Tag", secondary=article_tags, backref=db.backref("articles", order_by=article_id))
 
     # maybe add reference back to actions
-    actions = db.relationship("Action", backref=db.backref("articles", order_by=article_id))
+    actions = db.relationship("Action", backref=db.backref("article", order_by=article_id))
 
 
 class Tag(db.Model):

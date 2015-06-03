@@ -14,16 +14,49 @@
           <input type="submit" value="Where's my rep??">
       </div>
     </form>
-    <div class="actions">
-    {% if user.actions %}
-    <h3>Your actions:</h3>
-      {% for action in user.actions %}
-        <p>{{ action.action_type }}</p>
-      {% endfor %}
-    {% endif %}
-    </div>
   {% endif %}
 
+    <div class="articles">
+    {% if articles %}
+    <h3>Posted Articles:</h3>
+      <ul class="article_list">
+      {% for article in articles %}
+        <li><a href="/article/{{ article.title }}">{{ article.title }}</a></li>
+      {% endfor %}
+      </ul>
+    {% endif %}
+    </div>
+
+    <div class="actions">
+    {% if actions %}
+    <h3>Your actions:</h3>
+      <ol class="action_list">
+      {% for action in actions %}
+        <li>
+        
+        {# Set up good copy for each action_type: #}
+        {% if action.action_type == 'meetup' %} 
+        You attended a meetup after reading: 
+        {% elif action.action_type == 'give' %}
+        You donated to a charity after reading: 
+        {% elif action.action_type == 'congress' %}
+        You contacted congress after reading: 
+        {% endif %}
+        
+        <a href="/article/{{ action.article.title }}">{{ action.article.title }}</a>
+
+        <p>Tagged: {{ action.tag.tag_name }}</p>
+
+        </li>
+      {% endfor %}
+      </ol>
+    {% endif %}
+    </div>
+
+  <div class="most_tags"></div>
+
+  <h3>The Ripple Effect</h3>
+  <p>What happens after your articles are posted?</p>
   <div class="influence">
   </div>
 

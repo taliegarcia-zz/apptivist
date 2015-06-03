@@ -137,9 +137,10 @@ def get_user_by_id(id):
     """Display user info page by user_id"""
     user = User.query.get(id)
 
-    # articles = Article.query.
-
-    return render_template("profile.html", user=user)
+    return render_template("profile.html", 
+                            user=user, 
+                            articles=user.articles, 
+                            actions=user.actions)
 
 
 ###############################################################################

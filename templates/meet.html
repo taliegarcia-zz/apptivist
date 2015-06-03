@@ -3,7 +3,7 @@
 
   <h1>Meetup Info</h1>
 
-  <h3>You just read: {{ article.title }}</h3>
+  <h3>You just read: <a href="/article/{{ article.title }}">{{ article.title }}</a></h3>
 
   <div class='meetup-live-events'> 
 
@@ -20,7 +20,7 @@
               <br>
               {% if event.get("description") %}
                   
-                  <p id="desc"> {{ event.get("description") }} </p>
+                  <p id="desc"> {{ event.get("description")|safe }} </p>
                   
               {% endif %}  
               </div>

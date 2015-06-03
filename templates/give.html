@@ -3,7 +3,7 @@
 
   <h1>Open up Your Heart and Give!</h1>
 
-  <h3>You just read: {{ article.title }}</h3>
+  <h3>You just read: <a href="/article/{{ article.title }}">{{ article.title }}</a></h3>
 
   <p>These projects could use your help:</p>
 
@@ -13,15 +13,18 @@
         <h4>Charities related to: {{ tag.tag_name }}</h4>
         
         {% for project in tagged_projs %}
-        <ul class="actionLinks">
+        <div class="actionLinks">
         
-        	<li>
+        	<div class="give_project">
         		<a href="{{ project['projectLink'] }}" data-linkType='give' data-tagId="{{ tag.tag_id }}" data-articleId="{{ article.article_id }}">
         			{{ project['title'] }}
         		</a>
+            <br>
+            <img src="{{ project['imageLink'] }}" />
+            <br>
             <p>{{ project['summary'] }}</p>
-        	</li>
-        </ul>
+        	</div>
+        </div>
         {% endfor %}
         
       
