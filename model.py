@@ -1,6 +1,7 @@
 """Models and database functions for Apptivist project."""
 
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.sql import func
 
 db = SQLAlchemy()
 
@@ -53,7 +54,7 @@ class User(db.Model):
 
     actions = db.relationship("Action", backref=db.backref("users", order_by=user_id))
 
-    def most_tagged():
+    def tag_with_most_action(self):
         """Returns the keyword tag that the user takes action on the most.
         The SQL query for this is:
         SELECT tag_id, COUNT(*)
@@ -63,6 +64,13 @@ class User(db.Model):
         ORDER BY COUNT(*) DESC
         LIMIT 1;"""
 
+        # filter_actions_by_user = Action.query.filter_by(action_user=self.user_id)
+        # .group_by(tag_id).order_by(func.count(user_id)).limit(1)
+
+        # user_actions = self.actions
+
+
+        # most_actioned_tag
 
 
 class Article(db.Model):
