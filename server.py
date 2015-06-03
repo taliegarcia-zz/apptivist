@@ -30,7 +30,7 @@ app.jinja_env.undefined = StrictUndefined
     
 @app.route('/')
 def show_newsfeed():
-    """Display newsfeed on Homepage"""
+    """Display newsfeed on Homepage, order by most recent date"""
 
     articles = Article.query.order_by(Article.date.desc()).all()
    
@@ -48,7 +48,8 @@ def register_form():
 
 @app.route('/registration', methods=['POST'])
 def register_process():
-    """Process registration."""
+    """Process registration, add user to db, 
+    and add user to current server session."""
 
     # Get form variables
     name = request.form["name"]
@@ -82,9 +83,8 @@ def login_form():
 
 @app.route('/login', methods=['POST'])
 def login_process():
-    """Process login."""
+    """Process login information"""
 
-    # Get form variables
     name = request.form["name"]
     password = request.form["password"]
 
@@ -107,7 +107,7 @@ def login_process():
 
 @app.route('/logout')
 def logout():
-    """Log out."""
+    """Log out the user from the session."""
 
     del session["user_id"]
     flash("Logged Out.")
@@ -118,8 +118,7 @@ def logout():
 
 @app.route("/apptivist/<int:id>")
 def get_user_by_id(id):
-    """Display user info page by user_id
-    """
+    """Display user info page by user_id"""
     user = User.query.get(id)
 
     return render_template("profile.html", user=user)
@@ -130,27 +129,21 @@ def get_user_by_id(id):
 
 @app.route("/new_post")
 def new_post_form():
+    """Display postArticle form on page"""
     return render_template("new_post.html")
 
 @app.route("/post_article", methods=["POST"])
 def post_to_db():
+    """When the form is submitted, this will add the new article to the
+    db. It will also return the new article's url to the js AJAX call.
+    The ajax call will handle redirecting to the resulting url."""
 
-    print "()()()() Info: "
     url = request.form.get('url')
-    print "URL: ", url
     title = request.form.get('title')
-    print "Title: ", title
     img_src = request.form.get('img_src')
-    print "Image: ", img_src
     date_str = request.form.get('date')
-    print "Date_str: ", date_str
     date = datetime.datetime.strptime(date_str, "%Y-%m-%d")
-    print "Datetme date:", date
     tags = request.form.getlist('tagList[]')
-    print "List of tags: ", tags
-
-    print url, title, img_src, date_str, date, tags
-
 
     ### Add New Article to the articles table ###
     article = Article(title=title,
@@ -171,11 +164,25 @@ def post_to_db():
     db.session.commit()
 
     article_address = "/article/" + article.title
-    print "Redirect URL: ", article_address
 
-    return redirect("/")
+    return article_address
 
+###############################################################################
+    ### OpenGraph ###
 
+@app.route("/preview", methods=['POST'])
+def preview_article():
+    """Get OpenGraph Metadata to preview article post"""
+
+    url = request.form.get("url")
+
+    og_data = pyog(url).metadata
+
+    print og_data
+
+    return jsonify(title=og_data['title'], 
+                    img=og_data['image'],
+                    desc=og_data['description'])
 
 ###############################################################################
     ### Display Article Page ###
@@ -183,15 +190,10 @@ def post_to_db():
 @app.route("/article/<title>", methods=['GET'])
 def display_article(title):
     """Show individual article page.
-
     If a user is logged in, let them view possible actions.
     """
 
     article = Article.query.filter_by(title=title).first()
-
-    # for tag in article.tag_list:
-    #     print "()()()() The type of thing is: ", type(tag)
-    #     print "()()()() This is an associated tag: ", tag.tag_name
 
     user_id = session.get("user_id")
 
@@ -202,8 +204,7 @@ def display_article(title):
 
     return render_template("article.html",
                            user=user,
-                           article=article,
-                        )
+                           article=article)
 
 
 ###############################################################################
@@ -228,7 +229,7 @@ def display_meetups(title):
     for tag, tagged_meetups in meetup_dict_by_tag.items():
         for event in tagged_meetups:
             print type(event['event_url'])
-    #       print pyog(event['event_url']).metadata
+    
     # PyOg is not working on meetup.com.
 
     return render_template("meet.html", article=article, meetup_dict=meetup_dict_by_tag)
@@ -271,8 +272,7 @@ def lookup_congress(zipcode):
     return render_template('congress.html', congress_list=congress_list)
 
 ###############################################################################
-    ### Tracking Routes - Tracking Usage Behaviour on the site ###
-
+    ### Tracking Usage Behaviour on the site ###
 
 @app.route('/action', methods=['POST'])
 def add_action_to_db():
@@ -293,12 +293,12 @@ def add_action_to_db():
 
 
 ###############################################################################
-    ### d3 Playtime ###
+    ### d3 Jsonifier ###
 
 @app.route("/influences/<int:id>", methods=["GET"])
 def get_influences_json(id):
-    """Create JSON tree based on user's articles and 
-    the actions associated with those articles"""
+    """Create JSON tree object based on user's articles and 
+    the actions associated with those articles."""
 
     user = User.query.get(id)
 
@@ -326,23 +326,6 @@ def get_influences_json(id):
         influences['name']['children'].append(a_info)
 
     return jsonify(influences)
-
-###############################################################################
-    ### OpenGraph ###
-
-@app.route("/preview", methods=['POST'])
-def preview_article():
-    """Get OpenGraph Metadata to preview article post"""
-
-    url = request.form.get("url")
-
-    og_data = pyog(url).metadata
-
-    print og_data
-
-    return jsonify(title=og_data['title'], 
-                    img=og_data['image'],
-                    desc=og_data['description'])
 
 ###############################################################################
     ### Run Server ###

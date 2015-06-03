@@ -24,10 +24,8 @@ sim_tags = db.Table('simtags',
     ### Usage Tracking ###
 
 class Action(db.Model):
-    """I want a table that tracks usage on the site.
-    This will keep track of usage/actions associated with users, articles,
-    and 'action links': meetup, give, and congress.
-    Not sure if this will be a data model or just an association table"""
+    """Actions table for analysts to keep track of usage/actions associated 
+    with users, articles, and 'action links': meetup, give, and congress."""
 
     __tablename__ = "actions" 
 
@@ -76,7 +74,7 @@ class Article(db.Model):
 
 
 class Tag(db.Model):
-    """Tag - a keyword used to distinguish topics on the Apptivist news site."""
+    """Tag - a keyword used to categorize articles on the Apptivist news site."""
 
     __tablename__ = "tags" 
 

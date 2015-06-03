@@ -96,7 +96,7 @@ $("#postArticle").submit( function(e) {
             console.log("Obj first assigned: " + formInfo);
             console.log("Tags after object is assigned: " + allTags);
 
-            $.post("/post_article", formInfo, function () { window.location = '/'; });
+            $.post("/post_article", formInfo, function (result) { window.location = result; });
 
             console.log("Obj after posting to db: " + formInfo)
             console.log("Tags after posted to db: " + allTags);
