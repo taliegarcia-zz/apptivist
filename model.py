@@ -54,24 +54,18 @@ class User(db.Model):
 
     actions = db.relationship("Action", backref=db.backref("users", order_by=user_id))
 
-    def tag_with_most_action(self):
+    def get_favorite_tag(self):
         """Returns the keyword tag that the user takes action on the most.
         The SQL query for this is:
-        SELECT tag_id, COUNT(*)
-        FROM actions
-        WHERE action_user=user_id
-        GROUP BY tag_id
-        ORDER BY COUNT(*) DESC
-        LIMIT 1;"""
+        SELECT tag_id, COUNT(*) FROM actions WHERE action_user=user_id
+        GROUP BY tag_id ORDER BY COUNT(*) DESC LIMIT 1;"""
 
-        # filter_actions_by_user = Action.query.filter_by(action_user=self.user_id)
-        # .group_by(tag_id).order_by(func.count(user_id)).limit(1)
-
-        # user_actions = self.actions
-
-
-        # most_actioned_tag
-
+        tags = [action.tag_id for action in self.actions] 
+        favorite_id = max(set(tags), key=tags.count)
+        favorite_tag = Tag.query.get(favorite_id)
+      
+        return favorite_tag
+       
 
 class Article(db.Model):
     """News article posted by user."""
