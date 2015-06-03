@@ -86,6 +86,7 @@ class Tag(db.Model):
     meetup = db.relationship("Meetup", backref=db.backref("tags", order_by=tag_id))
     giving = db.relationship("GlobalGiving", backref=db.backref("tags", order_by=tag_id))
 
+    article_list = db.relationship("Article", secondary=article_tags)
     # sim_tag_list = db.relationship("Tag", secondary=sim_tags)
 
 

@@ -26,7 +26,7 @@ app.secret_key = "ABC"
 app.jinja_env.undefined = StrictUndefined
 
 ###############################################################################
-    ### Homepage ###
+    ### Homepage - News Feed ###
     
 @app.route('/')
 def show_newsfeed():
@@ -35,6 +35,22 @@ def show_newsfeed():
     articles = Article.query.order_by(Article.date.desc()).all()
    
     return render_template("newsfeed.html", articles=articles)
+
+###############################################################################
+    ### Filter News Feed ###
+    
+@app.route('/filter/<int:tag_id>', methods=["GET"])
+def filter_newsfeed_by_tag(tag):
+    """Filter newsfeed to only show articles associated 
+    with a particular tag"""
+
+    tag = Tag.query.get(tag_id)
+
+    # query object
+    articles_by_tag = tag.article_list
+
+    return render_template("newsfeed.html", articles=articles_by_tag)
+
 
 ###############################################################################
     ### User Registration ###
@@ -168,7 +184,7 @@ def post_to_db():
     return article_address
 
 ###############################################################################
-    ### OpenGraph ###
+    ### OpenGraph for Previewing URL's ###
 
 @app.route("/preview", methods=['POST'])
 def preview_article():
