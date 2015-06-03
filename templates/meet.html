@@ -11,15 +11,19 @@
 
     <h4>Upcoming events related to: {{ tag.tag_name }}</h4>
     {% for event in tagged_meetups %}
-
-            <ul class='actionLinks'>
-              <li> 
+            <div id="meetup_event" class='actionLinks'>
+              
               <a href="{{ event['event_url'] }}" data-linkType='meetup' data-tagId="{{ tag.tag_id }}" data-articleId="{{ article.article_id }}">
                 {{ event['group']['name'].lstrip('0123456789') }}
               </a>
-            </li>
-            </ul>
-
+              <div id="descDiv">
+              <br>
+              {% if event.get("description") %}
+              <p id="desc">{{ event.get("description") }}</p>
+              {% endif %}  
+              </div>
+              <br>
+            </div>
     {% endfor %}
 
   {% endfor %}
@@ -36,6 +40,7 @@
 
   <script>
 
+  $("desc").load()
 
 
   </script>

@@ -14,6 +14,12 @@ table, td {
 	border: 1px #70b8ff dashed;
 }
 
+
+#meetup_event {
+    border: 5px solid #999;
+    border-radius: 10px;
+}
+
 #modal_wrapper.overlay:before {
     content: " ";
     width: 100%;

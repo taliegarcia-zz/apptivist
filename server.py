@@ -137,6 +137,8 @@ def get_user_by_id(id):
     """Display user info page by user_id"""
     user = User.query.get(id)
 
+    # articles = Article.query.
+
     return render_template("profile.html", user=user)
 
 
@@ -222,6 +224,24 @@ def display_article(title):
                            user=user,
                            article=article)
 
+@app.route("/article/update_article", methods=['POST'])
+def add_tags():
+
+    article_id = request.form.get("article_id")
+    print "article_id: ", article_id
+
+    article = Article.query.get(article_id)
+
+    tags = request.form.getlist('tag')
+    print "Tags: ", tags
+
+    for tag_name in tags:
+        tag = Tag.query.filter_by(tag_name=tag_name).first()
+        article.tag_list.append(tag)
+
+    db.session.commit()
+
+    return redirect(article.title)
 
 ###############################################################################
     ### API Results Pages ###
