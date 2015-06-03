@@ -55,8 +55,13 @@ class User(db.Model):
 
     def most_tagged():
         """Returns the keyword tag that the user takes action on the most.
-        In a SQLAlchemy Query this would be looking for the highest count
-        of a tag when joining the actions and articles tables together."""
+        The SQL query for this is:
+        SELECT tag_id, COUNT(*)
+        FROM actions
+        WHERE action_user=user_id
+        GROUP BY tag_id
+        ORDER BY COUNT(*) DESC
+        LIMIT 1;"""
 
 
 
