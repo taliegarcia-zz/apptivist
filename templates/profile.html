@@ -33,7 +33,7 @@
     {% if actions %}
     <h3>Actions Taken:</h3>
     <div class="favorite_tag">
-    <h4>Most Active Tag: {{ user.get_favorite_tag().tag_name }} </h4>
+    <h4>Most Active Tag: {{ user.favorite_tag.tag_name }} </h4>
     </div>
       <ol class="action_list">
       {% for action in actions %}

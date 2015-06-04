@@ -18,7 +18,7 @@ article_tags = db.Table('articletags',
 
 # Association between two similar tag keywords
 sim_tags = db.Table('simtags',
-    # db.Column("simtag_id", db.Integer, autoincrement=True, primary_key=True),
+    db.Column("simtag_id", db.Integer, autoincrement=True, primary_key=True),
     db.Column('primary_tag_id', db.Integer, db.ForeignKey('tags.tag_id')),
     db.Column('secondary_tag_id', db.Integer, db.ForeignKey('tags.tag_id'))
 )
@@ -56,7 +56,8 @@ class User(db.Model):
 
     actions = db.relationship("Action", backref=db.backref("users", order_by=user_id))
 
-    def get_favorite_tag(self):
+    @property
+    def favorite_tag(self):
         """Returns the keyword tag_id that the user takes action on the most.
         The SQL query for this is:
         SELECT tag_id, COUNT(*) FROM actions WHERE action_user=user_id
@@ -69,7 +70,8 @@ class User(db.Model):
       
         return favorite_tag
 
-    def get_influences(self):
+    @property
+    def influences(self):
         """Returns a nested dictionary of a user's 'scope of influence'.
         Shows articles that the user has posted, and actions taken on those 
         articles.
@@ -90,10 +92,8 @@ class User(db.Model):
 
         influences['name']['children'] = []
 
-        articles = Article.query.filter_by(user_id=user.user_id).all()
-
-        for article in articles:
-            article_info = ArticleSerializer(a).data
+        for article in self.articles:
+            article_info = ArticleSerializer(article).data
             article_info['name'] = article_info['title']
             if article.actions:
                 article_info['children'] = []
