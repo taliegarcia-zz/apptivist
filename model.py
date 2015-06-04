@@ -109,7 +109,9 @@ class User(db.Model):
 
             influences['name']['children'].append(article_info)
 
-        return influences
+        self._influences = influences
+        
+        return self._influences
 
        
 
