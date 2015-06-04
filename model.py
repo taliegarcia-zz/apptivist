@@ -57,6 +57,11 @@ class User(db.Model):
     actions = db.relationship("Action", backref=db.backref("users", order_by=user_id))
 
     @property
+    def json(self):
+        self._json = UserSerializer(self).data
+        return self._json
+
+    @property
     def favorite_tag(self):
         """Returns the keyword tag_id that the user takes action on the most.
         The SQL query for this is:
@@ -93,7 +98,7 @@ class User(db.Model):
         influences['name']['children'] = []
 
         for article in self.articles:
-            article_info = ArticleSerializer(article).data
+            article_info = article.json
             article_info['name'] = article_info['title']
             if article.actions:
                 article_info['children'] = []
@@ -126,8 +131,13 @@ class Article(db.Model):
 
     tag_list = db.relationship("Tag", secondary=article_tags, backref=db.backref("articles", order_by=article_id))
 
-    # maybe add reference back to actions
     actions = db.relationship("Action", backref=db.backref("article", order_by=article_id))
+
+    @property
+    def json(self):
+        self._json = ArticleSerializer(self).data
+        return self._json
+    
 
 class Tag(db.Model):
     """Tag - a keyword used to categorize articles on the Apptivist news site."""
