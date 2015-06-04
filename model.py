@@ -40,6 +40,17 @@ class Action(db.Model):
 
     tag = db.relationship("Tag")
 
+    @property
+    def json(self):
+        self._json = ActionSerializer(self).data
+        return self._json
+
+    @property
+    def tree(self):
+        self._tree, self._tree['name'] = self.json, self.json['action_type']
+        
+        return self._tree
+
 ##############################################################################
     ### Front End Models ###
 
@@ -95,17 +106,21 @@ class User(db.Model):
 
         influences['name']['children'] = []
 
+        # influences['name']['children'].append(article.tree)
+        # influences['name']['children'] = [article.tree for article in self.articles]
+        # article.treejson['children'] = [action.json for action in article.actions]
+
         for article in self.articles:
             article_info = article.json
             article_info['name'] = article_info['title']
             if article.actions:
                 article_info['children'] = []
                 for action in article.actions:
-                    action_info = ActionSerializer(action).data
+                    action_info = action.json
                     action_info['name'] = action_info['action_type']
                     article_info['children'].append(action_info)
 
-            influences['name']['children'].append(article_info)
+            influences['name']['children'].append(article.tree)
 
         self._influences = influences
 
@@ -138,6 +153,13 @@ class Article(db.Model):
         self._json = ArticleSerializer(self).data
         return self._json
     
+    @property
+    def tree(self):
+        self._tree, self._tree['name'] = self.json, self.json['title']
+ 
+        self._tree['children'] = [action.tree for action in self.actions if self.actions]
+
+        return self._tree
 
 class Tag(db.Model):
     """Tag - a keyword used to categorize articles on the Apptivist news site."""
