@@ -91,9 +91,7 @@ class User(db.Model):
 
         influences = {}
 
-        user_info = UserSerializer(self).data
-
-        influences['name'] = user_info
+        influences['name'] = self.json
 
         influences['name']['children'] = []
 
@@ -110,7 +108,7 @@ class User(db.Model):
             influences['name']['children'].append(article_info)
 
         self._influences = influences
-        
+
         return self._influences
 
        
