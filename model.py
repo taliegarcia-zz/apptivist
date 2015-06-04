@@ -104,24 +104,8 @@ class User(db.Model):
 
         influences['name'] = self.json
 
-        influences['name']['children'] = []
-
-        # influences['name']['children'].append(article.tree)
-        # influences['name']['children'] = [article.tree for article in self.articles]
-        # article.treejson['children'] = [action.json for action in article.actions]
-
-        for article in self.articles:
-            article_info = article.json
-            article_info['name'] = article_info['title']
-            if article.actions:
-                article_info['children'] = []
-                for action in article.actions:
-                    action_info = action.json
-                    action_info['name'] = action_info['action_type']
-                    article_info['children'].append(action_info)
-
-            influences['name']['children'].append(article.tree)
-
+        influences['name']['children'] = [article.tree for article in self.articles if self.articles]
+       
         self._influences = influences
 
         return self._influences
@@ -156,8 +140,11 @@ class Article(db.Model):
     @property
     def tree(self):
         self._tree, self._tree['name'] = self.json, self.json['title']
- 
-        self._tree['children'] = [action.tree for action in self.actions if self.actions]
+        
+        if self.actions:
+            self._tree['children'] = [action.tree for action in self.actions]
+            # do not assign empty array to ['children'] key, disrupts d3 look
+
 
         return self._tree
 
