@@ -27,9 +27,14 @@
     {% endif %}
     </div>
 
+    
+
     <div class="actions">
     {% if actions %}
-    <h3>Your actions:</h3>
+    <h3>Actions Taken:</h3>
+    <div class="favorite_tag">
+    <h4>Most Active Tag: {{ user.get_favorite_tag().tag_name }} </h4>
+    </div>
       <ol class="action_list">
       {% for action in actions %}
         <li>
@@ -53,10 +58,8 @@
     {% endif %}
     </div>
 
-  <div class="most_tags"></div>
-
   <h3>The Ripple Effect</h3>
-  <p>What happens after your articles are posted?</p>
+  <p>Actions inspired by posted articles</p>
   <div class="influence">
   </div>
 

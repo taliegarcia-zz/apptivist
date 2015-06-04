@@ -2,6 +2,7 @@
 
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import func
+from collections import Counter
 
 db = SQLAlchemy()
 
@@ -55,14 +56,15 @@ class User(db.Model):
     actions = db.relationship("Action", backref=db.backref("users", order_by=user_id))
 
     def get_favorite_tag(self):
-        """Returns the keyword tag that the user takes action on the most.
+        """Returns the keyword tag_id that the user takes action on the most.
         The SQL query for this is:
         SELECT tag_id, COUNT(*) FROM actions WHERE action_user=user_id
         GROUP BY tag_id ORDER BY COUNT(*) DESC LIMIT 1;"""
 
         tags = [action.tag_id for action in self.actions] 
-        favorite_id = max(set(tags), key=tags.count)
-        favorite_tag = Tag.query.get(favorite_id)
+        favorite_tag_id, tag_count = Counter(tags).most_common()[0]
+        # or just cut right through the tuple: favorite_tag_id =  Counter(tags).most_common()[0][0]
+        favorite_tag = Tag.query.get(favorite_tag_id)
       
         return favorite_tag
        
@@ -88,7 +90,6 @@ class Article(db.Model):
     # maybe add reference back to actions
     actions = db.relationship("Action", backref=db.backref("article", order_by=article_id))
 
-
 class Tag(db.Model):
     """Tag - a keyword used to categorize articles on the Apptivist news site."""
 
@@ -104,6 +105,19 @@ class Tag(db.Model):
 
     article_list = db.relationship("Article", secondary=article_tags)
     # sim_tag_list = db.relationship("Tag", secondary=sim_tags)
+
+    def tag_ranking(self):
+        """Returns the keyword tag_id that the user takes action on the most.
+        The SQL query for this is:
+        SELECT tag_id, COUNT(*) FROM actions WHERE action_user=user_id
+        GROUP BY tag_id ORDER BY COUNT(*) DESC LIMIT 1;"""
+
+        tags = [action.tag_id for action in self.actions] 
+        favorite_tag_id, tag_count = Counter(tags).most_common()[0]
+        # or just cut right through the tuple: favorite_tag_id =  Counter(tags).most_common()[0][0]
+        favorite_tag = Tag.query.get(favorite_tag_id)
+      
+        return favorite_tag
 
 
 ##############################################################################
