@@ -339,6 +339,9 @@ def get_influences_json(id):
 
     user = User.query.get(id)
 
+    # writing method on User class in model.py to return the influence dict:
+    # influences_dict = user.get_influences()
+
     influences = {}
 
     user_info = UserSerializer(user).data
@@ -349,18 +352,17 @@ def get_influences_json(id):
 
     articles = Article.query.filter_by(user_id=user.user_id).all()
 
-    for a in articles:
-        a_info = ArticleSerializer(a).data
-        a_info['name'] = a_info['title']
-        actions = Action.query.filter_by(article_id=a.article_id).all()
-        if actions:
-            a_info['children'] = []
-            for act in a.actions:
-                act_info = ActionSerializer(act).data
-                act_info['name'] = act_info['action_type']
-                a_info['children'].append(act_info)
+    for article in articles:
+        article_info = ArticleSerializer(article).data
+        article_info['name'] = article_info['title']
+        if article.actions:
+            article_info['children'] = []
+            for action in article.actions:
+                action_info = ActionSerializer(action).data
+                action_info['name'] = action_info['action_type']
+                article_info['children'].append(action_info)
 
-        influences['name']['children'].append(a_info)
+        influences['name']['children'].append(article_info)
 
     return jsonify(influences)
 

@@ -3,6 +3,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import func
 from collections import Counter
+from serializer import UserSerializer, ArticleSerializer, ActionSerializer
 
 db = SQLAlchemy()
 
@@ -67,6 +68,44 @@ class User(db.Model):
         favorite_tag = Tag.query.get(favorite_tag_id)
       
         return favorite_tag
+
+    def get_influences(self):
+        """Returns a nested dictionary of a user's 'scope of influence'.
+        Shows articles that the user has posted, and actions taken on those 
+        articles.
+        Structure of results: { "name": { user_info_dict }, 
+                                "children": 
+                                [ array of all { article_info_dict , 
+                                "children of article_info": 
+                                [ array of all { action_info_dict } ] 
+                                } ]
+                                }
+        """
+
+        influences = {}
+
+        user_info = UserSerializer(self).data
+
+        influences['name'] = user_info
+
+        influences['name']['children'] = []
+
+        articles = Article.query.filter_by(user_id=user.user_id).all()
+
+        for article in articles:
+            article_info = ArticleSerializer(a).data
+            article_info['name'] = article_info['title']
+            if article.actions:
+                article_info['children'] = []
+                for action in article.actions:
+                    action_info = ActionSerializer(action).data
+                    action_info['name'] = action_info['action_type']
+                    article_info['children'].append(action_info)
+
+            influences['name']['children'].append(article_info)
+
+        return influences
+
        
 
 class Article(db.Model):
