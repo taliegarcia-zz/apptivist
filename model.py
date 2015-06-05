@@ -104,7 +104,7 @@ class User(db.Model):
 
         influences['name'] = self.json
 
-        influences['name']['children'] = [article.tree for article in self.articles if self.articles]
+        influences['name']['children'] = [article.tree for article in self.articles]
        
         self._influences = influences
 
@@ -206,7 +206,9 @@ class Meetup(db.Model):
 
 
 class GlobalGiving(db.Model):
-    """Global Giving object referncing the global giving code and name,
+    """One line explanation.
+
+    Global Giving object referncing the global giving code and name,
     organized by Theme from Global Giving website"""
 
     __tablename__ = "giving" 
