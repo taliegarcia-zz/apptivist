@@ -20,8 +20,8 @@ var svg = d3.select(".influence ").append("svg")
 
 var profileUrl = window.location.href
 var endOfUrl = profileUrl.lastIndexOf("/")
-var userId = profileUrl.slice(endOfUrl + 1)
-var userTreeUrl = "/influences/" + userId
+var userName = profileUrl.slice(endOfUrl + 1)
+var userTreeUrl = "/influences/" + userName
 
 d3.json(userTreeUrl, function(error, influences) {
   root = influences.name;

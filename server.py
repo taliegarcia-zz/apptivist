@@ -132,10 +132,10 @@ def logout():
 ###############################################################################
     ### User Profile Page ###
 
-@app.route("/apptivist/<int:id>")
-def get_user_by_id(id):
+@app.route("/apptivist/<name>")
+def get_user_by_name(name):
     """Display user info page by user_id"""
-    user = User.query.get(id)
+    user = User.query.filter_by(name=name).first()
 
     return render_template("profile.html", 
                             user=user, 
@@ -332,12 +332,12 @@ def add_action_to_db():
 ###############################################################################
     ### d3 Jsonifier ###
 
-@app.route("/influences/<int:id>", methods=["GET"])
-def get_influences_json(id):
+@app.route("/influences/<name>", methods=["GET"])
+def get_influences_json(name):
     """Create JSON tree object based on user's articles and 
     the actions associated with those articles."""
 
-    user = User.query.get(id)
+    user = User.query.filter_by(name=name).first()
 
     return jsonify(user.influences)
 
