@@ -345,9 +345,9 @@ def get_influences_json(name):
     return jsonify(user.influences)
 
 ###############################################################################
-    ### Heatmap ###
+    ### Heatmap of Actions ###
 
-@app.route("/heatmap")
+@app.route("/actionmap")
 def show_heatmap():
     """Create JSON tree object based on user's articles and 
     the actions associated with those articles."""
