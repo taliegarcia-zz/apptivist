@@ -12,7 +12,7 @@
   	<br>
     <p>Date: {{ article.date }}</p>
   	<ul class='tags'>
-     	<li> Tags: [ {% for tag in article.tag_list %} * {{ tag.tag_name }} * {% endfor %} ]</li>
+     	<li> Tags: [ {% for tag in article.tag_list %} * <a href="/news/{{ tag.tag_name }}">{{ tag.tag_name }}</a> * {% endfor %} ]</li>
      </ul>
   </div>
 {% endfor %}  

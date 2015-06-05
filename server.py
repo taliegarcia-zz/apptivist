@@ -79,7 +79,7 @@ def register_process():
     db.session.commit()
 
     # automatically log in the new user:
-    session["user_id"] = new_user.user_id
+    session["user_name"] = new_user.name
 
     flash("Welcome to the movement, %s. You are now logged in and ready to get active!" % name)
 
@@ -114,7 +114,7 @@ def login_process():
         print "Incorrect password"
         return redirect("/login")
 
-    session["user_id"] = user.user_id
+    session["user_name"] = name
 
     print "Logged in"
 
@@ -125,7 +125,7 @@ def login_process():
 def logout():
     """Log out the user from the session."""
 
-    del session["user_id"]
+    del session["user_name"]
     flash("Logged Out.")
     return redirect("/")
 
@@ -164,12 +164,13 @@ def post_to_db():
     date = datetime.datetime.strptime(date_str, "%Y-%m-%d")
     tags = request.form.getlist('tagList[]')
 
+    user = User.query.filter_by(name=session['user_name']).first()
     ### Add New Article to the articles table ###
     article = Article(title=title,
                         url=url,
                         img_src=img_src,
                         date=date,
-                        user_id=session['user_id'])
+                        user_id=user.user_id)
 
     db.session.add(article)
     db.session.commit() # needs to be committed here before it can be added to article_tags table below
@@ -214,10 +215,10 @@ def display_article(title):
 
     article = Article.query.filter_by(title=title).first()
 
-    user_id = session.get("user_id")
+    user_name = session.get("user_name")
 
-    if user_id:
-        user = User.query.get(user_id)
+    if user_name:
+        user = User.query.filter_by(name=user_name).first()
     else:
         user = None
 
@@ -256,7 +257,7 @@ def display_meetups(title):
 
     article = Article.query.filter_by(title=title).first()
 
-    user = User.query.get(session['user_id'])
+    user = User.query.filter_by(name=session['user_name']).first()
 
     if user:
         meetup_dict_by_tag = {}
@@ -278,7 +279,7 @@ def display_giving_projs(title):
 
     article = Article.query.filter_by(title=title).first()
 
-    user = User.query.get(session['user_id'])
+    user = User.query.filter_by(name=session['user_name']).first()
 
     if user:
         giving_dict_by_tag = {}
@@ -318,9 +319,11 @@ def add_action_to_db():
     action_type = request.form.get('action_type')
     print tag_id, article_id, action_type
 
+    user = User.query.filter_by(name=session['user_name']).first()
+
     new_action = Action(tag_id=int(tag_id),
                         article_id=int(article_id),
-                        action_user=session['user_id'],
+                        action_user=user.user_id,
                         action_type=action_type)
 
     db.session.add(new_action)

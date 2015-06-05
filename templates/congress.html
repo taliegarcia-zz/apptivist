@@ -7,7 +7,17 @@
 
 	  <ul>
 	  {% for rep in congress_list %}
-	  	<li>{{ rep['first_name'] }} {{ rep['last_name'] }} : {{ rep['phone'] }}</li>
+	  	<div class="congress">
+	  	<li>{{ rep['first_name'] }} {{ rep['last_name'] }} : {{ rep['phone'] }}
+	  	<p>Get at them:</p>
+	  	<ul>
+		  	<li><a href="http://www.twitter.com/{{ rep['twitter_id'] }}">On Twitter</a></li>
+		  	<li><a href="http://www.twitter.com/{{ rep['facebook_id'] }}">On Facebook</a></li>
+		  	<li><a href="http://www.twitter.com/{{ rep['youtube_id'] }}">On Youtube</a></li>
+		</ul>
+	  	</li>
+	  	<br>
+	  	</div>
 	  {% endfor %}
 	  </ul>
 
