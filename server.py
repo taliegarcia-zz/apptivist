@@ -351,6 +351,12 @@ def show_heatmap():
 
     return render_template("heatmap.html")
 
+@app.route("/zip_latlng", methods=["GET"])
+def add_latlng():
+
+    return "Woopidoo!"
+
+
 ###############################################################################
     ### Run Server ###
 
