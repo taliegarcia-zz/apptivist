@@ -66,7 +66,7 @@ class User(db.Model):
     zipcode = db.Column(db.String(20), nullable=False) # essential for lookup, joining
 
     actions = db.relationship("Action", backref=db.backref("users", order_by=user_id))
-
+         
     @property
     def json(self):
         self._json = UserSerializer(self).data

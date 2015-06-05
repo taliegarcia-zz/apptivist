@@ -30,7 +30,7 @@ app.jinja_env.undefined = StrictUndefined
     
 @app.route('/')
 def show_newsfeed():
-    """Display newsfeed on Homepage, order by most recent date"""
+    """Display newsfeed on Homepage, order by most recent date."""
 
     articles = Article.query.order_by(Article.date.desc()).all()
    
@@ -118,7 +118,7 @@ def login_process():
 
     print "Logged in"
 
-    return redirect("/apptivist/%s" % user.user_id)
+    return redirect("/apptivist/%s" % user.name)
 
 
 @app.route('/logout')
@@ -340,6 +340,16 @@ def get_influences_json(name):
     user = User.query.filter_by(name=name).first()
 
     return jsonify(user.influences)
+
+###############################################################################
+    ### Heatmap ###
+
+@app.route("/heatmap")
+def show_heatmap():
+    """Create JSON tree object based on user's articles and 
+    the actions associated with those articles."""
+
+    return render_template("heatmap.html")
 
 ###############################################################################
     ### Run Server ###
