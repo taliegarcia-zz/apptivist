@@ -1,8 +1,6 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Heatmaps</title>
+{% extends 'base.html' %}
+{% block content %}
+  
     <style>
       html, body, #map-canvas {
         height: 100%;
@@ -10,10 +8,10 @@
         padding: 0px
       }
       #panel {
-        position: absolute;
+/*        position: absolute;*/
         top: 5px;
         left: 50%;
-        margin-left: -180px;
+        margin-left: 180px;
         z-index: 5;
         background-color: #fff;
         padding: 5px;
@@ -823,16 +821,12 @@ google.maps.event.addDomListener(window, 'load', initialize);
 
 </script>
 
-  </head>
-
-  <body>
-
-    <div id="panel">
+    {# <div id="panel">
       <button onclick="toggleHeatmap()">Toggle Heatmap</button>
       <button onclick="changeGradient()">Change gradient</button>
       <button onclick="changeRadius()">Change radius</button>
       <button onclick="changeOpacity()">Change opacity</button>
-    </div>
+    </div> #}
     <div id="map-canvas"></div>
-  </body>
-</html>
+
+{% endblock %}
