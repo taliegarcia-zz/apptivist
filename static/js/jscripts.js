@@ -103,5 +103,8 @@ $("#postArticle").submit( function(e) {
 });
 
 
-   
- 
+$("#tagForm").click( function () {
+  $('#updateArticle').toggle();
+  $("#tagForm").text( function(i, text) { return text === "Nevermind, it's cool." ? "Add more tags!" : "Nevermind, it's cool."; })
+});
+

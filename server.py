@@ -39,12 +39,12 @@ def show_newsfeed():
 ###############################################################################
     ### Filter News Feed ###
     
-@app.route('/filter/<int:tag_id>', methods=["GET"])
-def filter_newsfeed_by_tag(tag):
+@app.route('/news/<tag_name>', methods=["GET"])
+def filter_newsfeed_by_tag(tag_name):
     """Filter newsfeed to only show articles associated 
     with a particular tag"""
 
-    tag = Tag.query.get(tag_id)
+    tag = Tag.query.filter_by(tag_name=tag_name).first()
 
     # query object
     articles_by_tag = tag.article_list

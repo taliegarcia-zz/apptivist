@@ -50,7 +50,7 @@
         
         <a href="/article/{{ action.article.title }}">{{ action.article.title }}</a>
 
-        <p>Tagged: {{ action.tag.tag_name }}</p>
+        <p>Tagged: <a href="/news/{{ action.tag.tag_name }}">{{ action.tag.tag_name }}</a></p>
 
         </li>
       {% endfor %}

@@ -1,9 +1,59 @@
 {% extends 'base.html' %}
 {% block content %}
 
-  <h2>Headline: {{ article.title }} </h2>
   
-    <div class="article-info">
+
+        {# user related info #}
+        {% if "user_id" in session %}
+          <div>Tags: 
+            <ul>
+            {% for tag in article.tag_list %}
+              <li><a href='/news/{{ tag.tag_name }}'>{{ tag.tag_name }}</a></li>
+            {% endfor %}
+            </ul>
+          <button id="tagForm">Add more tags!</button>
+            <form id="updateArticle" action="update_article" method="POST" style="display: none;">
+              <div>
+              <div id="article_id" type="hidden">
+              <input type="hidden" name="article_id" value="{{ article.article_id }}">
+              </div>  
+              <label>Do you think this article fits into other categories? Update the tagged keywords here:</label>  
+              <div>        
+                  <p><input type="checkbox" name="tag" value="civil">Civil Rights</p>
+                  <p><input type="checkbox" name="tag" value="climate">Climate Change</p>
+                  <p><input type="checkbox" name="tag" value="lgbt">LGBT</p>
+                  <p><input type="checkbox" name="tag" value="politics">Politics</p>
+                  <p><input type="checkbox" name="tag" value="education">Education</p>
+                  <p><input type="checkbox" name="tag" value="finance">Finance</p>
+                  <p><input type="checkbox" name="tag" value="technology">Technology</p>
+                  <p><input type="checkbox" name="tag" value="animal">Animal Rights</p>
+              </div>
+              </div>
+              <br>
+              <div>
+                  <input type="submit" value="Assign Tags">
+              </div>
+            </form>
+          </div>
+
+          <div>Take Action: 
+           <table style="width:30%">
+              <tr>
+                <td><a href="/meet/{{ article.title }}">Meet Up</a></td>
+                <td><a href="/give/{{ article.title }}">Give Back</a></td>
+                <td><a href="/congress/{{ user.zipcode }}">Escalate</a></td>
+              </tr>
+            </table>
+
+          </div>
+            
+        {% else %}
+          <div>You must <a href="/login">log in</a> to take action!</div>
+        {% endif %}
+
+        <h2>Headline: {{ article.title }} </h2>
+  
+        <div class="article-info">
 
         <div class="img">
           <img src="{{ article.img_src }}" />
@@ -15,54 +65,5 @@
           <iframe src="http://www.theguardian.com/commentisfree/2015/may/22/caesarean-rates-are-too-high-we-should-not-treat-birth-as-a-medical-procedure" height=600 width=600></iframe>
           </div>
         </div>
-
-        {# user related info #}
-        {% if "user_id" in session %}
-          <div>
-            Your Zipcode: {{ user.zipcode }}
-          </div>
-
-          <div>Tags: 
-            <ul>
-            {% for tag in article.tag_list %}
-              <li>{{ tag.tag_name }}</li>
-            {% endfor %}
-            </ul>
-          </div>
-
-          <div>Actions: 
-              <p><a href="/meet/{{ article.title }}">Meet</a></p>
-              <p><a href="/give/{{ article.title }}">Give</a></p>
-              <p><a href="/congress/{{ user.zipcode }}">Speak Up</a></p>
-
-          </div>
-            
-        {% else %}
-          <div>You must <a href="/login">log in</a> to take action!</div>
-        {% endif %}
-
-      <form id="updateArticle" action="update_article" method="POST">
-        <div>
-        <div id="article_id" type="hidden">
-        <input type="hidden" name="article_id" value="{{ article.article_id }}">
-        </div>  
-        <label>What's it all about? Check off at least tag that describes this article:</label>  
-        <div>        
-            <p><input type="checkbox" name="tag" value="civil">Civil Rights</p>
-            <p><input type="checkbox" name="tag" value="climate">Climate Change</p>
-            <p><input type="checkbox" name="tag" value="lgbt">LGBT</p>
-            <p><input type="checkbox" name="tag" value="politics">Politics</p>
-            <p><input type="checkbox" name="tag" value="education">Education</p>
-            <p><input type="checkbox" name="tag" value="finance">Finance</p>
-            <p><input type="checkbox" name="tag" value="technology">Technology</p>
-            <p><input type="checkbox" name="tag" value="animal">Animal Rights</p>
-        </div>
-        </div>
-        <br>
-        <div>
-            <input type="submit" value="Assign Tags">
-        </div>
-      </form>
-
 
 {% endblock %}
