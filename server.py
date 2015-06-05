@@ -351,9 +351,10 @@ def show_heatmap():
 
     return render_template("heatmap.html")
 
-@app.route("/zip_latlng", methods=["GET"])
+@app.route("/zip_latlng", methods=["POST"])
 def add_latlng():
-
+    thing = request.form.get("data")
+    print thing
     return "Woopidoo!"
 
 
