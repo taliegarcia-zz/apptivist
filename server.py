@@ -353,8 +353,10 @@ def show_heatmap():
 
 @app.route("/zip_latlng", methods=["POST"])
 def add_latlng():
-    thing = request.form.get("data")
-    print thing
+    lat = request.form.get("lat")
+    lng = request.form.get("lng")
+    print "Latitude", lat
+    print "Longitude", lng
     return "Woopidoo!"
 
 
