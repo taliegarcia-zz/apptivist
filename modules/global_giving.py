@@ -35,12 +35,12 @@ def list_giving_projs(gg_code):
     dictionary = json.loads(r.text)
     list_of_project_dictionaries = dictionary['projects']['project']
 
-    # for project in list_of_project_dictionaries:
-    #     print project
+    for project in list_of_project_dictionaries:
+        print project
 
     return list_of_project_dictionaries
 
 
 if __name__ == "__main__":
     print "Dictionary of Global Giving's Theme Codes for Projects: ", gen_gg_dict()
-    # gg_code = 'climate'
+    gg_code = 'climate'

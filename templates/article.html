@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
+{% block title %}Reading {% endblock %}|
 {% block content %}
 
   
 
         {# user related info #}
-        {% if "user_id" in session %}
+        {% if "user_name" in session %}
           <div>Tags: 
             <ul>
             {% for tag in article.tag_list %}
@@ -62,8 +63,14 @@
         <div>
           <a href="{{ article.url }}">Link to Source</a>  
           <div class="iframe">
-          <iframe src="http://www.theguardian.com/commentisfree/2015/may/22/caesarean-rates-are-too-high-we-should-not-treat-birth-as-a-medical-procedure" height=600 width=600></iframe>
-          </div>
+          {% if article.article_id == 101 %}
+          <iframe src="http://www.theguardian.com/commentisfree/2015/may/22/caesarean-rates-are-too-high-we-should-not-treat-birth-as-a-medical-procedure" height=600 width=800></iframe>
+          {% endif %}
+
+          {% if article.article_id == 102 %}
+          <iframe src="http://www.bbc.com/news/world-asia-32913899" height=600 width=800></iframe>
+          {% endif %}
+
         </div>
 
 {% endblock %}

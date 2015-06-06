@@ -34,7 +34,7 @@ table, td {
     background: rgba(0,0,0,0.7);
   }
 
-  #modal_window {
+#modal_window {
     display: none;
     z-index: 200;
     position: fixed;
@@ -48,6 +48,6 @@ table, td {
     box-shadow: 0 0 10px rgba(0,0,0,0.5);
   }
 
-  #modal_wrapper.overlay #modal_window {
+#modal_wrapper.overlay #modal_window {
     display: block;
   }

@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
-
-
+{% block title %}Profile{% endblock %}|
 {% block content %}
 
   <h1>{{ user.name }} </h1>
@@ -8,7 +7,7 @@
   <p>Zipcode: {{ user.zipcode }}</p>
 
   <div class="info">
-  {% if user.user_id == session["user_id"] %}
+  {% if user.name == session["user_name"] %}
     <form action="/congress/{{ user.zipcode }}" method="GET">
       <div>
           <input type="submit" value="Where's my rep??">

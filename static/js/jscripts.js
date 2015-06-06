@@ -14,7 +14,7 @@ $('.actionLinks a').click( function(event) {
                             article_id: actionObj.articleid,
                             action_type: actionObj.linktype
                           }, 
-                          function (result) { alert(result) }
+                          function (result) { console.log(result) }
                           );
                           });
 
