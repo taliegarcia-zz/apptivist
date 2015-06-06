@@ -349,18 +349,21 @@ def get_influences_json(name):
 
 @app.route("/actionmap")
 def show_heatmap():
-    """Create JSON tree object based on user's articles and 
-    the actions associated with those articles."""
+    """Show heatmap of user actions by zipcode.
+
+    Uses Google Javascript Maps API."""
 
     return render_template("heatmap.html")
 
-@app.route("/zip_latlng", methods=["POST"])
-def add_latlng():
-    lat = request.form.get("lat")
-    lng = request.form.get("lng")
-    print "Latitude", lat
-    print "Longitude", lng
-    return "Woopidoo!"
+
+###############################################################################
+    ### Antique Map SVG ###
+
+@app.route("/antique")
+def show_antique_map():
+    """Having fun with an SVG Antique Map of USA"""
+
+    return render_template("antique_map.html")
 
 
 ###############################################################################
