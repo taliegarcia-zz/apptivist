@@ -355,6 +355,14 @@ def show_heatmap():
 
     return render_template("heatmap.html")
 
+@app.route("/jsonactions", methods=["GET"])
+def get_actions_json():
+    """Create JSON tree object based all actions on site by zipcode.
+    
+    """
+
+    return jsonify("/static/js/map.json")
+
 
 ###############################################################################
     ### Antique Map SVG ###
@@ -372,6 +380,7 @@ def show_antique_map():
 if __name__ == "__main__":
     # Run in debug mode
     app.debug = True
+    app.config['TESTING'] = True
 
     connect_to_db(app)
 
