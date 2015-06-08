@@ -2,7 +2,48 @@
 {% block title %}{% endblock %}
 {% block content %}
 
+<!-- Posts List -->
+        <div class="section blog-posts-wrapper">
+        <div class="container">
+        <div class="row">
+        {% for article in articles %}
+          <!-- Post -->
+          <div class="col-md-4 col-sm-6">
+            <div class="blog-post">
+              <!-- Post Info -->
+              <div class="post-info">
+                <div class="post-date">
+                  <div class="date">{{ article.date }}</div>
+                </div>
+                <!-- <div class="post-comments-count">
+                  <a href="page-blog-post-right-sidebar.html" title="Show Comments"><i class="glyphicon glyphicon-comment icon-white"></i>11</a>
+                </div> -->
+              </div>
+              <!-- End Post Info -->
+              <!-- Post Image -->
+              <a href="page-blog-post-right-sidebar.html"><img src="{{ article.img_src }}" class="post-image" alt="Post Title"></a>
+              <!-- End Post Image -->
+              <!-- Post Title & Summary -->
+              <div class="post-title">
+                <h3><a href="page-blog-post-right-sidebar.html">{{ article.title }}</a></h3>
+              </div>
+              <div class="post-summary">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse mattis, nulla id pretium malesuada, dui est laoreet risus, ac rhoncus eros diam id odio. Duis elementum ligula eu ipsum condimentum accumsan.</p>
+              </div>
+              <!-- End Post Title & Summary -->
+              <div class="post-more">
+                <a href="page-blog-post-right-sidebar.html" class="btn btn-small">Read more</a>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+          <!-- End Post -->
+        </div>
+      </div>
+      </div>
+      <!-- End Posts List -->
 
+{#
 {% for article in articles %}
   <div class="article">
   	<a href="/article/{{ article.title }}">{{ article.title }}</a>
@@ -17,10 +58,7 @@
      </ul>
   </div>
 {% endfor %}  
+#}
 
-</body>
-
-
-</html>
 
 {% endblock %}
