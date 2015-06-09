@@ -1,6 +1,6 @@
+$(document).ready(function () {
 
 // the link to js is working now!
-
 console.log("linked jscript working!");
 
 // This function enables the site to track users' action-items, such as meetup/giving/congress
@@ -65,8 +65,9 @@ function getPreview(data) {
                  });
  }
 
-// new problem. now need to post this to my server. 
-$("#url-field").change( function() { 
+
+
+$("#url-field").on("change", function() { 
                         if (checkUrl($(this).val())) {
                           getPreview($(this).val());
                         } else {
@@ -106,5 +107,7 @@ $("#postArticle").submit( function(e) {
 $("#tagForm").click( function () {
   $('#updateArticle').toggle();
   $("#tagForm").text( function(i, text) { return text === "Nevermind, it's cool." ? "Add more tags!" : "Nevermind, it's cool."; })
+});
+
 });
 

@@ -18,6 +18,23 @@
         <link type="text/css" rel="stylesheet" href="/static/css/tree.css" />
         
 
+        {# jQuery library #}
+        <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+        <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+        
+               
+        {# mPurpose js files #}
+        <script src="/static/css/mPurpose-master/js/jquery.bxslider.js"></script>
+        <script src="/static/css/mPurpose-master/js/jquery.fitvids.js"></script>
+        <script src="/static/css/mPurpose-master/js/jquery.sequence.js"></script>
+        <script src="/static/css/mPurpose-master/js/bootstrap.js"></script>
+        <script src="/static/css/mPurpose-master/js/main-menu.js"></script>
+        <script src="/static/css/mPurpose-master/js/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+
+        {# my js files #}
+        <script src="/static/js/jscripts.js"></script>       
+        
+
    </head>
 
     <body>
@@ -32,7 +49,7 @@
 
                     {% if "user_name" in session %}
                         <li>
-                            <a href="/new_post">Create Post</a>
+                            <a href="/new_post">Post Article</a>
                         </li>
                         <li class="has-submenu active">
                             <a href="/apptivist/{{ session["user_name"] }}">Profile +</a>
@@ -67,12 +84,7 @@
                 Put your body here.
             {% endblock %}
         
-        {# jQuery library #}
-        <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-        <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-
-        {# my js files #}
-        <script src="/static/js/jscripts.js"></script>
+        
         
 
 

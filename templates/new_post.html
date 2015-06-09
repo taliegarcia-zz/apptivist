@@ -2,6 +2,7 @@
 {% block title %}Post | {% endblock %}
 {% block content %}
 
+
 <h1>Post a News Article </h1>
     
 <div class="section">
@@ -30,12 +31,13 @@
  
                             <div class="form-group">
                             <label for="url-field">Article URL</label> 
-                            <input type="url" class="form-control" name="name" id="url-field"><span class="msg" id="checkURL"></span>
+                            <input type="url" class="form-control" name="name" id="url-field">
+                            <span class="msg" id="checkURL"></span>
                             </div>
 
                             <div class="form-group">
                             <label for="date-field">Date Posted:
-                            <input type="date" name="date" id="date-field" default=>
+                            <input type="date" name="date" id="date-field">
                             </label>
                             </div> 
                           
@@ -69,6 +71,6 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> 
 
 {% endblock %}

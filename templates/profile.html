@@ -2,6 +2,17 @@
 {% block title %}Profile | {% endblock %}
 {% block content %}
 
+<!-- Page Title -->
+<div class="section section-breadcrumbs">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h1>Profile</h1>
+          </div>
+        </div>
+      </div>
+</div>
+
   <h1>{{ user.name }} </h1>
 
   <h5>Zipcode: {{ user.zipcode }}</h5>
@@ -21,125 +32,71 @@
         <div class="container">
           <div class="row">
 
-  <div class="col-sm-12">
+            <!-- User Profile Nav Tabs -->
+            <div class="col-sm-12">
               <div class="tabbable">
                 <!-- Tabs -->
               <ul class="nav nav-tabs product-details-nav">
-                <li class="active"><a href="#" data-toggle="tab">Description</a></li>
-                <li class=""><a href="#" data-toggle="tab">Specification</a></li>
+                <li class="active"><a href="#influence" data-toggle="tab">Influence</a></li>
+                {% if actions %}<li><a href="#actions" data-toggle="tab">Actions</a></li>{% endif %}
+                <li><a href="#articles" data-toggle="tab">Articles</a></li>
               </ul>
               <!-- Tab Content (Full Description) -->
               <div class="tab-content product-detail-info">
-                <div class="tab-pane active" id="tab1">
-                  <h4>Product Description</h4>
-                  <p>
-                    Donec hendrerit massa metus, a ultrices elit iaculis eu. Pellentesque ullamcorper augue lacus. Phasellus et est quis diam iaculis fringilla id nec sapien. Sed tempor ornare felis, non vulputate dolor. Etiam ornare diam vitae ligula malesuada tempor. Vestibulum nec odio vel libero ullamcorper euismod et in sapien. Suspendisse potenti.
-                  </p>
-                  <h4>Product Highlights</h4>
-                  <ul>
-                    <li>Nullam dictum augue nec iaculis rhoncus. Aenean lobortis fringilla orci, vitae varius purus eleifend vitae.</li>
-                    <li>Nunc ornare, dolor a ultrices ultricies, magna dolor convallis enim, sed volutpat quam sem sed tellus.</li>
-                    <li>Aliquam malesuada cursus urna a rutrum. Ut ultricies facilisis suscipit.</li>
-                    <li>Duis a magna iaculis, aliquam metus in, luctus eros.</li>
-                    <li>Aenean nisi nibh, imperdiet sit amet eleifend et, gravida vitae sem.</li>
-                    <li>Donec quis nisi congue, ultricies massa ut, bibendum velit.</li>
-                  </ul>
-                  <h4>Usage Information</h4>
-                  <p>
-                    Donec hendrerit massa metus, a ultrices elit iaculis eu. Pellentesque ullamcorper augue lacus. Phasellus et est quis diam iaculis fringilla id nec sapien. Sed tempor ornare felis, non vulputate dolor. Etiam ornare diam vitae ligula malesuada tempor. Vestibulum nec odio vel libero ullamcorper euismod et in sapien. Suspendisse potenti.
-                  </p>
+                <div class="tab-pane active" id="influence">
+                  <h4>The Ripple Effect</h4>
+                  <p>Actions inspired by posted articles</p>
+                  <div class="influence"></div> 
                 </div>
-                <!-- Tab Content (Specification) -->
-                <div class="tab-pane" id="tab2">
-                  <table>
-                    <tbody><tr>
-                      <td>Total sensor Pixels (megapixels)</td>
-                      <td>Approx. 16.7</td>
-                    </tr>
-                    <tr>
-                      <td>Effective Pixels (megapixels)</td>
-                      <td>Approx. 16.1</td>
-                    </tr>
-                    <tr>
-                      <td>Automatic White Balance</td>
-                      <td>YES</td>
-                    </tr>
-                    <tr>
-                      <td>White balance: preset selection</td>
-                      <td>Daylight, Shade, Cloudy, Incandescent, Fluorescent, Flash</td>
-                    </tr>
-                    <tr>
-                      <td>White balance: custom setting</td>
-                      <td>YES</td>
-                    </tr>
-                    <tr>
-                      <td>White balance: types of color temperature</td>
-                      <td>YES (G7 to M7,15-step) (A7 to B7,15-step)</td>
-                    </tr>
-                    <tr>
-                      <td>White balance bracketing</td>
-                      <td>NO</td>
-                    </tr>
-                    <tr>
-                      <td>ISO Sensitivity Setting</td>
-                      <td>ISO100 - 25600 equivalent</td>
-                    </tr>
-                  </tbody></table>
+
+                {% if actions %}
+                <div class="tab-pane" id="actions">
+                  <h4>Actions Taken</h4>
+                  <div class="actions">
+                  <div class="favorite_tag">
+                  <h5>Most Active Tag: {{ user.favorite_tag.tag_name }} </h5>
+                  </div>
+                    <ol class="action_list">
+                    {% for action in actions %}
+                      <li>
+                      
+                      {# Set up good copy for each action_type: #}
+                      {% if action.action_type == 'meetup' %} 
+                      You attended a meetup after reading: 
+                      {% elif action.action_type == 'give' %}
+                      You donated to a charity after reading: 
+                      {% elif action.action_type == 'congress' %}
+                      You contacted congress after reading: 
+                      {% endif %}
+                      
+                      <a href="/article/{{ action.article.title }}">{{ action.article.title }}</a>
+
+                      <p>Tagged: <a href="/news/{{ action.tag.tag_name }}">{{ action.tag.tag_name }}</a></p>
+
+                      </li>
+                    {% endfor %}
+                    </ol>
+                  {% endif %}
+                  </div>
                 </div>
-              </div>
-            </div>
+
+                <div class="tab-pane" id="articles">
+                <div class="articles">
+                  {% if articles %}
+                  <h3>Posted Articles:</h3>
+                    <ul class="article_list">
+                    {% for article in articles %}
+                      <li><a href="/article/{{ article.title }}">{{ article.title|title }}</a></li>
+                    {% endfor %}
+                    </ul>
+                  {% endif %}
+                  </div>
+                </div>
+            
           </div>
-</div>
-</div>
-</div>
-
-
-    <div class="articles" id="">
-    {% if articles %}
-    <h3>Posted Articles:</h3>
-      <ul class="article_list">
-      {% for article in articles %}
-        <li><a href="/article/{{ article.title }}">{{ article.title }}</a></li>
-      {% endfor %}
-      </ul>
-    {% endif %}
+      </div>
     </div>
 
-    
-
-    <div class="actions">
-    {% if actions %}
-    <h3>Actions Taken:</h3>
-    <div class="favorite_tag">
-    <h4>Most Active Tag: {{ user.favorite_tag.tag_name }} </h4>
-    </div>
-      <ol class="action_list">
-      {% for action in actions %}
-        <li>
-        
-        {# Set up good copy for each action_type: #}
-        {% if action.action_type == 'meetup' %} 
-        You attended a meetup after reading: 
-        {% elif action.action_type == 'give' %}
-        You donated to a charity after reading: 
-        {% elif action.action_type == 'congress' %}
-        You contacted congress after reading: 
-        {% endif %}
-        
-        <a href="/article/{{ action.article.title }}">{{ action.article.title }}</a>
-
-        <p>Tagged: <a href="/news/{{ action.tag.tag_name }}">{{ action.tag.tag_name }}</a></p>
-
-        </li>
-      {% endfor %}
-      </ol>
-    {% endif %}
-    </div>
-
-  <h3>The Ripple Effect</h3>
-  <p>Actions inspired by posted articles</p>
-  <div class="influence">
-  </div> 
 
 {# d3 library #}
 <script src="http://d3js.org/d3.v3.min.js"></script>        
