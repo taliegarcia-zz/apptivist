@@ -18,8 +18,12 @@
         <div class="container">
         <div class="row">
         {% for article in articles %}
+          {% if loop.index0 % 3 == 0 %}
+          <div class="visible-sm clearfix"></div>
+          <div class="visible-md clearfix"></div>
+          <div class="visible-lg clearfix"></div>
+          {% endif %}
           <!-- Post -->
-          <div class="clearfix"></div>
           <div class="col-md-4 col-sm-6">
             <div class="blog-post">
               <!-- Post Info -->
@@ -40,7 +44,7 @@
               <!-- End Post Image -->
               <!-- Post Title & Summary -->
               <div class="post-title">
-                <h3><a href="/article/{{ article.title }}">{{ article.title }}</a></h3>
+                <h3><a href="/article/{{ article.title }}">{{ article.title|truncate(50) }}</a></h3>
               </div>
               <div class="post-summary">
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse mattis, nulla id pretium malesuada, dui est laoreet risus, ac rhoncus eros diam id odio. Duis elementum ligula eu ipsum condimentum accumsan.</p>
