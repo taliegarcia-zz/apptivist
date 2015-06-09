@@ -32,7 +32,7 @@
               {% for tag in article.tag_list %}
                 <div class="post-comments-count">
                   <ul>
-                  <li><a href="/news/{{ tag.tag_name }}" title="Show Tags">{{ tag.tag_name }}</a></li>
+                  <li><a href="/news/{{ tag.tag_name }}" title="Show Tags">{{ tag.tag_name|tag }}</a></li>
                   </ul>
                 </div>
               {% endfor %}

@@ -18,11 +18,11 @@
         <div class="row">    
 
           <!-- Sidebar -->
-          <div class="col-sm-4 blog-sidebar">
+          <div class="col-md-4 blog-sidebar">
             <h4>Categories</h4>
             <ul class="blog-categories">
               {% for tag in article.tag_list %}
-                  <li><a href='/news/{{ tag.tag_name }}'>{{ tag.tag_name }}</a></li>
+                  <li><a href='/news/{{ tag.tag_name }}'>{{ tag.tag_name|title }}</a></li>
               {% endfor %}
             </ul>
             <br>
@@ -71,15 +71,12 @@
               <div class="single-post-info">
                 {{ article.date }} 
               
-          <div>Take Action: 
-           <table style="width:100%">
-              <tr>
-                <td><a href="/meet/{{ article.title }}">Meet Up</a></td>
-                <td><a href="/give/{{ article.title }}">Give Back</a></td>
-                <td><a href="/congress/{{ user.zipcode }}">Escalate</a></td>
-              </tr>
-            </table>
+          <div class="center" style="align: center">
+          <h4>Take Action! </h4>
 
+              <a class="btn btn-red btn-large pull-left" href="/meet/{{ article.title }}">Meet Up</a>
+              <a class="btn btn-green btn-large pull-left" href="/give/{{ article.title }}">Give Back</a>
+              <a class="btn btn-blue btn-large pull-left" href="/congress/{{ user.zipcode }}">Escalate</a>
           </div>
             
         {% else %}
