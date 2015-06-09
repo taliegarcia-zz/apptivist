@@ -15,8 +15,7 @@
         <![endif]-->
         <link rel="stylesheet" href="/static/css/mPurpose-master/css/main.css">
        
-
-        {# <link type="text/css" rel="stylesheet" href="/static/css/tree.css" /> #}
+        <link type="text/css" rel="stylesheet" href="/static/css/tree.css" />
         
 
    </head>
@@ -58,11 +57,11 @@
                     </ul>
         
         <!-- Show flashed messages -->    
-        <hr>
-
+        <div class="container">
             {% for flash in get_flashed_messages() %}
-              {{ flash }}
+                <div class="alert alert-info">{{ flash }}</div>
             {% endfor %}
+        </div>
 
             {% block content %}
                 Put your body here.

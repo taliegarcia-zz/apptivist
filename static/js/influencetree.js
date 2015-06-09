@@ -18,6 +18,7 @@ var svg = d3.select(".influence ").append("svg")
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+// get user's name from url 
 var profileUrl = window.location.href
 var endOfUrl = profileUrl.lastIndexOf("/")
 var userName = profileUrl.slice(endOfUrl + 1)
@@ -70,6 +71,8 @@ function update(source) {
       .attr("dy", ".35em")
       .attr("text-anchor", function(d) { return d.children || d._children ? "end" : "start"; })
       .text(function(d) { return d.name; })
+      .style("fill", "grey")
+      .style("font-size","20px")
       .style("fill-opacity", 1e-6);
 
   // Transition nodes to their new position.
@@ -78,7 +81,7 @@ function update(source) {
       .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; });
 
   nodeUpdate.select("circle")
-      .attr("r", 4.5)
+      .attr("r", 25)
       .style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; });
 
   nodeUpdate.select("text")
