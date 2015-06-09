@@ -13,20 +13,29 @@
       </div>
 </div>
 
-  <h1>{{ user.name }} </h1>
+<div class="section">
+  <div class="container">
+    <div class="row">
+    <div class="col-sm-12">
+      <div class="user">
+      <h1>{{ user.name }} </h1>
 
-  <h5>Zipcode: {{ user.zipcode }}</h5>
+      <h5>Zipcode: {{ user.zipcode }}</h5>
 
-  <div class="congress">
-  {% if user.name == session["user_name"] %}
-    <form action="/congress/{{ user.zipcode }}" method="GET">
-      <div class="row">
-          <h4>Got something to say? </h4>
-          <input class="btn" type="submit" value="Contact your Rep!">
+      <div class="row congress text-center">
+      {% if user.name == session["user_name"] %}
+        <form action="/congress/{{ user.zipcode }}" method="GET">
+          <div class="row">
+              <h4>Got something to say? </h4>
+              <input class="btn" type="submit" value="Contact your Rep!">
+          </div>
+        </form>
+      {% endif %}
       </div>
-    </form>
-  {% endif %}
-  </div>
+</div>
+</div>
+</div>
+</div>
 
   <div class="section">
         <div class="container">
