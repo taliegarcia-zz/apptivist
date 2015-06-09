@@ -79,8 +79,14 @@ function update(source) {
       .attr("x", function(d) { return d.children || d._children ? -10 : 10; })
       .attr("dy", ".35em")
       .attr("text-anchor", function(d) { return d.children || d._children ? "end" : "start"; })
-      .text(function(d) { return d.name; })
+      .text(function(d) { 
+                    if (d.action_user) {
+                      return ( d.action_type + " Action Taken!");
+                    } else {
+                    return d.name; }
+                  })
       .style("fill-opacity", 1e-6)
+      .style("text-transform", "capitalize")
       .call(wrap, 200);
 
 
