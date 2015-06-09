@@ -4,48 +4,71 @@
 
 <h1>Post a News Article </h1>
     
-<h3>Preview Post</h3>
-<div id="previewDiv"></div>
+<div class="section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6 col-sm-offset-3">
+                        <div class="blog-post">
+                        <div id="previewDiv">
+                            <h3>Preview Post</h3>
+                            <!-- Post Info -->
+                            <!-- Post Image -->
+                            <img class="post-image" alt="">
+                            <!-- End Post Image -->
+                            <!-- Post Title & Summary -->
+                            <div class="post-title">
+                            <h3></h3>
+                            </div>
+                            <div class="post-summary">
+                            <p></p>
+                            </div>
+                            <!-- End Post Title & Summary -->
+                        </div>
 
-
-    <form id="postArticle" action="post_article" method="POST">
-
-        <div class="form-group">
-        <label for="url-field">Article URL</label> 
-        <input type="url" class="form-control" name="name" id="url-field"><span class="msg" id="checkURL"></span>
-        </div>
-
-        <div class="form-group">
-        <label for="date-field">Date Posted:
-        <input type="date" name="date" id="date-field" default=>
-        </label>
-        </div> 
-      
-    <br>
-    <br>
-    <div>
-        <label>What's it all about? Check off at least one tag that describes this article:
-        <div id='keywords'>        
-            <p><input type="checkbox" name="tag" value="civil">Civil Rights</p>
-            <p><input type="checkbox" name="tag" value="climate">Climate Change</p>
-            <p><input type="checkbox" name="tag" value="lgbt">LGBT</p>
-            <p><input type="checkbox" name="tag" value="politics">Politics</p>
-            <p><input type="checkbox" name="tag" value="education">Education</p>
-            <p><input type="checkbox" name="tag" value="finance">Finance</p>
-            <p><input type="checkbox" name="tag" value="technology">Technology</p>
-            <p><input type="checkbox" name="tag" value="animal">Animal Rights</p>
-        </div>
-        </label>
-    </div>
-    <br>
-
-    <div>
-        <input id="newArticle" type="submit" value="Post Article">
-    </div>
-
-</form>
-
+                        <div class="basic-login">
+                            <form id="postArticle" action="post_article" method="POST" role="form">
  
+                            <div class="form-group">
+                            <label for="url-field">Article URL</label> 
+                            <input type="url" class="form-control" name="name" id="url-field"><span class="msg" id="checkURL"></span>
+                            </div>
 
+                            <div class="form-group">
+                            <label for="date-field">Date Posted:
+                            <input type="date" name="date" id="date-field" default=>
+                            </label>
+                            </div> 
+                          
+                            <div class="form-group">
+                            <label class="title">What's it all about? 
+                            <p>Check off at least one category tag that describes this article:</p>
+                            </label>
+
+                            <label class="checkbox">
+                            <div class="checkbox" id='keywords'>        
+                            <div class="form-group">
+                                <p><input type="checkbox" name="tag" value="civil"> Civil Rights</p>
+                                <p><input type="checkbox" name="tag" value="climate"> Climate Change</p>
+                                <p><input type="checkbox" name="tag" value="lgbt"> LGBT</p>
+                                <p><input type="checkbox" name="tag" value="politics"> Politics</p>
+                                <p><input type="checkbox" name="tag" value="education"> Education</p>
+                                <p><input type="checkbox" name="tag" value="finance"> Finance</p>
+                                <p><input type="checkbox" name="tag" value="technology"> Technology</p>
+                                <p><input type="checkbox" name="tag" value="animal"> Animal Rights</p>
+                            </div>
+                            </div>
+                            </div>
+                            </label>
+                            <br>
+
+                            <div class="form-group">
+                                <input class="btn" id="newArticle" type="submit" value="Post Article">
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 {% endblock %}

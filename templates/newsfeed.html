@@ -2,10 +2,21 @@
 {% block title %}{% endblock %}
 {% block content %}
 
+<!-- Page Title -->
+<div class="section section-breadcrumbs">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h1>Newsfeed</h1>
+          </div>
+        </div>
+      </div>
+</div>
+
 <!-- Posts List -->
         <div class="section blog-posts-wrapper">
         <div class="container">
-        <div class="row">
+        <div class="row clearfix">
         {% for article in articles %}
           <!-- Post -->
           <div class="col-md-4 col-sm-6">
@@ -15,24 +26,26 @@
                 <div class="post-date">
                   <div class="date">{{ article.date }}</div>
                 </div>
-                <!-- <div class="post-comments-count">
-                  <a href="page-blog-post-right-sidebar.html" title="Show Comments"><i class="glyphicon glyphicon-comment icon-white"></i>11</a>
-                </div> -->
+              </div>
+              <div class="post-info" style="align: bottom">
+                <div class="post-comments-count">
+                  <a href="page-blog-post-right-sidebar.html" title="Show Comments">tag_name</a>
+                </div>
               </div>
               <!-- End Post Info -->
               <!-- Post Image -->
-              <a href="page-blog-post-right-sidebar.html"><img src="{{ article.img_src }}" class="post-image" alt="Post Title"></a>
+              <a href="/article/{{ article.title }}"><img src="{{ article.img_src }}" class="post-image" alt="Post Title"></a>
               <!-- End Post Image -->
               <!-- Post Title & Summary -->
               <div class="post-title">
-                <h3><a href="page-blog-post-right-sidebar.html">{{ article.title }}</a></h3>
+                <h3><a href="/article/{{ article.title }}">{{ article.title }}</a></h3>
               </div>
               <div class="post-summary">
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse mattis, nulla id pretium malesuada, dui est laoreet risus, ac rhoncus eros diam id odio. Duis elementum ligula eu ipsum condimentum accumsan.</p>
               </div>
               <!-- End Post Title & Summary -->
               <div class="post-more">
-                <a href="page-blog-post-right-sidebar.html" class="btn btn-small">Read more</a>
+                <a href="/article/{{ article.title }}" class="btn btn-small">Read more</a>
               </div>
             </div>
           </div>
@@ -41,24 +54,7 @@
         </div>
       </div>
       </div>
+      </div>
       <!-- End Posts List -->
-
-{#
-{% for article in articles %}
-  <div class="article">
-  	<a href="/article/{{ article.title }}">{{ article.title }}</a>
-  	<br>
-  	<img src="{{ article.img_src }}">
-  	<br>
-  	Posted by <a href="/apptivist/{{ article.user.name }}">{{ article.user.name }}</a>
-  	<br>
-    <p>Date: {{ article.date }}</p>
-  	<ul class='tags'>
-     	<li> Tags: [ {% for tag in article.tag_list %} * <a href="/news/{{ tag.tag_name }}">{{ tag.tag_name }}</a> * {% endfor %} ]</li>
-     </ul>
-  </div>
-{% endfor %}  
-#}
-
 
 {% endblock %}

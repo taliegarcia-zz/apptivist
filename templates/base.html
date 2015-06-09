@@ -5,7 +5,7 @@
        
         <title>{% block title %}{% endblock %}Apptivist</title>
 
-        <link rel="stylesheet" href="/static/css/mPurpose-master/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/static/css/bootstrap.css">
         <link rel="stylesheet" href="/static/css/mPurpose-master/css/icomoon-social.css">
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,600,800' rel='stylesheet' type='text/css'>
 
@@ -21,28 +21,41 @@
 
    </head>
 
-
     <body>
+    <div class="mainmenu-wrapper">
+            <div class="container">
+                <nav id="mainmenu" class="mainmenu">
+                    <ul>
+                        <li class="logo-wrapper"><a href="/"><h1>Apptivist</h1></a></li>
+                        <li>
+                            <a href="/">Newsfeed</a>
+                        </li>
 
-      <h1>Apptivist</h1>
-      <!-- Menu Bar -->
-        <div class="homebar">
-
-            <p><a href="/">Home</a></p>
-
-            <!-- show if logged in or not -->
-            {% if "user_name" in session %}
-                <p><a href="/apptivist/{{ session["user_name"] }}">My Profile</a></p>
-                <p><a href="/new_post" class="formbox">Post a New Article</a></p>
-                <p><a href="/logout">Log Out</a></p>
-            {% else %}
-                <p><a href="/login">Log In</a></p>
-                <p><a href="/registration">Register</a></p>
-            {% endif %} 
-                <p><a href="/actionmap">Apptivist Action Map</a></p>
-        
-        </div>
-
+                    {% if "user_name" in session %}
+                        <li>
+                            <a href="/new_post">Create Post</a>
+                        </li>
+                        <li class="has-submenu active">
+                            <a href="/apptivist/{{ session["user_name"] }}">Profile +</a>
+                            <div class="mainmenu-submenu">
+                                <div class="mainmenu-submenu-inner"> 
+                                    <div>
+                                        <h4>View Influence</h4>
+                                        <ul>
+                                            <li><a href="/apptivist/{{ session["user_name"] }}">Homepage (Sample 1)</a></li>
+                                        </ul>
+                        <li>
+                            <a href="/logout">Logout</a>
+                        </li>
+                    {% else %}
+                        <li>
+                            <a href="/login">Login</a>
+                        </li>
+                        <li>
+                            <a href="/register">Register</a>
+                        </li>
+                    {% endif %} 
+                    </ul>
         
         <!-- Show flashed messages -->    
         <hr>

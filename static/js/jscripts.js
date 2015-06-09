@@ -58,9 +58,9 @@ function getPreview(data) {
 
                   // insert preview into html
                   function (result) { 
-                  $("#previewDiv").html('<strong>Headline: </strong>' + result.title 
-                                        + '<br><img src="' + result.img 
-                                        + '" /><br><strong>Description: </strong>' + result.desc);
+                  $("#previewDiv .post-title h3").text(result.title); 
+                  $("#previewDiv .post-image").attr("src", result.img);
+                  $("#previewDiv .post-summary p").text(result.desc);
                   addDataAttr(result, "#postArticle");
                  });
  }
@@ -102,7 +102,7 @@ $("#postArticle").submit( function(e) {
             console.log("Tags after posted to db: " + allTags);
 });
 
-
+// add more tags on Article Page
 $("#tagForm").click( function () {
   $('#updateArticle').toggle();
   $("#tagForm").text( function(i, text) { return text === "Nevermind, it's cool." ? "Add more tags!" : "Nevermind, it's cool."; })
