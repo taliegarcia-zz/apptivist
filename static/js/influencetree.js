@@ -78,7 +78,7 @@ function update(source) {
   nodeEnter.select("a").append("text")
       .attr("x", function(d) { return d.children || d._children ? -10 : 10; })
       .attr("dy", ".35em")
-      .attr("text-anchor", function(d) { return d.children || d._children ? "end" : "start"; })
+      .attr("text-anchor", function(d) { return d.children || d._children ? "end" : "middle"; })
       .text(function(d) { 
                     if (d.action_user) {
                       return ( d.action_type + " Action Taken!");
@@ -98,7 +98,7 @@ function update(source) {
       .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; });
 
   nodeUpdate.select("circle")
-      .attr("r", 25)
+      .attr("r", 30)
       .style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; });
 
   nodeUpdate.select("text")
