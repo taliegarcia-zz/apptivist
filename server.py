@@ -2,7 +2,7 @@
 
 from jinja2 import StrictUndefined
 
-from flask import Flask, render_template, redirect, request, flash, session, jsonify
+from flask import Flask, render_template, redirect, request, flash, session, jsonify, url_for
 from flask_debugtoolbar import DebugToolbarExtension
 
 from model import User, Article, Tag, Meetup, GlobalGiving, Action, article_tags, connect_to_db, db
@@ -134,13 +134,25 @@ def logout():
 
 @app.route("/apptivist/<name>")
 def get_user_by_name(name):
-    """Display user info page by user_id"""
+    """Display user info page by user's name'"""
     user = User.query.filter_by(name=name).first()
 
     return render_template("profile.html", 
                             user=user, 
                             articles=user.articles, 
                             actions=user.actions)
+
+@app.route("/apptivist/<int:id>")
+def get_user_by_id(id):
+    """Display user info page by user_id.
+    This handles the d3 tree links."""
+
+
+    user = User.query.get(id)
+
+    user_url = "/apptivist/" + user.name
+
+    return redirect(user_url) 
 
 
 ###############################################################################
@@ -381,6 +393,7 @@ if __name__ == "__main__":
     # Run in debug mode
     app.debug = True
     app.config['TESTING'] = True
+    app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = True
 
     connect_to_db(app)
 

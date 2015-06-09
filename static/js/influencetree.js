@@ -15,7 +15,7 @@ var diagonal = d3.svg.diagonal()
 var svg = d3.select(".influence ").append("svg")
     .attr("width", width + margin.right + margin.left)
     .attr("height", height + margin.top + margin.bottom)
-  .append("g")
+    .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 // get user's name from url 
@@ -49,7 +49,7 @@ function update(source) {
   var nodes = tree.nodes(root).reverse(),
       links = tree.links(nodes);
 
-  // Normalize for fixed-depth.
+  // Normalize for fixed-depth. 
   nodes.forEach(function(d) { d.y = d.depth * 180; });
 
   // Update the nodes…
@@ -65,15 +65,26 @@ function update(source) {
   nodeEnter.append("circle")
       .attr("r", 1e-6)
       .style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; });
-
-  nodeEnter.append("text")
+  
+  nodeEnter.append("svg:a").attr("xlink:href", function(d){
+                                if (d.title) {
+                                  return ("/article/" + d.title);
+                                } else if (d.action_user) {
+                                  return ("/apptivist/" + d.action_user);
+                                }
+                                });
+                                
+  
+  nodeEnter.select("a").append("text")
       .attr("x", function(d) { return d.children || d._children ? -10 : 10; })
       .attr("dy", ".35em")
       .attr("text-anchor", function(d) { return d.children || d._children ? "end" : "start"; })
       .text(function(d) { return d.name; })
-      .style("fill", "grey")
-      .style("font-size","20px")
-      .style("fill-opacity", 1e-6);
+      .style("fill-opacity", 1e-6)
+      .call(wrap, 200);
+
+
+      
 
   // Transition nodes to their new position.
   var nodeUpdate = node.transition()
@@ -142,4 +153,34 @@ function click(d) {
     d._children = null;
   }
   update(d);
+}
+
+// wrap text
+function wrap(text, width) {
+  text.each(function() {
+    var text = d3.select(this),
+        words = text.text().split(/\s+/).reverse(),
+        word,
+        line = [],
+        lineNumber = 0,
+        lineHeight = 1.1, // ems
+        y = text.attr("y"),
+        dy = parseFloat(text.attr("dy")),
+        tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+    while (word = words.pop()) {
+      line.push(word);
+      tspan.text(line.join(" "));
+      if (tspan.node().getComputedTextLength() > width) {
+        line.pop();
+        tspan.text(line.join(" "));
+        line = [word];
+        tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+      }
+    }
+  });
+}
+
+function type(d) {
+  d.value = +d.value;
+  return d;
 }
