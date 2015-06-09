@@ -2,17 +2,33 @@
 {% block title %}Reading | {% endblock %}
 {% block content %}
 
-  
+<!-- Page Title -->
+    <div class="section section-breadcrumbs">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h1>{{ article.title|title }}</h1>
+          </div>
+        </div>
+      </div>
+    </div>
 
-        {# user related info #}
-        {% if "user_name" in session %}
-          <div>Tags: 
-            <ul>
-            {% for tag in article.tag_list %}
-              <li><a href='/news/{{ tag.tag_name }}'>{{ tag.tag_name }}</a></li>
-            {% endfor %}
+    <div class="section">
+      <div class="container">
+        <div class="row">    
+
+          <!-- Sidebar -->
+          <div class="col-sm-4 blog-sidebar">
+            <h4>Categories</h4>
+            <ul class="blog-categories">
+              {% for tag in article.tag_list %}
+                  <li><a href='/news/{{ tag.tag_name }}'>{{ tag.tag_name }}</a></li>
+              {% endfor %}
             </ul>
-          <button id="tagForm">Add more tags!</button>
+            <br>
+            {% if "user_name" in session %}
+            <div class="">
+            <button id="tagForm" class="btn">Add more category tags!</button>
             <form id="updateArticle" action="update_article" method="POST" style="display: none;">
               <div>
               <div id="article_id" type="hidden">
@@ -32,13 +48,31 @@
               </div>
               <br>
               <div>
-                  <input type="submit" value="Assign Tags">
+                  <input class="btn" type="submit" value="Assign Tags">
               </div>
             </form>
+            </div>
+            <h4>Archive</h4>
+            <ul>
+              <li><a href="#">January 2013</a></li>
+              <li><a href="#">February 2013</a></li>
+              <li><a href="#">March 2013</a></li>
+              <li><a href="#">April 2013</a></li>
+              <li><a href="#">May 2013</a></li>
+            </ul>
           </div>
-
+          <!-- End Sidebar -->        
+  
+  <div class="col-sm-8">
+            <div class="blog-post blog-single-post">
+              <div class="single-post-title">
+                <h3>{{ article.title|title }}</h3>
+              </div>
+              <div class="single-post-info">
+                {{ article.date }} 
+              
           <div>Take Action: 
-           <table style="width:30%">
+           <table style="width:100%">
               <tr>
                 <td><a href="/meet/{{ article.title }}">Meet Up</a></td>
                 <td><a href="/give/{{ article.title }}">Give Back</a></td>
@@ -52,25 +86,30 @@
           <div>You must <a href="/login">log in</a> to take action!</div>
         {% endif %}
 
-        <h2>Headline: {{ article.title }} </h2>
-        <p>Posted by: <a href="/apptivist/{{ article.user.name }}">{{ article.user.name }}</a></p>  
-        <div class="article-info">
-
-        <div class="img">
-          <img src="{{ article.img_src }}" />
-        </div> 
+              <div class="single-post-image">
+                <img src="{{ article.img_src }}" alt="Post Title">
+              </div>
+              <div class="single-post-content">
+                <h3>Lorem ipsum dolor sit amet</h3>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse mattis, nulla id pretium malesuada, dui est laoreet risus, ac rhoncus eros diam id odio. Duis elementum ligula eu ipsum condimentum accumsan.
+                </p>
+                <p>
+                  Vivamus euismod elit ac libero facilisis tristique. Duis mollis non ligula vel tincidunt. Nulla consectetur libero id nunc ornare, vel vulputate tellus mollis. Sed quis nulla magna. Integer rhoncus sem quis ultrices lobortis. Maecenas tempus nulla quis dolor vulputate egestas. Phasellus cursus tortor quis massa faucibus fermentum vel sit amet tortor. Phasellus vehicula lorem et tortor luctus, a dignissim lacus tempor. Aliquam volutpat molestie metus sit amet aliquam. Duis vestibulum quam tortor, sed ultrices orci sagittis nec.
+                </p>
+                <h3>Sed sit amet metus sit</h3>
+                <p>
+                  Proin fermentum, purus id eleifend molestie, nisl arcu rutrum tellus, a luctus erat tortor ut augue. Vivamus feugiat nisi sit amet dignissim fermentum. Duis elementum mattis lacinia. Sed sit amet metus sit amet leo semper feugiat. Nulla vel orci nec neque interdum facilisis egestas vitae lorem. Phasellus elit ante, posuere at augue quis, porta vestibulum magna. Nullam non mattis odio. Donec eget velit leo. Nunc et diam volutpat tellus ultrices fringilla eu a neque. Integer lectus nunc, vestibulum a turpis vitae, malesuada lacinia nibh. In sit amet leo ut turpis convallis bibendum. Nullam nec purus sapien. Quisque sollicitudin cursus felis sit amet aliquam.
+                </p>
+              <div>
+                <a href="{{ article.url }}">Read more</a> 
+              </div>
+              </div>
+            </div>
+    </div>
+</div>
+</div>
+</div>        
         
-        <div>
-          <a href="{{ article.url }}">Link to Source</a>  
-          <div class="iframe">
-          {% if article.article_id == 101 %}
-          <iframe src="http://www.theguardian.com/commentisfree/2015/may/22/caesarean-rates-are-too-high-we-should-not-treat-birth-as-a-medical-procedure" height=600 width=800></iframe>
-          {% endif %}
-
-          {% if article.article_id == 102 %}
-          <iframe src="http://www.bbc.com/news/world-asia-32913899" height=600 width=800></iframe>
-          {% endif %}
-
-        </div>
 
 {% endblock %}
