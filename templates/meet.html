@@ -1,50 +1,91 @@
 {% extends 'base.html' %}
 {% block title %}Meet Up | {% endblock %}
 {% block content %}
+<!-- Page Title -->
+<div class="section section-breadcrumbs">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h1>Meetups Near You</h1>
+          </div>
+        </div>
+      </div>
+</div>
 
-  <h1>Meetup Info</h1>
+<div class="section">
+  <div class="container">
+    <div class="row">
+    <div class="col-sm-12">
+      <h3>You just read: <a href="/article/{{ article.title }}">{{ article.title }}</a></h3> 
+      </div>
+    </div>
+  </div>
+</div>
 
-  <h3>You just read: <a href="/article/{{ article.title }}">{{ article.title }}</a></h3>
-
-  <div class='meetup-live-events'> 
-
-  {% for tag, tagged_meetups in meetup_dict.items() %}
-
-    <h4>Upcoming events related to: {{ tag.tag_name }}</h4>
-    {% for event in tagged_meetups %}
-            <div id="meetup_event" class='actionLinks'>
-              
-              <a href="{{ event['event_url'] }}" data-linkType='meetup' data-tagId="{{ tag.tag_id }}" data-articleId="{{ article.article_id }}">
-                {{ event['group']['name'].lstrip('0123456789') }}
-              </a>
-              <div id="descDiv">
-              <br>
-              {% if event.get("description") %}
-                  
-                  <p id="desc"> {{ event.get("description")|safe }} </p>
-                  
-              {% endif %}  
+<!-- Posts List -->
+        <div class="section blog-posts-wrapper">
+        <div class="container">
+        <div class="row">
+          {% for tag, tagged_meetups in meetup_dict.items() %}
+          <div class="col-sm-12">
+          <h4>Upcoming events related to: {{ tag.tag_name|title }}</h4>
+          </div>
+          {% if tagged_meetups %}
+          {% for event in tagged_meetups %}
+        </div>
+          <!-- Post -->
+          <div class="row col-sm-10 col-centered">
+            <div class="blog-post">
+              <!-- Post Info -->
+              <div class="post-info">
+                <div class="post-comments-count">
+                  <p>
+                  <a href="/news/{{ tag.tag_name }}" title="Show Tags">{{ tag.tag_name|title }}</a>
+                  </p>
+                </div>
               </div>
-              <br>
+              <!-- End Post Info -->
+              <!-- Post Image -->
+              <div id="meetup_event" class='actionLinks'>
+              <a href="{{ event['event_url'] }}" data-linkType='meetup' data-tagId="{{ tag.tag_id }}" data-articleId="{{ article.article_id }}"><img src="http://www.ftsociety.org/wp-content/uploads/Meetup-Logo-1-med1.jpg" class="post-image" alt="Post Title"></a>
+              </div>
+              <!-- End Post Image -->
+              <!-- Post Name & Summary -->
+              <div class="post-title">
+                <h3>
+                <div id="meetup_event" class='actionLinks'>
+                <a href="{{ event['event_url'] }}" data-linkType='meetup' data-tagId="{{ tag.tag_id }}" data-articleId="{{ article.article_id }}">{{ event['group']['name'].lstrip('0123456789')|truncate(50)|title }}</a>
+                </div>
+                </h3>
+              </div>
+              {% if event.get("description") %}
+              <div class="post-summary">    
+                  <p id="desc" style="word-wrap: break-word;"> 
+                  {{ event["description"]|safe }} </p>
+              </div>    
+              {% endif %}  
+              <div class="post-summary"></div>
+              <!-- End Post Title & Summary -->
+              <div class="post-more">
+                <div id="meetup_event" class='actionLinks'>
+                <a href="{{ event['event_url'] }}" class="btn btn-small" data-linkType='meetup' data-tagId="{{ tag.tag_id }}" data-articleId="{{ article.article_id }}">Meet Up!</a>
+                </div>
+              </div>
             </div>
-    {% endfor %}
-
-  {% endfor %}
-  </div>
-	
-  <div>
-    Tags: 
-        <ul>
-        {% for tag in article.tag_list %}
-          <li>{{ tag.tag_name }}</li>
+          </div>
+          {% endfor %}
+          <!-- End Post -->
+          {% else %}
+          <div class="post-title">
+                <h3>
+                No Meetups found.
+                </h3>
+          </div>
+          {% endif %}
         {% endfor %}
-        </ul>
-  </div>
-
-  <script>
-
-
-
-  </script>
+      </div>
+      </div>
+      </div>
+      <!-- End Posts List -->
 
 {% endblock %}

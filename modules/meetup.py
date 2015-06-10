@@ -46,6 +46,7 @@ def list_events(zipcode, topic):
     else:
         print "No events found."
         events_list = []
+   
 
     return events_list
 

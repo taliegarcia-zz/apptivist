@@ -2667,3 +2667,8 @@ span.color-red {
 .dropdown.open a.dropdown-toggle .caret {
   border-top: 4px solid #FFF;
 }
+
+.col-centered{
+    float: none;
+    margin: 0 auto;
+}
