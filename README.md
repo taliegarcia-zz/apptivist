@@ -12,18 +12,23 @@ Meetup.com API, GlobalGiving.org API, Sunlight Congress RESTful API
 
 
 ####User Features:
+
 > **Ability for the user to:**
 
 > - Post a news article to the site
   * View preview of article before posting
+
 > - Tag articles with keywords from eight different categories
+
 > - Read news articles posted by o†her users 
   * In newsfeed, sorted by date posted
   * Can optionally be sorted by category too
+
 > - Take one of three actions after reading an interesting article:
   * Look up related Meetup.com events 
   * Find related GlobalGiving.org charity projects
   * Contact their local govt representative 
+
 > - View user profiles with the following details:
   * Influence: A data tree representing their influence on the site: articles they have posted, and actions that other users have taken since reading those articles
   * Actions: A list of the user's actions made when interacting with the site
@@ -34,11 +39,18 @@ Meetup.com API, GlobalGiving.org API, Sunlight Congress RESTful API
 > **Ability for the app to:**
 
 > - Display newsfeed either by date or by category tag, after querying database in SQLite
-> - Preview article posts by parsing header tags in the new url for Open Graph Protocol data. Return the result to the browser for the user to preview their post.
+
+> - Preview article posts via AJAX post request. In browser, the javascript AJAX post sends the url to the server. The server parses the Open Graph Protocol header tags in the url for the article data to preview. Return the result to the browser so the user can preview their post.
+
 > - Use the database associating Apptivist category tags to categories on Meetup and Global Giving sites. 
+
 > - Use the associated terms to send requests to Meetup API and Global Giving API. Results are returned in JSON, then rendered in browser for user
+
 > - Based on the user's zipcode, send request to Sunlight Congress API for contact information on all the user's local government officials
+
 > - Track and store user's actions on the site. Everytime a user clicks on an official Meetup, Global Giving, or Congress link, send the information of that event back to the server to be added to a database of user actions
+database
+
 > - Nestle the tracked user data into a tree object to be rendered by d3 javascript into a collapsible graph on the user's profile page - the Influence tree!
 
 
