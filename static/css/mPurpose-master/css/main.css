@@ -2672,3 +2672,10 @@ span.color-red {
     float: none;
     margin: 0 auto;
 }
+
+#map-canvas {
+  width: 100%;
+  height: 500px;
+  margin-bottom: 15px;
+  border: 2px solid #fff;
+}

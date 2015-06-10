@@ -34,10 +34,11 @@
         {# my js files #}
         <script src="/static/js/jscripts.js"></script>       
         
-
+        {% block head %}{% endblock %}
    </head>
 
     <body>
+
     <div class="mainmenu-wrapper">
             <div class="container">
                 <nav id="mainmenu" class="mainmenu">
@@ -51,15 +52,9 @@
                         <li>
                             <a href="/new_post">Post Article</a>
                         </li>
-                        <li class="has-submenu active">
-                            <a href="/apptivist/{{ session["user_name"] }}">Profile +</a>
-                            <div class="mainmenu-submenu">
-                                <div class="mainmenu-submenu-inner"> 
-                                    <div>
-                                        <h4>View Influence</h4>
-                                        <ul>
-                                            <li><a href="/apptivist/{{ session["user_name"] }}">Homepage (Sample 1)</a></li>
-                                        </ul>
+                        <li>
+                            <a href="/apptivist/{{ session["user_name"] }}">My Profile +</a>
+                        </li>
                         <li>
                             <a href="/logout">Logout</a>
                         </li>
@@ -71,8 +66,17 @@
                             <a href="/register">Register</a>
                         </li>
                     {% endif %} 
+                        <li class="navbar-right">
+                        <a href="/actionmap"><img src="/static/images/usa.png" width="50px" height="50px" style="margin-right: 0"></a>
+                        </li>
                     </ul>
-        
+
+                </nav>
+
+            </div>
+        </div>
+
+
         <!-- Show flashed messages -->    
         <div class="container">
             {% for flash in get_flashed_messages() %}
