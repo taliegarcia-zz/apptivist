@@ -15,19 +15,19 @@ Meetup.com API, GlobalGiving.org API, Sunlight Congress RESTful API
 > **Ability for the user to:**
 
 > - Post a news article to the site
-	> -- View preview of article before posting
+  * View preview of article before posting
 > - Tag articles with keywords from eight different categories
 > - Read news articles posted by o†her users 
-	> -- In newsfeed, sorted by date posted
-	> -- Can optionally be sorted by category too
+  * In newsfeed, sorted by date posted
+  * Can optionally be sorted by category too
 > - Take one of three actions after reading an interesting article:
-	> -- Look up related Meetup.com events 
-	> -- Find related GlobalGiving.org charity projects
-	> -- Contact their local govt representative 
+  * Look up related Meetup.com events 
+  * Find related GlobalGiving.org charity projects
+  * Contact their local govt representative 
 > - View user profiles with the following details:
-	> -- Influence: A data tree representing their influence on the site: articles they have posted, and actions that other users have taken since reading those articles
-	> -- Actions: A list of the user's actions made when interacting with the site
-	> -- Articles: listing all articles the user has posted to the site
+  * Influence: A data tree representing their influence on the site: articles they have posted, and actions that other users have taken since reading those articles
+  * Actions: A list of the user's actions made when interacting with the site
+  * Articles: listing all articles the user has posted to the site
 
 
 ####Server-side Features:
