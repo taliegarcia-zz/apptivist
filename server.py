@@ -13,7 +13,6 @@ from modules.meetup import list_events
 from modules.global_giving import list_giving_projs
 from modules.og import PyOpenGraph as pyog
 
-#FIXME: This is just for temporarily adding articles through webform
 import datetime
 
 app = Flask(__name__)
@@ -21,8 +20,7 @@ app = Flask(__name__)
 # Required to use Flask sessions and the debug toolbar
 app.secret_key = "ABC"
 
-# Normally, if you use an undefined variable in Jinja2, it fails silently.
-# This is horrible. Fix this so that, instead, it raises an error.
+
 app.jinja_env.undefined = StrictUndefined
 
 ###############################################################################
@@ -41,8 +39,7 @@ def show_newsfeed():
     
 @app.route('/news/<tag_name>', methods=["GET"])
 def filter_newsfeed_by_tag(tag_name):
-    """Filter newsfeed to only show articles associated 
-    with a particular tag"""
+    """Filter newsfeed to only show articles associated with a particular tag"""
 
     tag = Tag.query.filter_by(tag_name=tag_name).first()
 
@@ -64,8 +61,7 @@ def register_form():
 
 @app.route('/registration', methods=['POST'])
 def register_process():
-    """Process registration, add user to db, 
-    and add user to current server session."""
+    """Process reg, add user to db, add user to current server session."""
 
     # Get form variables
     name = request.form["name"]
@@ -135,6 +131,7 @@ def logout():
 @app.route("/apptivist/<name>")
 def get_user_by_name(name):
     """Display user info page by user's name'"""
+
     user = User.query.filter_by(name=name).first()
 
     return render_template("profile.html", 
@@ -144,8 +141,7 @@ def get_user_by_name(name):
 
 @app.route("/apptivist/<int:id>")
 def get_user_by_id(id):
-    """Display user info page by user_id.
-    This handles the d3 tree links."""
+    """Display user info page by user_id. This handles the d3 tree links."""
 
 
     user = User.query.get(id)
@@ -165,7 +161,9 @@ def new_post_form():
 
 @app.route("/post_article", methods=["POST"])
 def post_to_db():
-    """When the form is submitted, this will add the new article to the
+    """Handles form post of new article.
+
+    When the form is submitted, this will add the new article to the
     db. It will also return the new article's url to the js AJAX call.
     The ajax call will handle redirecting to the resulting url."""
 
@@ -200,7 +198,7 @@ def post_to_db():
     return article_address
 
 ###############################################################################
-    ### OpenGraph for Previewing URL's ###
+    ### OpenGraph for Previewing News Article ###
 
 @app.route("/preview", methods=['POST'])
 def preview_article():
@@ -222,7 +220,11 @@ def preview_article():
 @app.route("/article/<title>", methods=['GET'])
 def display_article(title):
     """Show individual article page.
+
+
     If a user is logged in, let them view possible actions.
+    Logged in users can also add more category tags to the 
+    articles they read.
     """
 
     article = Article.query.filter_by(title=title).first()
@@ -240,6 +242,7 @@ def display_article(title):
 
 @app.route("/article/update_article", methods=['POST'])
 def add_tags():
+    """User can add more article tags to articles."""
 
     article_id = request.form.get("article_id")
     print "article_id: ", article_id
@@ -262,8 +265,9 @@ def add_tags():
 
 @app.route("/meet/<title>", methods=['GET'])
 def display_meetups(title):
-    """This will display meetup info based on 
-    tags associated with this article.
+    """This will display meetup info based on tags associated with this article.
+    
+
     meetup_dict_by_tag keeps the tag object with the generated meetup info,
     this keeps things organized and separate on the results page."""
 
@@ -280,7 +284,6 @@ def display_meetups(title):
         for event in tagged_meetups:
             print type(event['event_url'])
     
-    # PyOg is not working on meetup.com.
 
     return render_template("meet.html", article=article, meetup_dict=meetup_dict_by_tag)
     
@@ -326,6 +329,8 @@ def lookup_congress(zipcode):
 
 @app.route('/action', methods=['POST'])
 def add_action_to_db():
+    """Add tracking info on a user's action to the db"""
+
     tag_id = request.form.get('tag_id')
     article_id = request.form.get('article_id')
     action_type = request.form.get('action_type')
@@ -349,8 +354,9 @@ def add_action_to_db():
 
 @app.route("/influences/<name>", methods=["GET"])
 def get_influences_json(name):
-    """Create JSON tree object based on user's articles and 
-    the actions associated with those articles."""
+    """Create JSON tree object for d3 graph.
+
+    Based on user's articles and the actions associated with those articles."""
 
     user = User.query.filter_by(name=name).first()
 
@@ -391,7 +397,7 @@ def show_antique_map():
 
 if __name__ == "__main__":
     # Run in debug mode
-    app.debug = True
+    app.debug = False
     app.config['TESTING'] = True
     app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = True
 

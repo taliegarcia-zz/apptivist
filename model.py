@@ -124,8 +124,6 @@ class Article(db.Model):
     date = db.Column(db.Date, nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
 
-    # TODO. consider renaming this to: posted_user, 
-    # to disambiguate between user-that-posted-article and user-that-read/clicked-article 
     user = db.relationship("User", backref=db.backref("articles", order_by=article_id))
 
     tag_list = db.relationship("Tag", secondary=article_tags, backref=db.backref("articles", order_by=article_id))
@@ -143,7 +141,7 @@ class Article(db.Model):
         
         if self.actions:
             self._tree['children'] = [action.tree for action in self.actions]
-            # do not assign empty array to ['children'] key, disrupts d3 look
+            # do not assign empty array to ['children'] key, disrupts d3 view
 
 
         return self._tree
@@ -166,6 +164,8 @@ class Tag(db.Model):
 
     def tag_ranking(self):
         """Returns the keyword tag_id that the user takes action on the most.
+
+
         The SQL query for this is:
         SELECT tag_id, COUNT(*) FROM actions WHERE action_user=user_id
         GROUP BY tag_id ORDER BY COUNT(*) DESC LIMIT 1;"""
@@ -181,22 +181,17 @@ class Tag(db.Model):
 ##############################################################################
     ### Models relying on API's ###
 
-# FIXME: I think these are redundant...why do I need to keep this information at all really?
-# it was neat for figuing things out and finding the terms and calling the apis
-# and above too...why would I even need a backreference to the meetup and giving tables?
-# The global giving table is handy as a referene...doesnt need to be connected at all really, 
-# could just be a static csv I look at sometimes!
-
-# TODO: Change this to be Meetup topics, not Meetup category_ids
 class Meetup(db.Model):
     """Meetup.com object, with topic and name from the meetup website.
+
+
     This might become obsolete if I just hardcode the topics into the Tag table.
     Seems redundant."""
 
     __tablename__ = "meetups" 
 
     meetup_id = db.Column(db.Integer, primary_key=True)
-    # TODO: Set up Meetup topic field. 
+
     meetup_topic = db.Column(db.String(64), nullable=True)
     
     def __repr__(self):
@@ -206,10 +201,10 @@ class Meetup(db.Model):
 
 
 class GlobalGiving(db.Model):
-    """One line explanation.
+    """Global Giving object referncing the global giving code and name.
 
-    Global Giving object referncing the global giving code and name,
-    organized by Theme from Global Giving website"""
+
+    Organized by Theme from Global Giving website"""
 
     __tablename__ = "giving" 
 
@@ -235,8 +230,6 @@ def connect_to_db(app):
 
 
 if __name__ == "__main__":
-    # As a convenience, if we run this module interactively, it will leave
-    # you in a state of being able to work with the database directly.
 
     from server import app
     connect_to_db(app)
