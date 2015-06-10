@@ -258,7 +258,11 @@ def add_tags():
 
     db.session.commit()
 
-    return redirect(article.title)
+    user = User.query.filter_by(name=name).first()
+
+    article_address = "/article/" + article.title
+
+    return article_address
 
 ###############################################################################
     ### API Results Pages ###
