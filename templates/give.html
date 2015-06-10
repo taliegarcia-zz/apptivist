@@ -2,21 +2,114 @@
 {% block title %}Give Back | {% endblock %}
 {% block content %}
 
-  <h1>Open up Your Heart and Give!</h1>
+<!-- Page Title -->
+<div class="section section-breadcrumbs">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h1>Open up Your Heart and Give!</h1>
+          </div>
+        </div>
+      </div>
+</div>
+  
 
-  <h3>You just read: <a href="/article/{{ article.title }}">{{ article.title }}</a></h3>
+<div class="section">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+      <h3>You just read: <a href="/article/{{ article.title }}">{{ article.title }}</a></h3> 
+      </div>
+    </div>
+  </div>
+</div>
 
-  <p>These projects could use your help:</p>
 
+<!-- Posts List -->
+<div class="section blog-posts-wrapper">
+  <div class="container">
+    <div class="row">
+      {% for tag, tagged_projs in giving_projs.items() %}
+      <div class="col-sm-12">
+      <h4>Projects related to: {{ tag.tag_name|title }}</h4>
+      <h5>These projects could use your help!</h5>
+      </div>
+      {% if tagged_projs %}
+    </div>
+    
+    <div class="row">
+          {% for project in tagged_projs %}
+            {% if loop.index0 % 3 == 0 %}
+            <div class="visible-sm clearfix"></div>
+            <div class="visible-md clearfix"></div>
+            <div class="visible-lg clearfix"></div>
+            {% endif %}
+          <!-- Post -->
+          <div class="col-md-4 col-sm-6">
+            <div class="blog-post">
+              <!-- Post Info -->
+              <div class="post-info">
+                <div class="post-comments-count">
+                  <p>
+                  <a href="/news/{{ tag.tag_name }}" title="Show Tags">{{ tag.tag_name|title }}</a>
+                  </p>
+                </div>
+              </div>
+              <!-- End Post Info -->
+              <!-- Post Image -->
+              <div id="give_project" class="actionLinks give_project">
+              <a href="{{ project['projectLink'] }}" data-linkType='give' data-tagId="{{ tag.tag_id }}" data-articleId="{{ article.article_id }}"><img src="{{ project['imageLink'] }}" class="post-image" alt="Post Title"></a>
+              </div>
+              <!-- End Post Image -->
+              <!-- Post Name & Summary -->
+              <div class="post-title">
+                <h3>
+                <div id="give_project" class="actionLinks give_project">
+                <a href="{{ project['projectLink'] }}" data-linkType='give' data-tagId="{{ tag.tag_id }}" data-articleId="{{ article.article_id }}">
+                {{ project['title'] }}
+                </a>
+                </div>
+                </h3>
+              </div>
+               <div class="post-summary">
+                <p>{{ project['summary'] }}</p>
+              </div>
+              <div class="post-summary"></div>
+              <!-- End Post Title & Summary -->
+              <div class="post-more">
+                <div id="give_project" class="actionLinks give_project">
+                <a href="{{ project['projectLink'] }}" data-linkType='give' data-tagId="{{ tag.tag_id }}" data-articleId="{{ article.article_id }}">
+                Give Back!</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+          <!-- End Post -->
+          {% else %}
+          <div class="post-title">
+                <h3>
+                No Projects found.
+                </h3>
+          </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+      </div>
+      </div>
+      <!-- End Posts List -->
+
+{% endblock %}
+
+{#
       <h3>Global Giving Results:</h3>
       
       {% for tag, tagged_projs in giving_projs.items() %}
         <h4>Charities related to: {{ tag.tag_name }}</h4>
         
         {% for project in tagged_projs %}
-        <div class="actionLinks">
-        
-        	<div class="give_project">
+       
+        	<div id="give_project" class="actionLinks give_project">
         		<a href="{{ project['projectLink'] }}" data-linkType='give' data-tagId="{{ tag.tag_id }}" data-articleId="{{ article.article_id }}">
         			{{ project['title'] }}
         		</a>
@@ -47,3 +140,5 @@
 
 
 {% endblock %}
+
+#}
