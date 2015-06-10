@@ -69,9 +69,7 @@ function update(source) {
   nodeEnter.append("svg:a").attr("xlink:href", function(d){
                                 if (d.title) {
                                   return ("/article/" + d.title);
-                                } else if (d.action_user) {
-                                  return ("/apptivist/" + d.action_user);
-                                }
+                                } 
                                 });
                                 
   

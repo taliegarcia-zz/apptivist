@@ -148,7 +148,10 @@ def get_user_by_name(name):
 
 #     user_url = "/apptivist/" + user.name
 
-#     return redirect(user_url) 
+#     return render_template("profile.html", 
+#                             user=user, 
+#                             articles=user.articles, 
+#                             actions=user.actions)
 
 
 ###############################################################################
