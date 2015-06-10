@@ -2679,3 +2679,8 @@ span.color-red {
   margin-bottom: 15px;
   border: 2px solid #fff;
 }
+
+.naked ul 
+{
+    list-style-type: none;
+}

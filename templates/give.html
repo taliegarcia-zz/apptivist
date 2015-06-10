@@ -7,18 +7,17 @@
       <div class="container">
         <div class="row">
           <div class="col-md-12">
-            <h1>Open up Your Heart and Give!</h1>
+            <h1>Global Giving Charities</h1>
           </div>
         </div>
       </div>
 </div>
-  
 
 <div class="section">
   <div class="container">
     <div class="row">
       <div class="col-sm-12">
-      <h3>You just read: <a href="/article/{{ article.title }}">{{ article.title }}</a></h3> 
+      <h3>You just read: <a href="/article/{{ article.title }}">{{ article.title|title }}</a></h3> 
       </div>
     </div>
   </div>
@@ -99,46 +98,6 @@
       </div>
       <!-- End Posts List -->
 
-{% endblock %}
-
-{#
-      <h3>Global Giving Results:</h3>
-      
-      {% for tag, tagged_projs in giving_projs.items() %}
-        <h4>Charities related to: {{ tag.tag_name }}</h4>
-        
-        {% for project in tagged_projs %}
-       
-        	<div id="give_project" class="actionLinks give_project">
-        		<a href="{{ project['projectLink'] }}" data-linkType='give' data-tagId="{{ tag.tag_id }}" data-articleId="{{ article.article_id }}">
-        			{{ project['title'] }}
-        		</a>
-            <br>
-            <img src="{{ project['imageLink'] }}" />
-            <br>
-            <p>{{ project['summary'] }}</p>
-        	</div>
-        </div>
-        {% endfor %}
-        
-      
-      {% endfor %}
-
-	  <div>Tags: 
-            <ul>
-            {% for tag in article.tag_list %}
-              <li>{{ tag.tag_name }}</li>
-            {% endfor %}
-            </ul>
-    </div>
-
-    <script>
-    
-    
-    </script>
-
-
 
 {% endblock %}
 
-#}
