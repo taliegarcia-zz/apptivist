@@ -133,22 +133,22 @@ def get_user_by_name(name):
     """Display user info page by user's name'"""
 
     user = User.query.filter_by(name=name).first()
-
+    print user.name
     return render_template("profile.html", 
                             user=user, 
                             articles=user.articles, 
                             actions=user.actions)
 
-@app.route("/apptivist/<int:id>")
-def get_user_by_id(id):
-    """Display user info page by user_id. This handles the d3 tree links."""
+# @app.route("/apptivist/<int:id>")
+# def get_user_by_id(id):
+#     """Display user info page by user_id. This handles the d3 tree links."""
 
 
-    user = User.query.get(id)
+#     user = User.query.get(id)
 
-    user_url = "/apptivist/" + user.name
+#     user_url = "/apptivist/" + user.name
 
-    return redirect(user_url) 
+#     return redirect(user_url) 
 
 
 ###############################################################################
@@ -401,7 +401,7 @@ def show_antique_map():
 
 if __name__ == "__main__":
     # Run in debug mode
-    app.debug = False
+    app.debug = True
     app.config['TESTING'] = True
     app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = True
 

@@ -72,16 +72,14 @@
                       
                       {# Set up good copy for each action_type: #}
                       {% if action.action_type == 'meetup' %} 
-                      You attended a meetup after reading: 
+                      You attended a Meetup related to:
                       {% elif action.action_type == 'give' %}
-                      You donated to a charity after reading: 
+                      You donated to a Global Giving Project related to:
                       {% elif action.action_type == 'congress' %}
-                      You contacted congress after reading: 
+                      You contacted Congress about: 
                       {% endif %}
-                      
-                      <a href="/article/{{ action.article.title }}">{{ action.article.title|title }}</a>
 
-                      <p>Tagged: <a href="/news/{{ action.tag.tag_name }}">{{ action.tag.tag_name|title }}</a></p>
+                      <a href="/news/{{ action.tag.tag_name }}">{{ action.tag.tag_name|title }}</a>
 
                       </li>
                     {% endfor %}
