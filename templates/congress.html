@@ -2,25 +2,54 @@
 {% block title %}Contact | {% endblock %}
 {% block content %}
 
-  <h1>Congress Member Contact Info</h1>
+<!-- Page Title -->
+<div class="section section-breadcrumbs">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h1>Congress Member Contact Info</h1>
+          </div>
+        </div>
+      </div>
+</div>
 
-  <p>Based on your location, these representatives should take your call:</p>
+<div class="section">
+  <div class="container">
+    <div class="row">
+    <div class="col-sm-12">
 
-	  <ul>
-	  {% for rep in congress_list %}
-	  	<div class="congress">
-	  	<li>{{ rep['first_name'] }} {{ rep['last_name'] }} : {{ rep['phone'] }}
-	  	<p>Get at them:</p>
-	  	<ul>
-		  	<li><a href="http://www.twitter.com/{{ rep['twitter_id'] }}">On Twitter</a></li>
-		  	<li><a href="http://www.twitter.com/{{ rep['facebook_id'] }}">On Facebook</a></li>
-		  	<li><a href="http://www.twitter.com/{{ rep['youtube_id'] }}">On Youtube</a></li>
-		</ul>
-	  	</li>
-	  	<br>
-	  	</div>
-	  {% endfor %}
-	  </ul>
+</div>
+</div>
+</div>
+</div>
+
+
+<div class="section">
+	        <div class="container">
+	        	<h2>Congress members ready to hear from you...</h2>
+	        	<div class="row">
+	        		{% for rep in congress_list %}
+	        		<div class="col-md-3 col-sm-6">
+	        			<div class="service-wrapper">
+		        			<h3>{{ rep['first_name'] }} {{ rep['last_name'] }}</h3>
+		        			<p>{{ rep['phone'] }}</p>
+		        			<h5>Connect On:</h5>
+		        			<ul style="text-align: left;">
+		        			<li>
+		        			<img src="/static/images/twitter.png" width="16px" height="16px"><a href="http://www.twitter.com/{{ rep['twitter_id'] }}"> Twitter</a>
+		        			</li>
+		        			<li>
+		        			<img src="/static/images/facebook.png" width="16px" height="16px"><a href="http://www.facebook.com/{{ rep['facebook_id'] }}"> Facebook</a>
+		        			</li>
+		        			<li>
+		        			<img src="/static/images/youtube.png" width="16px" height="16px"><a href="http://www.youtube.com/{{ rep['youtube_id'] }}"> Youtube</a>
+		        			</li>
+	        			</div>
+	        		</div>
+	        		{% endfor %}
+	        	</div>
+	        </div>
+</div>
 
 {% endblock %}
 
