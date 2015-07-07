@@ -120,7 +120,7 @@ class Article(db.Model):
     article_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
     url = db.Column(db.String(200), nullable=False)
-    img_src = db.Column(db.String(200), nullable=True, default="http://placekitten.com/220/220")
+    img_src = db.Column(db.String(200), nullable=True, default="/static/images/newspaper.jpg")
     date = db.Column(db.Date, nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
 
