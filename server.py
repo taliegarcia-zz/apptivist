@@ -2,7 +2,7 @@
 
 from jinja2 import StrictUndefined
 
-from flask import Flask, render_template, redirect, request, flash, session, jsonify, url_for
+from flask import Flask, render_template, redirect, request, flash, session, json, jsonify, url_for
 from flask_debugtoolbar import DebugToolbarExtension
 
 from model import User, Article, Tag, Meetup, GlobalGiving, Action, article_tags, connect_to_db, db
@@ -175,7 +175,8 @@ def post_to_db():
     img_src = request.form.get('img_src')
     date_str = request.form.get('date')
     date = datetime.datetime.strptime(date_str, "%Y-%m-%d")
-    tags = request.form.getlist('tagList[]')
+    tags = json.loads(request.form.get('tagList'))
+    print "()()()() These are the TAGS:", tags
 
     user = User.query.filter_by(name=session['user_name']).first()
     ### Add New Article to the articles table ###
@@ -191,6 +192,7 @@ def post_to_db():
 
     ### Append New ArticleTag Association(s) to the articletags tables ###
     for tag_name in tags:
+        print tag_name
         tag = Tag.query.filter_by(tag_name=tag_name).first()
         article.tag_list.append(tag)
 
@@ -262,11 +264,9 @@ def add_tags():
 
     db.session.commit()
 
-    user = User.query.filter_by(name=name).first()
-
     article_address = "/article/" + article.title
 
-    return article_address
+    return redirect(article_address)
 
 ###############################################################################
     ### API Results Pages ###

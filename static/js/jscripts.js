@@ -91,7 +91,7 @@ $("#postArticle").submit( function(e) {
               img_src: this.dataset.img,
               url: $("#url-field").val(),
               date: $("#date-field").val(),
-              tagList: allTags
+              tagList: JSON.stringify(allTags)
             }
 
             console.log("Obj first assigned: " + formInfo);
