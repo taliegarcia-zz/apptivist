@@ -229,6 +229,7 @@ def display_article(title):
     Logged in users can also add more category tags to the 
     articles they read.
     """
+    print title
 
     article = Article.query.filter_by(title=title).first()
 
