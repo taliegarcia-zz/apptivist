@@ -139,19 +139,16 @@ def get_user_by_name(name):
                             articles=user.articles, 
                             actions=user.actions)
 
-# @app.route("/apptivist/<int:id>")
-# def get_user_by_id(id):
-#     """Display user info page by user_id. This handles the d3 tree links."""
+@app.route("/apptivist/<int:id>")
+def get_user_by_id(id):
+    """Display user info page by user_id. This handles the d3 tree links."""
 
 
-#     user = User.query.get(id)
+    user = User.query.get(id)
 
-#     user_url = "/apptivist/" + user.name
+    user_url = "/apptivist/" + user.name
 
-#     return render_template("profile.html", 
-#                             user=user, 
-#                             articles=user.articles, 
-#                             actions=user.actions)
+    return redirect(user_url)
 
 
 ###############################################################################
@@ -191,6 +188,7 @@ def post_to_db():
     print "SUCCESSFULLY added new article!!!"
 
     ### Append New ArticleTag Association(s) to the articletags tables ###
+    article = Article.query.filter_by(title=title).first()
     for tag_name in tags:
         print tag_name
         tag = Tag.query.filter_by(tag_name=tag_name).first()
@@ -407,7 +405,7 @@ if __name__ == "__main__":
     # Run in debug mode
     app.debug = True
     app.config['TESTING'] = True
-    app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = True
+    app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
     connect_to_db(app)
 
